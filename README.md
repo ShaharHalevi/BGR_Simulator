@@ -180,7 +180,7 @@ source install/setup.bash
 **Drive straight**
 
 ```bash
-ros2 topic pub --once /forward_velocity_controller/commands std_msgs/Float64MultiArray "data:
+ros2 topic pub -r 5 /forward_velocity_controller/commands std_msgs/Float64MultiArray "data:
 - 5.0  # Wheel_rr
 - 5.0  # Wheel_rl
 - 5.0  # Wheel_fr (remove if RWD only)
@@ -192,101 +192,15 @@ ros2 topic pub --once /forward_velocity_controller/commands std_msgs/Float64Mult
 
 ```bash
 # Steering right (~0.3 rad)
-ros2 topic pub --once /forward_position_controller/commands std_msgs/Float64MultiArray "data: [0.3]"
+ros2 topic pub -r 5 /forward_position_controller/commands std_msgs/msg/Float64MultiArray "data: [2.0]"
 
 # Forward at moderate speed
-ros2 topic pub --once /forward_velocity_controller/commands std_msgs/Float64MultiArray "data: [2.0, 2.0, 2.0, 2.0]"
+ros2 topic pub -r 5 /forward_velocity_controller/commands std_msgs/msg/Float64MultiArray "data: [7,7,7,7]"
 ```
 
 **Center steering + stop**
 
 ```bash
-ros2 topic pub --once /forward_position_controller/commands std_msgs/Float64MultiArray "data: [0.0]"
-ros2 topic pub --once /forward_velocity_controller/commands std_msgs/Float64MultiArray "data: [0.0, 0.0, 0.0, 0.0]"
-```
-
-> **RWD only?** Remove `Wheel_fr_joint` and `Wheel_fl_joint` from the YAML velocity controller, rebuild, then publish only **2** values (RR, RL).
-
----
-
-## 5) Troubleshooting
-
-**Wheels spin but robot doesn’t move**
-
-* Let the robot settle; ensure wheels touch ground (spawn at `-z ~ 1.0–1.2`)
-* Wheel joint origins: **Z = -wheel_radius**
-* Wheel **collision** must be a cylinder rolled **+90°** (axis = Y)
-* Check `bgr_gazebo.xacro` friction/slip (`mu1/mu2 ~ 1.2`, slip ~ `0.01`)
-
-**Robot sinks / is stuck**
-
-* Base collision origin should be **`+body_size_z/2`** so the body sits above ground
-* Keep contact `kp` high and `max_vel` small (already set)
-
-**Steering only on one side**
-
-* Right steering (`Steering_fr_joint`) is commanded (position)
-* Left steering (`Steering_fl_joint`) is **mimic** with multiplier **-1.0** (URDF + physics plugin)
-* Names in launch/YAML must match exactly
-
-**Controllers won’t activate**
-
-* `ros2 control list_hardware_interfaces` → joints must export `velocity` / `position`
-* Start `joint_state_broadcaster` **before** other controllers (our launch does)
-* Ensure controller names in launch equal YAML names
-
-**RViz shows nothing**
-
-* Set **Fixed Frame** = `base_link`
-* Ensure `robot_state_publisher` runs with `robot_description`
-
----
-
-## 6) Common changes
-
-* **RWD only** – remove the front wheel joints from the velocity controller YAML; rebuild.
-* **Different world** – change `empty.sdf` in `bgr_description/launch/gz.launch.py`.
-* **Steering range** – edit `steer_limit` (radians) in `bgr.urdf.xacro` and keep controller min/max consistent.
-* **Mesh orientation off** – adjust `<visual><origin rpy="...">` in the wheel macro (collision already aligned).
-
----
-
-## 7) Team context (why)
-
-* **Team:** BGRacing – Driverless Simulator (BGU Formula Student)
-* **Goal:** Smooth, realistic Ackermann dynamics for controller testing before track days
-* **Next:** add Innoviz LiDAR + camera via GZ plugins, perception topics, and a `cmd_vel` → wheel/steering translator node
-
----
-
-## 8) Contributing
-
-* Branches: `feat/<area>`, `fix/<area>`, `docs/<area>`
-* PR checklist:
-
-  * Launches run clean (no critical warnings)
-  * Robot spawns on ground; wheels touch ground
-  * Steering mimic works
-  * `ros2 control list_controllers` shows 3 active controllers
-  * Keep comments in **simple English**
-
----
-
-## 9) License
-
-Released under the **MIT License**. See `LICENSE`.
-
----
-
-## 10) Quick start (3 commands)
-
-```bash
-# Build
-cd ~/ws_bgr && colcon build && source install/setup.bash
-
-# Sim + robot
-ros2 launch bgr_description gz.launch.py
-
-# Controllers
-ros2 launch bgr_controller controllers.launch.py
+ros2 topic pub -r 5 /forward_position_controller/commands std_msgs/Float64MultiArray "data: [0.0]"
+ros2 topic pub -r 5 /forward_velocity_controller/commands std_msgs/Float64MultiArray "data: [0.0, 0.0, 0.0, 0.0]"
 ```
