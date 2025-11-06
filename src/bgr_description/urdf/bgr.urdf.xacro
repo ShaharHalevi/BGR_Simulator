@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<robot name="bgr" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Select Gazebo flavor (Ignition/GZ) to load the matching ros2_control hardware plugin -->
+  <xacro:arg name="is_ignition" default="true"/>
+
+
+  <!-- External includes-->
+  <xacro:include filename="$(find bgr_description)/urdf/bgr_gazebo.xacro"/>
+  <xacro:include filename="$(find bgr_description)/urdf/bgr_ros2_control.xacro"/>
+
+  <!-- === Basic params === -->
+   
+  <!-- Wheel geometry (radius/width) and chassis dimensions -->
+  <xacro:property name="wheel_radius" value="0.24"/>
+  <xacro:property name="wheel_width"  value="0.12"/>
+
+  <!-- Track = left-right distance between wheel centers; Wheelbase = front-rear distance -->
+  <xacro:property name="track"        value="1.3092"/>   
+  <xacro:property name="wheelbase"    value="2.0368"/>   
+
+   <!-- Mass and steering limits -->
+  <xacro:property name="body_mass"    value="50.0"/>
+  <xacro:property name="steer_limit"  value="0.6"/>     
+  
+  <!-- Bounding box used for base_link collision and inertia -->
+  <xacro:property name="body_size_x"  value="2.0"/>
+  <xacro:property name="body_size_y"  value="1.0"/>
+  <xacro:property name="body_size_z"  value="0.5"/>
+
+   <!--  Base link (chassis) -->
+  <link name="base_link">
+    <!-- Box inertia -->
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${body_mass}"/>
+      <inertia ixx="${1.0/12.0*body_mass*(body_size_y*body_size_y + body_size_z*body_size_z)}"
+               iyy="${1.0/12.0*body_mass*(body_size_x*body_size_x + body_size_z*body_size_z)}"
+               izz="${1.0/12.0*body_mass*(body_size_x*body_size_x + body_size_y*body_size_y)}"
+               ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+
+    <!-- Visual STL File (doesn't affect physics) -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://bgr_description/meshes/visual/base_link.STL"/>
+      </geometry>
+      <material name=""><color rgba="0.79216 0.81961 0.93333 1"/></material>
+    </visual>
+
+    <!-- Collision as box (affects physics) -->
+    <collision>
+      <origin xyz="0 0 ${body_size_z/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${body_size_x} ${body_size_y} ${body_size_z}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- === Wheel link macro === -->
+  <xacro:macro name="wheel_link" params="name visual_mesh">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="5.0"/>
+        <inertia ixx="${(1.0/12.0)*5.0*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"
+                 iyy="${(1.0/12.0)*5.0*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"
+                 izz="${0.5*5.0*wheel_radius*wheel_radius}"
+                 ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+
+      <!-- Visual mesh -->
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${visual_mesh}"/>
+        </geometry>
+        <material name=""><color rgba="0.79216 0.81961 0.93333 1"/></material>
+      </visual>
+
+      <!-- Collision as cylinder -->
+      <collision>
+        <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <!-- === Stub link macro (for steering knuckles) === -->
+  <xacro:macro name="stub_link" params="name">
+    <link name="${name}">
+      <inertial>
+        <mass value="0.01"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><cylinder radius="0.01" length="0.02"/></geometry>
+      </visual>
+    </link>
+  </xacro:macro>
+
+  <!-- === Wheels and Joints === -->
+  <!-- rear wheels -->
+  <xacro:wheel_link name="Wheel_rl" visual_mesh="package://bgr_description/meshes/visual/Wheel_rl.STL"/>
+  <xacro:wheel_link name="Wheel_rr" visual_mesh="package://bgr_description/meshes/visual/Wheel_rr.STL"/>
+
+  <!-- front wheels with steering stubs -->
+  <xacro:stub_link name="Steering_fl"/>
+  <xacro:wheel_link name="Wheel_fl" visual_mesh="package://bgr_description/meshes/visual/Wheel_fl.STL"/>
+
+  <xacro:stub_link name="Steering_fr"/>
+  <xacro:wheel_link name="Wheel_fr" visual_mesh="package://bgr_description/meshes/visual/Wheel_fr.STL"/>
+
+  <!-- === Joints === -->
+  <!-- rear left -->
+  <joint name="Wheel_rl_joint" type="continuous">
+    <origin xyz="${-wheelbase/2} ${ track/2} -${wheel_radius}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="Wheel_rl"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="200" velocity="100"/>
+    <dynamics damping="0.05" friction="0.01"/>
+  </joint>
+
+  <!-- rear right -->
+  <joint name="Wheel_rr_joint" type="continuous">
+    <origin xyz="${-wheelbase/2} ${-track/2} -${wheel_radius}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="Wheel_rr"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="200" velocity="100"/>
+    <dynamics damping="0.05" friction="0.01"/>
+  </joint>
+
+  <!-- steering front left-->
+  <joint name="Steering_fl_joint" type="revolute">
+    <origin xyz="${ wheelbase/2} ${ track/2} -${wheel_radius}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="Steering_fl"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${-steer_limit}" upper="${steer_limit}" effort="200" velocity="2.0"/>
+    <dynamics damping="1.5" friction="0.1"/>
+    <mimic joint="Steering_fr_joint" multiplier="1.0" offset="0.0"/>
+  </joint>
+
+  <!-- left front wheel -->
+  <joint name="Wheel_fl_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="Steering_fl"/>
+    <child  link="Wheel_fl"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="200" velocity="100"/>
+    <dynamics damping="0.03" friction="0.01"/>
+  </joint>
+
+  <!-- steering front right-->
+  <joint name="Steering_fr_joint" type="revolute">
+    <origin xyz="${ wheelbase/2} ${-track/2} -${wheel_radius}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child  link="Steering_fr"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${-steer_limit}" upper="${steer_limit}" effort="200" velocity="2.0"/>
+    <dynamics damping="1.5" friction="0.1"/>
+  </joint>
+
+  <!-- right front wheel -->
+  <joint name="Wheel_fr_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="Steering_fr"/>
+    <child  link="Wheel_fr"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="200" velocity="100"/>
+    <dynamics damping="0.03" friction="0.01"/>
+  </joint>
+</robot>

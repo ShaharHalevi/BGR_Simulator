@@ -1,0 +1,40 @@
+# ros2_control controller manager + controllers
+controller_manager:
+  ros__parameters:
+    update_rate: 1000 # Hz
+
+  # These three names MUST match the names you spawn in the controllers launch file.
+  # Velocity controller: sends velocity commands to wheel joints.
+    forward_velocity_controller:
+      type: forward_command_controller/ForwardCommandController
+  # Position controller: sends position commands to steering joints.
+    forward_position_controller:
+      type: forward_command_controller/ForwardCommandController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+forward_velocity_controller:
+  ros__parameters:
+    joints:
+      - Wheel_rr_joint    # rear right wheel
+      - Wheel_rl_joint    # rear left wheel
+      - Wheel_fr_joint    # front right wheel
+      - Wheel_fl_joint    # front left wheel
+    interface_name: velocity # the command interface to use
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+
+forward_position_controller:
+  ros__parameters:
+    joints:
+      - Steering_fr_joint  # right steering joint (master)
+    interface_name: position # the command interface to use
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
