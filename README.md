@@ -3,10 +3,6 @@
 *A clear, stable Ackermann robot model for our Formula Student simulator team.*
 *Includes URDF/Xacro, Gazebo (GZ Sim) tuning, `ros2_control` controllers, and ready-to-run launch files.*
 
-![ROS 2](https://img.shields.io/badge/ROS%202-Iron%20%7C%20Humble-blue)
-![GZ Sim](https://img.shields.io/badge/GZ%20Sim-8%2B-brightgreen)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
-
 ---
 
 ## 1) What’s inside
