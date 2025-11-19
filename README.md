@@ -59,6 +59,10 @@ bgr_robot/
 
 Install (replace `${ROS_DISTRO}` with `humble` / `iron` / `jazzy`):
 
+To check ROS version type in terminal:
+
+"echo $ROS_DISTRO"
+
 ```bash
 sudo apt update
 sudo apt install \
@@ -69,6 +73,15 @@ sudo apt install \
   ros-${ROS_DISTRO}-joint-state-publisher-gui \
   ros-${ROS_DISTRO}-xacro
 ```
+For Ubuntu 22 + ROS :
+udo apt update
+sudo apt install \
+  ros-humble-ros-gz-sim \
+  ros-humble-ros-gz-bridge \
+  ros-humble-robot-state-publisher \
+  ros-humble-controller-manager \
+  ros-humble-joint-state-publisher-gui \
+  ros-humble-xacro
 
 ---
 
