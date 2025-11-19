@@ -1,0 +1,78 @@
+# ==========================
+# ROS 2 / Colcon build files
+# ==========================
+build/
+install/
+log/
+.colcon/
+.colcon_metadata/
+
+# Ignore build artifacts inside any subfolder
+*/build/
+*/install/
+*/log/
+
+# ==========================
+# Gazebo / Ignition artifacts
+# ==========================
+*.log
+*.bak
+*.tmp
+*.swap
+
+# Gazebo model cache
+.gazebo/
+.gazebo/models/*
+.gazebo/log/*
+.gazebo/state/*
+
+# ==========================
+# RViz generated files
+# ==========================
+*.rviz~
+*.perspective
+rviz/autosave.rviz
+
+# ==========================
+# Python cache files
+# ==========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ==========================
+# VSCode project settings
+# ==========================
+.vscode/
+.history/
+.idea/
+
+# ==========================
+# System / OS junk files
+# ==========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ==========================
+# Mesh / STL artifacts
+# ==========================
+# (Keep your actual mesh files; ignore cached/generated ones)
+*.stl.tmp
+*.dae.tmp
+
+# ==========================
+# Launch file backups
+# ==========================
+*launch.py~
+*.yaml~
+*.xml~
+
+# ==========================
+# Other ignored files
+# ==========================
+*.backup
+*.old
+*.orig
