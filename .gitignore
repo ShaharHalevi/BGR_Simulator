@@ -1,0 +1,10 @@
+# Ignore everything in the repository root by default
+/*
+
+# Keep the essentials
+!README.md
+!.gitignore
+!src/
+
+# Allow all contents inside src
+!src/**

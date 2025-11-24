@@ -1,0 +1,25 @@
+joy_teleop:
+  ros__parameters:
+    # מהירות גלגלים (Scalar)
+    wheel_speed:
+      type: topic
+      interface_type: std_msgs/msg/Float64
+      topic_name: /wheel_speed
+      deadman_buttons: [5]     # RT
+      axis_mappings:
+        data:                  # שדה היחיד בהודעת Float64
+          axis: 1              # Left stick Y
+          scale: 12        # ~ 1.0 / 0.24  [rad/s per m/s]
+          offset: 0.0
+
+    # זווית היגוי (Scalar)
+    steering_angle:
+      type: topic
+      interface_type: std_msgs/msg/Float64
+      topic_name: /steering_angle
+      deadman_buttons: [5]
+      axis_mappings:
+        data:
+          axis: 3              # Right stick X
+          scale: 0.6108        # רדיונים (±35°)
+          offset: 0.0
