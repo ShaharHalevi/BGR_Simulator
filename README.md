@@ -107,6 +107,7 @@ rosdep install --from-paths src --ignore-src -r -y
 # Build
 colcon build
 
+In a new terminal: 
 # Source the workspace (applies to THIS terminal only)
 source install/setup.bash
 ```
