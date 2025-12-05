@@ -96,14 +96,20 @@ def generate_launch_description():
         ],
     )
 
-    # Bridge /clock topic from GZ to ROS 2.
+    # Bridge topics from GZ to ROS 2.
     gz_ros2_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+            "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
+            "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
         ],
+        output="screen",
     )
+
+
 
     # Return everything we want to start.
     return LaunchDescription(
@@ -114,5 +120,6 @@ def generate_launch_description():
             gazebo,                         # starts the simulator
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
+            
         ]
     )

@@ -6,7 +6,17 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
+# Generate message interfaces
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/CarPose.msg"
+)
+
+# Export typesupport runtime dependency
+ament_export_dependencies(rosidl_default_runtime)
+
+# Install description files (meshes, urdf, launch, rviz)
 install(DIRECTORY meshes urdf launch rviz
   DESTINATION share/${PROJECT_NAME}
 )
@@ -17,5 +27,12 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+install(PROGRAMS
+  car_wheel_publisher.py
+  car_state_publisher.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 
 ament_package()
