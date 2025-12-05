@@ -103,4 +103,23 @@
       </wheel>
     </plugin>
   </gazebo>
+
+
+    <!-- Publish ground-truth pose of the BGR car as /model/bgr/pose in Gazebo -->
+  <!-- GROUND TRUTH ODOMETRY (Perfect Position) -->
+  <gazebo>
+    <xacro:unless value="$(arg is_ignition)">
+      <plugin filename="gz-sim-odometry-publisher-system"
+              name="gz::sim::systems::OdometryPublisher">
+        <dimensions>3</dimensions> <!-- 3D Position -->
+        <odom_frame>world</odom_frame> <!-- Calculate relative to the World -->
+        <robot_base_frame>base_link</robot_base_frame>
+        <odom_publish_frequency>50</odom_publish_frequency>
+      </plugin>
+    </xacro:unless>
+  </gazebo>
+
+
+
+
 </robot>
