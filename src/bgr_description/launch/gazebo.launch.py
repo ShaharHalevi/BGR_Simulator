@@ -30,6 +30,8 @@ def generate_launch_description():
     # Where the package 'bgr_description' keeps its files.
     bgr_description = get_package_share_directory("bgr_description")
 
+    world_path = os.path.join(bgr_description, "worlds", "track1.sdf")
+
     # Launch argument for the robot model file to use.
     model_arg = DeclareLaunchArgument(
         name="model",
@@ -37,18 +39,13 @@ def generate_launch_description():
         description="Absolute path to robot urdf file",
     )
 
-    # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
-    # We point to the parent folder of the 'share' dir. This helps GZ find assets.
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH", value=[str(Path(bgr_description).parent.resolve())]
     )
 
-    # Pick which Gazebo plugin family to use.
-    # 'humble' uses Ignition; newer distros use GZ Sim.
     ros_distro = os.environ["ROS_DISTRO"]
     is_ignition = "True" if ros_distro == "humble" else "False"
 
-    # Create robot_description parameter from xacro file.
     robot_description = ParameterValue(
         Command(
             ["xacro ", LaunchConfiguration("model"), " is_ignition:=", is_ignition]
@@ -56,17 +53,13 @@ def generate_launch_description():
         value_type=str,
     )
 
-    # Start robot_state_publisher node to publish TFs.
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
-    # Start GZ Sim. We use the 'empty.sdf' world.
-    # Flags:
-    #   -v 4 : verbose logging
-    #   -r   : run immediately
+    # *** פה מחליפים את empty.sdf ב-world_path ***
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -74,10 +67,14 @@ def generate_launch_description():
                 "/gz_sim.launch.py",
             ]
         ),
-        launch_arguments=[("gz_args", [" -v 4", " -r", " empty.sdf"])],
+        launch_arguments=[
+            (
+                "gz_args",
+                [" -v 4 -r ", world_path],
+            )
+        ],
     )
 
-    # Spawn the robot into the world from the 'robot_description' topic.
     gz_spawn_entity = Node(
         package="ros_gz_sim",
         executable="create",
@@ -96,7 +93,6 @@ def generate_launch_description():
         ],
     )
 
-    # Bridge /clock topic from GZ to ROS 2.
     gz_ros2_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
@@ -105,14 +101,13 @@ def generate_launch_description():
         ],
     )
 
-    # Return everything we want to start.
     return LaunchDescription(
         [
-            model_arg,                      # lets you override the URDF path
-            gazebo_resource_path,           # tells GZ where to find assets
-            robot_state_publisher_node,     # starts robot_state_publisher
-            gazebo,                         # starts the simulator
-            gz_spawn_entity,                # spawns the robot in GZ
-            gz_ros2_bridge,                 # bridges /clock topic
+            model_arg,
+            gazebo_resource_path,
+            robot_state_publisher_node,
+            gazebo,
+            gz_spawn_entity,
+            gz_ros2_bridge,
         ]
     )

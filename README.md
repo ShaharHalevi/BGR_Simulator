@@ -132,7 +132,7 @@ source install/setup.bash
 # Terminal A (already sourced)
 ros2 launch bgr_description gz.launch.py
 ```
-
+ros2 launch bgr_description gazebo.launch.py
 **Option B – RViz (no simulator)**
 
 ```bash
