@@ -14,6 +14,8 @@ install(
 
 install(PROGRAMS
   ${PROJECT_NAME}/joy_array_bridge.py
+  ${PROJECT_NAME}/lap_analyzer/lap_analyzer.py
+  ${PROJECT_NAME}/pid_controller/lap_gui.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
