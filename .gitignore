@@ -6,6 +6,7 @@
 !.gitignore
 !src/
 !tools/
+!Dockerfile
 
 # Allow all contents inside src
 !src/**
