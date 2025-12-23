@@ -1,0 +1,928 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="track_competitionmap3">
+    <static>true</static>
+
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_001</name>
+      <pose>54.953 82.950 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_002</name>
+      <pose>58.274 83.264 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_003</name>
+      <pose>61.905 83.754 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_004</name>
+      <pose>65.535 84.262 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_005</name>
+      <pose>69.184 84.759 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_006</name>
+      <pose>72.850 85.223 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_007</name>
+      <pose>76.522 85.634 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_008</name>
+      <pose>80.190 85.964 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_009</name>
+      <pose>83.930 86.172 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_010</name>
+      <pose>87.726 86.154 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_011</name>
+      <pose>91.672 85.581 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_012</name>
+      <pose>95.307 84.546 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_013</name>
+      <pose>98.966 82.929 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_014</name>
+      <pose>102.146 80.327 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_015</name>
+      <pose>104.691 77.249 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_016</name>
+      <pose>106.264 73.316 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_017</name>
+      <pose>106.670 69.363 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_018</name>
+      <pose>106.411 65.431 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_019</name>
+      <pose>105.710 61.725 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_020</name>
+      <pose>104.862 58.125 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_021</name>
+      <pose>103.995 54.582 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_022</name>
+      <pose>103.295 51.147 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_023</name>
+      <pose>102.834 47.591 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_024</name>
+      <pose>102.096 43.692 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_025</name>
+      <pose>99.857 39.902 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_026</name>
+      <pose>96.774 37.388 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_027</name>
+      <pose>93.807 35.191 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_028</name>
+      <pose>89.820 33.503 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_029</name>
+      <pose>85.585 33.740 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_030</name>
+      <pose>82.455 33.970 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_031</name>
+      <pose>79.788 32.875 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_032</name>
+      <pose>77.029 30.887 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_033</name>
+      <pose>74.434 28.543 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_034</name>
+      <pose>72.369 26.116 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_035</name>
+      <pose>70.844 22.994 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_036</name>
+      <pose>68.550 19.424 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_037</name>
+      <pose>64.732 17.259 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_038</name>
+      <pose>60.807 16.366 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_039</name>
+      <pose>56.724 16.354 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_040</name>
+      <pose>52.744 17.595 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_041</name>
+      <pose>49.323 19.665 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_042</name>
+      <pose>46.344 22.572 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_043</name>
+      <pose>44.678 26.651 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_044</name>
+      <pose>44.788 30.981 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_045</name>
+      <pose>45.890 34.479 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_046</name>
+      <pose>46.293 37.699 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_047</name>
+      <pose>46.069 40.834 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_048</name>
+      <pose>44.447 42.809 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_049</name>
+      <pose>41.973 44.404 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_050</name>
+      <pose>39.091 44.315 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_051</name>
+      <pose>35.345 43.888 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_052</name>
+      <pose>31.952 43.726 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_053</name>
+      <pose>28.941 42.630 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_054</name>
+      <pose>26.678 40.779 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_055</name>
+      <pose>24.370 38.021 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_056</name>
+      <pose>21.778 35.188 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_057</name>
+      <pose>18.583 32.701 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_058</name>
+      <pose>14.620 31.198 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_059</name>
+      <pose>10.348 31.230 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_060</name>
+      <pose>6.435 32.463 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_061</name>
+      <pose>2.991 34.705 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_062</name>
+      <pose>0.280 37.812 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_063</name>
+      <pose>-1.455 41.612 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_064</name>
+      <pose>-1.791 45.935 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_065</name>
+      <pose>0.227 50.161 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_066</name>
+      <pose>3.808 52.450 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_067</name>
+      <pose>7.233 53.869 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_068</name>
+      <pose>10.239 55.363 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_069</name>
+      <pose>12.399 57.334 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_070</name>
+      <pose>13.413 59.947 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_071</name>
+      <pose>13.277 62.802 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_072</name>
+      <pose>11.754 64.748 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_073</name>
+      <pose>8.858 66.227 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_074</name>
+      <pose>5.325 67.866 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_075</name>
+      <pose>2.123 71.221 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_076</name>
+      <pose>1.048 75.354 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_077</name>
+      <pose>1.913 79.790 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_078</name>
+      <pose>4.659 83.125 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_079</name>
+      <pose>8.580 85.097 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_080</name>
+      <pose>12.506 85.670 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_081</name>
+      <pose>16.307 85.744 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_082</name>
+      <pose>20.141 85.539 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_083</name>
+      <pose>23.979 84.597 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_084</name>
+      <pose>27.493 83.389 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_085</name>
+      <pose>30.903 82.204 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_086</name>
+      <pose>34.257 81.261 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_087</name>
+      <pose>37.560 80.856 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_088</name>
+      <pose>40.948 80.977 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_089</name>
+      <pose>44.393 81.533 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_yellow</uri>
+      <name>cone_yellow_090</name>
+      <pose>48.025 82.221 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_001</name>
+      <pose>54.961 79.450 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_002</name>
+      <pose>58.712 79.792 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_003</name>
+      <pose>62.389 80.287 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_004</name>
+      <pose>66.018 80.795 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_005</name>
+      <pose>69.643 81.289 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_006</name>
+      <pose>73.268 81.749 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_007</name>
+      <pose>76.878 82.152 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_008</name>
+      <pose>80.454 82.474 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_009</name>
+      <pose>84.042 82.673 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_010</name>
+      <pose>87.545 82.659 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_011</name>
+      <pose>90.842 82.181 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_012</name>
+      <pose>94.185 81.231 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_013</name>
+      <pose>97.188 79.915 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_014</name>
+      <pose>99.604 77.920 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_015</name>
+      <pose>101.726 75.388 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_016</name>
+      <pose>102.843 72.580 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_017</name>
+      <pose>103.170 69.297 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_018</name>
+      <pose>102.948 65.943 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_019</name>
+      <pose>102.291 62.476 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_020</name>
+      <pose>101.463 58.960 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_021</name>
+      <pose>100.589 55.388 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_022</name>
+      <pose>99.839 51.700 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_023</name>
+      <pose>99.358 48.007 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_024</name>
+      <pose>98.761 44.752 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_025</name>
+      <pose>97.322 42.316 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_026</name>
+      <pose>94.742 40.238 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_027</name>
+      <pose>91.848 38.091 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_028</name>
+      <pose>89.173 36.942 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_029</name>
+      <pose>86.164 37.191 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_030</name>
+      <pose>82.033 37.444 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_031</name>
+      <pose>77.976 35.869 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_032</name>
+      <pose>74.808 33.592 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_033</name>
+      <pose>71.978 31.036 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_034</name>
+      <pose>69.364 27.909 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_035</name>
+      <pose>67.673 24.475 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_036</name>
+      <pose>66.088 21.912 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_037</name>
+      <pose>63.583 20.565 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_038</name>
+      <pose>60.391 19.841 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_039</name>
+      <pose>57.187 19.823 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_040</name>
+      <pose>54.244 20.757 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_041</name>
+      <pose>51.422 22.465 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_042</name>
+      <pose>49.178 24.625 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_043</name>
+      <pose>48.126 27.248 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_044</name>
+      <pose>48.193 30.170 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_045</name>
+      <pose>49.285 33.629 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_046</name>
+      <pose>49.793 37.628 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_047</name>
+      <pose>49.445 41.755 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_048</name>
+      <pose>46.713 45.477 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_049</name>
+      <pose>43.038 47.738 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_050</name>
+      <pose>38.663 47.789 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_051</name>
+      <pose>35.140 47.382 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_052</name>
+      <pose>31.283 47.161 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_053</name>
+      <pose>27.468 45.805 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_054</name>
+      <pose>24.066 43.108 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_055</name>
+      <pose>21.685 40.267 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_056</name>
+      <pose>19.348 37.707 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_057</name>
+      <pose>16.800 35.713 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_058</name>
+      <pose>14.000 34.642 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_059</name>
+      <pose>10.954 34.677 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_060</name>
+      <pose>7.925 35.630 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_061</name>
+      <pose>5.284 37.349 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_062</name>
+      <pose>3.212 39.722 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_063</name>
+      <pose>1.918 42.548 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_064</name>
+      <pose>1.676 45.450 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_065</name>
+      <pose>2.697 47.682 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_066</name>
+      <pose>5.251 49.261 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_067</name>
+      <pose>8.581 50.639 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_068</name>
+      <pose>12.113 52.407 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_069</name>
+      <pose>15.265 55.324 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_070</name>
+      <pose>16.872 59.413 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_071</name>
+      <pose>16.595 63.915 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_072</name>
+      <pose>13.797 67.590 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_073</name>
+      <pose>10.210 69.456 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_074</name>
+      <pose>7.101 70.882 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_075</name>
+      <pose>5.314 72.660 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_076</name>
+      <pose>4.540 75.597 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_077</name>
+      <pose>5.038 78.214 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_078</name>
+      <pose>6.921 80.454 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_079</name>
+      <pose>9.441 81.705 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_080</name>
+      <pose>12.737 82.178 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_081</name>
+      <pose>16.243 82.244 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_082</name>
+      <pose>19.653 82.073 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_083</name>
+      <pose>22.921 81.261 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_084</name>
+      <pose>26.316 80.092 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_085</name>
+      <pose>29.816 78.877 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_086</name>
+      <pose>33.504 77.843 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_087</name>
+      <pose>37.436 77.358 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_088</name>
+      <pose>41.322 77.497 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_089</name>
+      <pose>45.065 78.098 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_blue</uri>
+      <name>cone_blue_090</name>
+      <pose>48.606 78.770 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_orange</uri>
+      <name>cone_orange_001</name>
+      <pose>52.192 79.300 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_orange</uri>
+      <name>cone_orange_002</name>
+      <pose>52.192 82.752 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_orange</uri>
+      <name>cone_orange_003</name>
+      <pose>53.492 82.752 0.000 0 0 0.000</pose>
+    </include>
+    <include>
+      <uri>model://cone_orange</uri>
+      <name>cone_orange_004</name>
+      <pose>53.492 79.300 0.000 0 0 0.000</pose>
+    </include>
+
+  </model>
+</sdf>
