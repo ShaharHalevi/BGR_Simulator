@@ -5,7 +5,7 @@
 !README.md
 !.gitignore
 !src/
+!tools/
 
 # Allow all contents inside src
 !src/**
-!tools/**
