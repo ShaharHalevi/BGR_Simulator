@@ -19,6 +19,7 @@ from launch.actions import (
     DeclareLaunchArgument,
     IncludeLaunchDescription,
     SetEnvironmentVariable,
+    ExecuteProcess,
 )
 from launch.substitutions import Command, LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -30,17 +31,25 @@ def generate_launch_description():
     # Where the package 'bgr_description' keeps its files.
     bgr_description = get_package_share_directory("bgr_description")
 
+    fsa_models_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models")
+
+    # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
+    # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
+    # We point to the parent folder of the 'share' dir. This helps GZ find assets.
+    gazebo_resource_path = SetEnvironmentVariable(
+        name="GZ_SIM_RESOURCE_PATH",
+        value=[
+            str(Path(bgr_description).parent.resolve()), 
+            ":", 
+            fsa_models_path  
+        ]
+    )
+
     # Launch argument for the robot model file to use.
     model_arg = DeclareLaunchArgument(
         name="model",
         default_value=os.path.join(bgr_description, "urdf", "bgr.urdf.xacro"),
         description="Absolute path to robot urdf file",
-    )
-
-    # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
-    # We point to the parent folder of the 'share' dir. This helps GZ find assets.
-    gazebo_resource_path = SetEnvironmentVariable(
-        name="GZ_SIM_RESOURCE_PATH", value=[str(Path(bgr_description).parent.resolve())]
     )
 
     # Pick which Gazebo plugin family to use.
@@ -109,6 +118,14 @@ def generate_launch_description():
         output="screen",
     )
 
+    gui_script_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/track_gui.py")
+    
+    track_gui_process = ExecuteProcess(
+        cmd=['python3', gui_script_path],
+        output='screen'
+    )
+    # --------------------------------------
+
 
 
     # Return everything we want to start.
@@ -120,6 +137,6 @@ def generate_launch_description():
             gazebo,                         # starts the simulator
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
-            
+            track_gui_process,              # starts the track GUI
         ]
     )

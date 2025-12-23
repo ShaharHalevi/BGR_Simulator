@@ -69,6 +69,7 @@ class WheelsMonitor(Node):
                     vel_rad_sec = msg.velocity[idx]
                     
                     # Convert rad/s to RPM
+                    # Change of units: 1 rad/s = 9.549296596425384 RPM
                     rpms[i] = vel_rad_sec * 9.549296596425384
 
             # --- 3. Publish Data ---
