@@ -8,3 +8,4 @@
 
 # Allow all contents inside src
 !src/**
+!tools/**
