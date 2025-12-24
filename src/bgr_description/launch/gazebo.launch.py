@@ -102,6 +102,17 @@ def generate_launch_description():
         executable="parameter_bridge",
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+            "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
+        ],
+    )
+
+    # NEW: Open rqt_plot to monitor velocity. - 25.11
+    rqt_plot_node = Node(
+        package="rqt_plot",
+        executable="rqt_plot",
+        arguments=[
+            "/model/bgr/odometry/twist/twist/linear/x",
+            "/model/bgr/odometry/twist/twist/angular/z"
         ],
     )
 
@@ -114,5 +125,6 @@ def generate_launch_description():
             gazebo,                         # starts the simulator
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
+            rqt_plot_node,                  # starts rqt_plot to monitor velocity
         ]
     )

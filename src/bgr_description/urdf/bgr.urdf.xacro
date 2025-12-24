@@ -9,6 +9,7 @@
   <xacro:include filename="$(find bgr_description)/urdf/bgr_gazebo.xacro"/>
   <xacro:include filename="$(find bgr_description)/urdf/bgr_ros2_control.xacro"/>
 
+
   <!-- === Basic params === -->
    
   <!-- Wheel geometry (radius/width) and chassis dimensions -->
