@@ -126,6 +126,21 @@ def generate_launch_description():
     )
     # --------------------------------------
 
+    # 1. Start the State Publisher (The "Middleman" that does the math)
+    car_state_node = Node(
+        package="bgr_description",
+        executable="car_state_publisher.py",
+        output="screen",
+        parameters=[{"use_sim_time": True}]
+    )
+
+    # 2. Start the Dashboard GUI
+    dashboard_script = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/bgr_description/car_dashboard.py")
+    dashboard_process = ExecuteProcess(
+        cmd=['python3', dashboard_script],
+        output='screen'
+    )
+
 
 
     # Return everything we want to start.
@@ -138,5 +153,7 @@ def generate_launch_description():
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
             track_gui_process,              # starts the track GUI
+            car_state_node,                 # starts the car state publisher --
+            dashboard_process,              # starts the car dashboard GUI --
         ]
     )
