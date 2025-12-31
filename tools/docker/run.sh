@@ -96,3 +96,49 @@ docker_gui_run() {
     "${BGR_IMAGE}" \
     bash -lc "$1"
 }
+
+docker_rviz() {
+  ensure_ws_built_docker_if_needed
+  info "Launching RViz via Docker..."
+  docker_gui_run "
+    set -e
+    cd '${BGR_WS_IN_CONTAINER}'
+    source /opt/ros/${BGR_ROS_DISTRO}/setup.bash
+    source install/setup.bash
+    ros2 launch bgr_description display.launch.py
+  "
+}
+
+docker_gazebo() {
+  ensure_ws_built_docker_if_needed
+  info "Launching Gazebo via Docker..."
+  docker_gui_run "
+    set -e
+    cd '${BGR_WS_IN_CONTAINER}'
+    source /opt/ros/${BGR_ROS_DISTRO}/setup.bash
+    source install/setup.bash
+    ros2 launch bgr_description gazebo.launch.py
+  "
+}
+
+docker_all() {
+  info "Start ALL (Docker): image + build (if needed) + Gazebo + RViz"
+
+  ensure_image
+  ensure_ws_built_docker_if_needed
+
+  warn "We will run Gazebo and RViz in TWO terminals (recommended)."
+
+  local self="${REPO_ROOT}/tools/run_gui.sh"
+
+  if open_new_terminal "cd '${REPO_ROOT}' && '${self}' docker gazebo"; then
+    info "Gazebo started in a new terminal."
+  else
+    warn "Couldn't open a new terminal automatically."
+    warn "Run Gazebo in another terminal with:"
+    warn "  ${self} docker gazebo"
+  fi
+
+  # RViz in current terminal
+  docker_rviz
+}

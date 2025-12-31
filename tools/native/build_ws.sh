@@ -3,10 +3,21 @@
 # Note: Native mode is optional and may be brittle if your host has mixed ROS distros or Snap conflicts.
 
 set -euo pipefail
-# shellcheck source=../lib/common.sh
-source "${TOOLS_DIR}/../lib/common.sh"
-# shellcheck source=env.sh
-source "${TOOLS_DIR}/env.sh"
+
+# Absolute dir of THIS file: .../tools/native
+NATIVE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# tools/ directory
+TOOLS_DIR="$(cd "${NATIVE_DIR}/.." && pwd)"
+
+# Repo root: parent of tools/
+REPO_ROOT="$(cd "${TOOLS_DIR}/.." && pwd)"
+
+# Common utilities
+source "${TOOLS_DIR}/lib/common.sh"
+
+# Native env helpers (native_source_ros, etc.)
+source "${NATIVE_DIR}/env.sh"
 
 native_build_clean() {
   info "Building workspace natively (clean build)..."
