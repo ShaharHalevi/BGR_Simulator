@@ -5,6 +5,8 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 WORLD = "empty"
+
+# NOTE: Update this path to your adjusted location
 TRACK_DIR = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/models/tracks")
 
 # Map: track file -> model name inside that SDF
