@@ -31,7 +31,8 @@ def generate_launch_description():
     # Where the package 'bgr_description' keeps its files.
     bgr_description = get_package_share_directory("bgr_description")
 
-    fsa_models_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models")
+    # NOTE: Update this path to your adjusted location
+    fsa_models_path = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/models")
 
     # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
@@ -117,14 +118,35 @@ def generate_launch_description():
         ],
         output="screen",
     )
-
-    gui_script_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/track_gui.py")
+    # NOTE: Update this path to your adjusted location (change in track_gui.py too!)
+    gui_script_path = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/tracks/track_gui.py")
     
     track_gui_process = ExecuteProcess(
         cmd=['python3', gui_script_path],
         output='screen'
     )
     # --------------------------------------
+    # Car state publisher node
+    car_state_node = Node(
+        package="bgr_description",
+        executable="car_state_publisher.py",
+        output="screen",
+        parameters=[{"use_sim_time": True}],
+    )
+    # Car wheel publisher node
+    car_wheel_node = Node(
+        package="bgr_description",
+        executable="car_wheel_publisher.py",
+        output="screen",
+        parameters=[{"use_sim_time": True}],
+    )
+
+    car_dashboard_node = Node(
+    package="bgr_description",
+    executable="car_dashboard.py",
+    output="screen",
+    )
+    
 
 
 
@@ -138,5 +160,8 @@ def generate_launch_description():
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
             track_gui_process,              # starts the track GUI
+            car_state_node,                 # starts the car state publisher node
+            car_wheel_node,                 # starts the car wheel publisher node
+            car_dashboard_node,             # starts the car dashboard GUI node
         ]
     )

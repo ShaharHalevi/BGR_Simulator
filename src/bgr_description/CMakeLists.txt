@@ -31,6 +31,7 @@ endif()
 install(PROGRAMS
   car_wheel_publisher.py
   car_state_publisher.py
+  car_dashboard.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
