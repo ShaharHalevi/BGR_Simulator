@@ -121,7 +121,7 @@
 
 <!-- Lidar -->
   <gazebo reference="lidar_link">
-    <sensor name="lidar" type="gpu_lidar"> <topic>scan</topic> <!-- if there is a gpu - switch type="lidar"> to type="gpu_lidar" -->
+    <sensor name="lidar" type="lidar"> <topic>scan</topic> <!-- if there is a gpu - switch type="lidar"> to type="gpu_lidar" -->
       <pose>0 0 0 0 0 0</pose>
       <always_on>true</always_on>
       <visualize>true</visualize>
@@ -150,7 +150,7 @@
   </gazebo>
 
   <gazebo>
-    <plugin filename="libgz-sim-sensors-system" name="gz::sim::systems::Sensors">
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
   </gazebo>

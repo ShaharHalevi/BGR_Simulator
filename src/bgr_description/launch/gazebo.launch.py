@@ -125,10 +125,7 @@ def generate_launch_description():
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             "/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
-        remappings=[
-            ('/world/empty/dynamic_pose/info', '/tf'),
-            ('/scan/points', '/scan')
-        ],
+
         output="screen",
     )
 
