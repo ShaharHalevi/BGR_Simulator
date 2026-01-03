@@ -26,17 +26,25 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
-
 def generate_launch_description():
     # Where the package 'bgr_description' keeps its files.
     bgr_description = get_package_share_directory("bgr_description")
-
+    #world_path = os.path.join(bgr_description, 'worlds', 'empty.sdf')
+    
     # NOTE: Update this path to your adjusted location
-    fsa_models_path = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/models")
+    fsa_models_path = os.path.expanduser("~/BGR_WS/BGR_Simulator/src/TracksV0/models")
 
     # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
     # We point to the parent folder of the 'share' dir. This helps GZ find assets.
+
+    # # Gazebo Sim process
+    # gazebo = ExecuteProcess(
+    #     cmd=['gz', 'sim', '-r', world_path],
+    #     output='screen'
+    # )
+
+    # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[
@@ -115,11 +123,17 @@ def generate_launch_description():
             "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
+            "/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+        ],
+        remappings=[
+            ('/world/empty/dynamic_pose/info', '/tf'),
+            ('/scan/points', '/scan')
         ],
         output="screen",
     )
+
     # NOTE: Update this path to your adjusted location (change in track_gui.py too!)
-    gui_script_path = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/tracks/track_gui.py")
+    gui_script_path = os.path.expanduser("~/BGR_WS/BGR_Simulator/src/TracksV0/tracks/track_gui.py")
     
     track_gui_process = ExecuteProcess(
         cmd=['python3', gui_script_path],

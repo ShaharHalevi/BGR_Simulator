@@ -17,7 +17,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ament_export_dependencies(rosidl_default_runtime)
 
 # Install description files (meshes, urdf, launch, rviz)
-install(DIRECTORY meshes urdf launch rviz
+install(DIRECTORY meshes urdf launch rviz worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
