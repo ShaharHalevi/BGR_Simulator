@@ -4,6 +4,11 @@ from rclpy.node import Node
 import csv
 import os
 
+# --------------------------------
+# NOTE: To use, start gazebo.launch.py first, and enter:
+# ros2 service call /get_track bgr_description/srv/GetTrack "{track_name: '<insert_track_name>'}"
+# --------------------------------
+
 # Imports the necessary srv and msg files.
 from bgr_description.srv import GetTrack
 from bgr_description.msg import Cone
