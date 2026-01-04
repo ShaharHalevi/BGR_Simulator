@@ -115,8 +115,6 @@ def generate_launch_description():
             "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-
-            #"/chase_cam@sensor_msgs/msg/Image[gz.msgs.Image", NOTE: Uncomment to enable camera bridge
         ],
         output="screen",
     )
@@ -127,9 +125,16 @@ def generate_launch_description():
         cmd=['python3', gui_script_path],
         output='screen'
     )
+
     # Process to make GUI follow the car upon startup
     car_tracker = ExecuteProcess(
-        cmd=["sleep 5; gz topic -t /gui/follow -m gz.msgs.StringMsg -p 'data: \"bgr\"'"],
+        cmd=[
+            "sleep 8; gz service -s /gui/follow "
+            "--reqtype gz.msgs.StringMsg "
+            "--reptype gz.msgs.Boolean "
+            "--timeout 2000 "
+            "--req 'data: \"bgr\"'"
+        ],
         shell=True, 
         output="screen"
     )
