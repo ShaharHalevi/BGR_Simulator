@@ -13,7 +13,8 @@ install(
 )
 
 install(PROGRAMS
-  ${PROJECT_NAME}/joy_array_bridge.py
+  bgr_controller/joy_array_bridge.py
+  bgr_controller/keyboard_teleop.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
