@@ -137,6 +137,9 @@ def generate_launch_description():
         output='screen'
     )
     # --------------------------------------
+    # Car & Map specific nodes
+    # --------------------------------------
+
     # Car state publisher node
     car_state_node = Node(
         package="bgr_description",
@@ -151,11 +154,18 @@ def generate_launch_description():
         output="screen",
         parameters=[{"use_sim_time": True}],
     )
-
+    # Car dashboard GUI node
     car_dashboard_node = Node(
     package="bgr_description",
     executable="car_dashboard.py",
     output="screen",
+    )
+    # Cone service node
+    cone_service_node = Node(
+        package="bgr_description",
+        executable="cone_service.py",
+        name="cone_service",
+        output="screen"
     )
     
 
@@ -174,5 +184,6 @@ def generate_launch_description():
             car_state_node,                 # starts the car state publisher node
             car_wheel_node,                 # starts the car wheel publisher node
             car_dashboard_node,             # starts the car dashboard GUI node
+            cone_service_node               # starts the cone service node
         ]
     )

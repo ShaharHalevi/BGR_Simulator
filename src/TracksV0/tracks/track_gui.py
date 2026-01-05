@@ -92,6 +92,8 @@ def refresh_tracks():
 root = tk.Tk()
 root.title("FSA Track Selector")
 
+root.geometry("-0-0") # Pops up at top-left of screen, edited by barak
+
 frm = ttk.Frame(root, padding=12)
 frm.grid()
 
