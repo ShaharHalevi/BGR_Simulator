@@ -32,7 +32,7 @@ def generate_launch_description():
     bgr_description = get_package_share_directory("bgr_description")
 
     # NOTE: Update this path to your adjusted location
-    fsa_models_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models")
+    fsa_models_path = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/models")
 
     # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
@@ -119,11 +119,24 @@ def generate_launch_description():
         output="screen",
     )
     # NOTE: Update this path to your adjusted location (change in track_gui.py too!)
-    gui_script_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/track_gui.py")
+    gui_script_path = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/tracks/track_gui.py")
     
     track_gui_process = ExecuteProcess(
         cmd=['python3', gui_script_path],
         output='screen'
+    )
+
+    # Process to make GUI follow the car upon startup
+    car_tracker = ExecuteProcess(
+        cmd=[
+            "sleep 8; gz service -s /gui/follow "
+            "--reqtype gz.msgs.StringMsg "
+            "--reptype gz.msgs.Boolean "
+            "--timeout 2000 "
+            "--req 'data: \"bgr\"'"
+        ],
+        shell=True, 
+        output="screen"
     )
     # --------------------------------------
     # Car & Map specific nodes
@@ -156,6 +169,7 @@ def generate_launch_description():
         name="cone_service",
         output="screen"
     )
+
     
 
 
@@ -173,6 +187,7 @@ def generate_launch_description():
             car_state_node,                 # starts the car state publisher node
             car_wheel_node,                 # starts the car wheel publisher node
             car_dashboard_node,             # starts the car dashboard GUI node
-            cone_service_node               # starts the cone service node
+            cone_service_node,              # starts the cone service node
+            car_tracker,                    # makes GUI follow the car
         ]
     )
