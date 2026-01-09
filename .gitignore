@@ -5,6 +5,8 @@
 !README.md
 !.gitignore
 !src/
+!docs/
 
 # Allow all contents inside src
 !src/**
+!docs/**
