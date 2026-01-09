@@ -123,8 +123,10 @@ def generate_launch_description():
             "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            "/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
+            "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
+        remappings=[('/lidar/points', '/scan/points')],
 
         output="screen",
     )
@@ -168,7 +170,15 @@ def generate_launch_description():
         output="screen"
     )
     
-
+    # TF Bridge: Connects the Gazebo Lidar frame to the Robot base frame
+    # This makes the fix permanent
+    static_tf_node = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        # Arguments: x y z yaw pitch roll parent_frame child_frame
+        arguments=["0", "0", "0", "0", "0", "0", "base_link", "bgr/base_footprint/lidar"],
+        output="screen"
+    )
 
 
     # Return everything we want to start.
@@ -184,6 +194,7 @@ def generate_launch_description():
             car_state_node,                 # starts the car state publisher node
             car_wheel_node,                 # starts the car wheel publisher node
             car_dashboard_node,             # starts the car dashboard GUI node
-            cone_service_node               # starts the cone service node
+            cone_service_node,               # starts the cone service node
+            static_tf_node                 # starts the static TF publisher node
         ]
     )

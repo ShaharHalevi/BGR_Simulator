@@ -121,7 +121,8 @@
 
 <!-- Lidar -->
   <gazebo reference="lidar_link">
-    <sensor name="lidar" type="lidar"> <topic>scan</topic> <!-- if there is a gpu - switch type="lidar"> to type="gpu_lidar" -->
+    <sensor name="lidar" type="gpu_lidar"> 
+      <topic>lidar</topic>
       <pose>0 0 0 0 0 0</pose>
       <always_on>true</always_on>
       <visualize>true</visualize>
@@ -131,13 +132,13 @@
             <horizontal>
               <samples>360</samples>
               <resolution>1</resolution>
-              <min_angle>-3.14159</min_angle>
-              <max_angle>3.14159</max_angle>
+              <min_angle>-1</min_angle>
+              <max_angle>1</max_angle>
             </horizontal>
             <vertical>
-            <samples>32</samples>
+            <samples>256</samples>
             <resolution>1</resolution>
-            <min_angle>-0.26</min_angle> <max_angle>0.26</max_angle>  </vertical>
+            <min_angle>-0.218</min_angle> <max_angle>0.218</max_angle>  </vertical>
           </scan>
           
           <range>
