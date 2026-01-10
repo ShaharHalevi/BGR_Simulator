@@ -27,6 +27,15 @@
   <xacro:property name="body_size_x"  value="2.0"/>
   <xacro:property name="body_size_y"  value="1.0"/>
   <xacro:property name="body_size_z"  value="0.5"/>
+  
+  <!-- === Base footprint === -->
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
 
    <!--  Base link (chassis) -->
   <link name="base_link">
@@ -177,4 +186,32 @@
     <limit effort="200" velocity="100"/>
     <dynamics damping="0.03" friction="0.01"/>
   </joint>
+
+  <!-- Lidar -->
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0.5 0 0.3" rpy="0 0 0"/> 
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+  </joint>
+
+  <link name="lidar_link">
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+    </collision>
+  </link>
 </robot>
