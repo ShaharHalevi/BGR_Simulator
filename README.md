@@ -1,203 +1,143 @@
-# BGRacing – Driverless Simulator (ROS 2 + GZ Sim)
+# 🏎️ BGRacing Driverless Simulator (ROS 2 Jazzy)
 
-*A clear, stable Ackermann robot model for our Formula Student simulator team.*
-*Includes URDF/Xacro, Gazebo (GZ Sim) tuning, `ros2_control` controllers, and ready-to-run launch files.*
+![ROS 2 Jazzy](https://img.shields.io/badge/ROS_2-Jazzy-blue?logo=ros&logoColor=white)
+![Gazebo Sim](https://img.shields.io/badge/Simulator-Gazebo_Sim-orange?logo=gazebo&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
----
-
-## 1) What’s inside
-
-* **`bgr_description`** – URDF/Xacro model, meshes, Gazebo + RViz launch files
-
-  * Ackermann layout (front steering with **mimic**), sane inertials, wheel friction/slip tuning
-* **`bgr_controller`** – `ros2_control` YAML + controller spawner launch
-
-  * **Velocity** command for wheels; **Position** command for the **right** steering joint (left follows via mimic)
-* All files include **simple, plain-English comments** for fast onboarding.
+A high-fidelity simulation environment for the **BGRacing Formula Student Team**.
+Built on **ROS 2 Jazzy** and **Gazebo Sim (GZ)**, utilizing `ros2_control` for accurate vehicle dynamics and Ackermann steering.
 
 ---
 
-## 2) Repository layout
+## 📸 Gallery & Demos
 
-```
-bgr_robot/
-├─ .gitignore
-├─ LICENSE
-├─ README.md
-└─ src/
-   ├─ bgr_description/
-   │  ├─ package.xml
-   │  ├─ CMakeLists.txt
-   │  ├─ urdf/
-   │  │  ├─ bgr.urdf.xacro
-   │  │  ├─ bgr_gazebo.xacro
-   │  │  └─ bgr_ros2_control.xacro
-   │  ├─ meshes/
-   │  │  └─ visual/ (base_link.STL, Wheel_fl.STL, Wheel_fr.STL, Wheel_rl.STL, Wheel_rr.STL)
-   │  ├─ launch/
-   │  │  ├─ gz.launch.py          # GZ Sim world + spawn
-   │  │  └─ display.launch.py     # RViz display (no sim)
-   │  └─ rviz/
-   │     └─ display.rviz
-   └─ bgr_controller/
-      ├─ package.xml
-      ├─ CMakeLists.txt
-      ├─ config/
-      │  └─ bgr_controllers.yaml  # ros2_control config
-      └─ launch/
-         └─ controllers.launch.py # spawns controllers
-```
+### Simulation Environment
+![Simulation View](/doc/Car1.png)
 
-> If you already have a workspace `~/ws_bgr`, place the two packages (`bgr_description`, `bgr_controller`) in `~/ws_bgr/src/`.
+
+### Driving Demo + LiDAR Sim
+
+
+https://github.com/user-attachments/assets/a613b591-cd07-49bc-b930-c8c4ba2a1f91
+
+
+
+### Driving Demo + Localization Sim
+
+https://github.com/user-attachments/assets/27b3cb61-808b-4af2-99aa-c85f0a2a9ecf
+
+
+
 
 ---
 
-## 3) Requirements
+## 🚀 Features
 
-* ROS 2 **Humble** (Ignition Gazebo) **or** ROS 2 **Iron/Jazzy** (GZ Sim)
-* Packages: `ros_gz_sim`, `ros_gz_bridge`, `robot_state_publisher`, `controller_manager`, `joint_state_publisher_gui`, `xacro`
+* **Custom Ackermann Steering:** Realistic geometry with mimic joints for visualization.
+* **ROS 2 Control Integration:** Velocity and Position controllers for precise wheel command.
+* **Dynamic Tracks:** Load CSV based tracks (cones) directly into the simulation.
+* **Interactive Tools:**
+    * `track_gui.py`: Visual track selection and management.
+    * `car_dashboard.py`: Real-time vehicle telemetry.
+* **Sensor Simulation:** Simulated Odometry, IMU (via Gazebo plugins), and Cameras.
 
-Install (replace `${ROS_DISTRO}` with `humble` / `iron` / `jazzy`):
+---
+
+## 🛠️ Installation & Prerequisites
+
+### 1. System Requirements
+* **OS:** Ubuntu 24.04 LTS (Noble Numbat)
+* **ROS:** ROS 2 Jazzy Jalisco
+
+### 2. Install Dependencies
+Run the following commands to install all necessary packages for ROS 2 Jazzy and Gazebo:
 
 ```bash
 sudo apt update
-sudo apt install \
-  ros-${ROS_DISTRO}-ros-gz-sim \
-  ros-${ROS_DISTRO}-ros-gz-bridge \
-  ros-${ROS_DISTRO}-robot-state-publisher \
-  ros-${ROS_DISTRO}-controller-manager \
-  ros-${ROS_DISTRO}-joint-state-publisher-gui \
-  ros-${ROS_DISTRO}-xacro
+sudo apt install -y \
+    ros-jazzy-ros2-control \
+    ros-jazzy-ros2-controllers \
+    ros-jazzy-xacro \
+    ros-jazzy-ros-gz-* \
+    ros-jazzy-*-ros2-control \
+    ros-jazzy-joint-state-publisher-gui \
+    ros-jazzy-turtlesim \
+    ros-jazzy-robot-localization \
+    ros-jazzy-joy \
+    ros-jazzy-joy-teleop \
+    ros-jazzy-tf-transformations
+```
+
+### 3. Clone & Build
+Create a workspace and clone the repository:
+
+```bash
+mkdir -p ~/bgr_ws/src
+cd ~/bgr_ws/src
+git clone https://github.com/shaharhalevi/bgr_simulator.git .
+```
+
+Install python dependencies (if any) and build the workspace:
+
+```bash
+cd ~/bgr_ws
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --symlink-install
 ```
 
 ---
 
-## 4) Quick Start (VS Code + Terminal)
+## 🏁 How to Run
 
-Follow these steps exactly. Commands are for Linux/macOS terminals (Bash/Zsh).
-
-### 4.1 Clone the repo and open it in VS Code
-
-**Option A – inside VS Code**
-
-1. Open **VS Code**.
-2. `Ctrl+Shift+P` (macOS: `Cmd+Shift+P`) → **Git: Clone** → paste your repo URL.
-3. Choose a folder (e.g., `~/ws_bgr/src`) and click **Open** when VS Code asks.
-
-**Option B – from a normal terminal**
+Open separate terminals for each step (or use functionality like Tmux/Terminator). Always source your workspace in every new terminal:
 
 ```bash
-mkdir -p ~/ws_bgr/src
-cd ~/ws_bgr/src
-git clone <YOUR_REPO_URL>
-code .   # opens VS Code in the workspace
+source ~/bgr_ws/install/setup.bash
 ```
 
-### 4.2 Build with colcon
-
-Open a terminal (**Terminal → New Terminal** in VS Code) and run:
+### Step 1: Launch the Simulation
+This loads the track, the robot model (bgr_description), and the Gazebo environment.
 
 ```bash
-# Ensure you are in the workspace root (~/ws_bgr)
-cd ~/ws_bgr
-
-# First time only: install dependencies
-rosdep install --from-paths src --ignore-src -r -y
-
-# Build
-colcon build
-
-In a new terminal: 
-# Source the workspace (applies to THIS terminal only)
-source install/setup.bash
+ros2 launch bgr_description gazebo.launch.py
 ```
 
-### 4.3 Start the simulator (Gazebo / GZ Sim) OR RViz (display only)
+**Tip:** This also starts the car_dashboard and track_gui automatically.
 
-**Option A – Gazebo (GZ Sim)**
+### Step 2: Activate Controllers
+Once the simulation is running, spawn the ros2_control managers:
 
 ```bash
-# Terminal A (already sourced)
-ros2 launch bgr_description gz.launch.py
+ros2 launch bgr_controller controller.launch.py
 ```
 
-**Option B – RViz (no simulator)**
+You should see output confirming `joint_state_broadcaster`, `forward_velocity_controller`, and `forward_position_controller` are active.
+
+### Step 3: Drive the Car (Keyboard Teleop)
+To drive the car using your keyboard, run the teleoperation script:
 
 ```bash
-# Terminal A (already sourced)
-ros2 launch bgr_description display.launch.py
+ros2 run bgr_controller keyboard_teleop.py
 ```
 
-> If the robot appears too high/low in Gazebo, adjust `-z` in `bgr_description/launch/gz.launch.py`.
+**Controls:**
+- Use **Arrow Keys** or **WASD** to control the car
+- **Space** to brake/stop
+- **Q** to quit the teleop node
+- Ensure the terminal running the script has focus for keyboard input to work
 
-### 4.4 Start controllers (new terminal)
+---
 
-Open a **new terminal** and **source** again:
+---
 
-```bash
-# Terminal B
-cd ~/ws_bgr
-source install/setup.bash
+## 🔧 Troubleshooting
 
-# Start controllers: joint_state_broadcaster, velocity, position
-ros2 launch bgr_controller controllers.launch.py
-```
+**Robot not moving?** Ensure you ran Step 2 (Controllers). The robot won't respond to commands if the controllers aren't spawned.
 
-Expected state:
+**Missing Models?** Ensure the environment variable `GZ_SIM_RESOURCE_PATH` is set correctly. The launch file handles this, but if you moved folders manually, check `gazebo.launch.py`.
 
-```
-joint_state_broadcaster         active
-forward_velocity_controller     active
-forward_position_controller     active
-```
+**Gazebo crashes on VM?** Ensure "Accelerate 3D Graphics" is enabled in your VM settings, or try running with `LIBGL_ALWAYS_SOFTWARE=1` if you lack a GPU.
 
-Check:
+---
 
-```bash
-ros2 control list_controllers
-ros2 topic echo /joint_states --once
-```
-
-### 4.5 Drive the robot (new terminal)
-
-Open **another** new terminal and **source** again:
-
-```bash
-# Terminal C
-cd ~/ws_bgr
-source install/setup.bash
-```
-
-**Topics**
-
-* **Velocity (wheels)**: `/forward_velocity_controller/commands` (`std_msgs/Float64MultiArray`)
-* **Position (right steering)**: `/forward_position_controller/commands` (`std_msgs/Float64MultiArray`)
-* **Left steering is a mimic** of the right with multiplier **-1.0** (do not command it directly).
-
-**Drive straight**
-
-```bash
-ros2 topic pub -r 5 /forward_velocity_controller/commands std_msgs/Float64MultiArray "data:
-- 5.0  # Wheel_rr
-- 5.0  # Wheel_rl
-- 5.0  # Wheel_fr (remove if RWD only)
-- 5.0  # Wheel_fl (remove if RWD only)
-"
-```
-
-**Turn right, then go forward**
-
-```bash
-# Steering right (~0.3 rad)
-ros2 topic pub -r 5 /forward_position_controller/commands std_msgs/msg/Float64MultiArray "data: [2.0]"
-
-# Forward at moderate speed
-ros2 topic pub -r 5 /forward_velocity_controller/commands std_msgs/msg/Float64MultiArray "data: [7,7,7,7]"
-```
-
-**Center steering + stop**
-
-```bash
-ros2 topic pub -r 5 /forward_position_controller/commands std_msgs/Float64MultiArray "data: [0.0]"
-ros2 topic pub -r 5 /forward_velocity_controller/commands std_msgs/Float64MultiArray "data: [0.0, 0.0, 0.0, 0.0]"
-```
+**Maintained by:** BGRacing Simulator Team
