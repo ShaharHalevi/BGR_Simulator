@@ -14,7 +14,15 @@ Built on **ROS 2 Jazzy** and **Gazebo Sim (GZ)**, utilizing `ros2_control` for a
 ### Simulation Environment
 ![Simulation View](/doc/Car1.png)
 
-### Driving Demo
+
+### Driving Demo + LiDAR Sim
+
+
+https://github.com/user-attachments/assets/a613b591-cd07-49bc-b930-c8c4ba2a1f91
+
+
+
+### Driving Demo + Localization Sim
 
 https://github.com/user-attachments/assets/27b3cb61-808b-4af2-99aa-c85f0a2a9ecf
 
