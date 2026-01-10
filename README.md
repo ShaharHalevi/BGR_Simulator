@@ -12,11 +12,11 @@ Built on **ROS 2 Jazzy** and **Gazebo Sim (GZ)**, utilizing `ros2_control` for a
 ## 📸 Gallery & Demos
 
 ### Simulation Environment
-![Simulation View](/BGR_Simulator/BGR_Simulator/doc/Car1.png)
+![Simulation View](/doc/Car1.png)
 *Real-time simulation environment with custom tracks and cones.*
 
 ### Driving Demo
-[![Watch the video](/BGR_Simulator/BGR_Simulator/doc/Vid1.mp4)]
+[![Watch the video](/doc/Vid1.mp4)]
 
 ---
 
