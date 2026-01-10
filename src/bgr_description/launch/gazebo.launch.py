@@ -138,6 +138,19 @@ def generate_launch_description():
         cmd=['python3', gui_script_path],
         output='screen'
     )
+
+    # Process to make GUI follow the car upon startup
+    car_tracker = ExecuteProcess(
+        cmd=[
+            "sleep 8; gz service -s /gui/follow "
+            "--reqtype gz.msgs.StringMsg "
+            "--reptype gz.msgs.Boolean "
+            "--timeout 2000 "
+            "--req 'data: \"bgr\"'"
+        ],
+        shell=True, 
+        output="screen"
+    )
     # --------------------------------------
     # Car & Map specific nodes
     # --------------------------------------
@@ -169,6 +182,7 @@ def generate_launch_description():
         name="cone_service",
         output="screen"
     )
+
     
     # TF Bridge: Connects the Gazebo Lidar frame to the Robot base frame
     # This makes the fix permanent
@@ -196,5 +210,6 @@ def generate_launch_description():
             car_dashboard_node,             # starts the car dashboard GUI node
             cone_service_node,               # starts the cone service node
             static_tf_node                 # starts the static TF publisher node
+            car_tracker,                    # makes GUI follow the car
         ]
     )
