@@ -13,10 +13,13 @@ Built on **ROS 2 Jazzy** and **Gazebo Sim (GZ)**, utilizing `ros2_control` for a
 
 ### Simulation Environment
 ![Simulation View](/doc/Car1.png)
-*Real-time simulation environment with custom tracks and cones.*
 
 ### Driving Demo
-[![Watch the video](/doc/Vid1.mp4)]
+
+https://github.com/user-attachments/assets/27b3cb61-808b-4af2-99aa-c85f0a2a9ecf
+
+
+
 
 ---
 
