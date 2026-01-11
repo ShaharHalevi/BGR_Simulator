@@ -22,7 +22,7 @@ class ConeService(Node):
         
         # NOTE: Update this path to your adjusted location
         self.csv_base_dir = os.path.expanduser(
-            "~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/csv"
+            "~/ros2_workspaces/bgr_ws/src/TracksV0/tracks/csv"
         )
         
         self.get_logger().info(f'Cone Service Ready. Reading maps from: {self.csv_base_dir}')

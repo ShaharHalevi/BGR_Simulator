@@ -214,4 +214,26 @@
       </geometry>
     </collision>
   </link>
+
+  <!-- Chase Camera -->
+  <link name="chase_cam_link">
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="chase_cam_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="chase_cam_link"/>
+    <origin xyz="0.5 0 0.38" rpy="0 0 0"/> 
+  </joint>
 </robot>

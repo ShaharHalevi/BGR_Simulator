@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 WORLD = "empty"
-TRACK_DIR = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models/tracks")
+TRACK_DIR = os.path.expanduser("~/ros2_workspaces/bgr_ws/src/TracksV0/models/tracks")
 
 # Map: track file -> model name inside that SDF
 # IMPORTANT: model name must match <model name="..."> in each track sdf

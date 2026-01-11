@@ -150,10 +150,48 @@
     </sensor>
   </gazebo>
 
-  <gazebo>
+  <!-- <gazebo>
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
+  </gazebo> -->
+
+  <gazebo reference="chase_cam_link">
+    <sensor name="chase_camera" type="camera">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>30</update_rate>
+      <topic>chase_cam</topic>
+      <camera>
+        <horizontal_fov>1.2</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>600</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>1000</far>
+        </clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
+
+
+  <!-- Correct sensor plugin varying by ros version-->
+  <gazebo>
+    <xacro:if value="$(arg is_ignition)">
+      <plugin filename="ign-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+      </plugin>
+    </xacro:if>
+
+    <xacro:unless value="$(arg is_ignition)">
+      <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+      </plugin>
+    </xacro:unless>
   </gazebo>
   
 </robot>
