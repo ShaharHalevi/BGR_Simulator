@@ -156,12 +156,13 @@
     </plugin>
   </gazebo> -->
 
-  <gazebo reference="chase_cam_link">
-    <sensor name="chase_camera" type="camera">
+  <!-- Front Camera -->
+  <gazebo reference="front_cam_link">
+    <sensor name="front_camera" type="camera">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>30</update_rate>
-      <topic>chase_cam</topic>
+      <topic>front_cam</topic>
       <camera>
         <horizontal_fov>1.2</horizontal_fov>
         <image>

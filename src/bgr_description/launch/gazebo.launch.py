@@ -125,7 +125,7 @@ def generate_launch_description():
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
-            "/chase_cam@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image", # Front camera bridge
         ],
         remappings=[('/lidar/points', '/scan/points')],
 
