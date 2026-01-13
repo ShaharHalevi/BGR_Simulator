@@ -26,25 +26,16 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
+
 def generate_launch_description():
     # Where the package 'bgr_description' keeps its files.
     bgr_description = get_package_share_directory("bgr_description")
-    #world_path = os.path.join(bgr_description, 'worlds', 'empty.sdf')
-    
-    # NOTE: Update this path to your adjusted location
+
     fsa_models_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models")
 
     # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
     # We point to the parent folder of the 'share' dir. This helps GZ find assets.
-
-    # # Gazebo Sim process
-    # gazebo = ExecuteProcess(
-    #     cmd=['gz', 'sim', '-r', world_path],
-    #     output='screen'
-    # )
-
-    # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[
@@ -123,76 +114,18 @@ def generate_launch_description():
             "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
-            "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
-        remappings=[('/lidar/points', '/scan/points')],
-
         output="screen",
     )
 
-    # NOTE: Update this path to your adjusted location (change in track_gui.py too!)
     gui_script_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/track_gui.py")
     
     track_gui_process = ExecuteProcess(
         cmd=['python3', gui_script_path],
         output='screen'
     )
-
-    # Process to make GUI follow the car upon startup
-    car_tracker = ExecuteProcess(
-        cmd=[
-            "sleep 8; gz service -s /gui/follow "
-            "--reqtype gz.msgs.StringMsg "
-            "--reptype gz.msgs.Boolean "
-            "--timeout 2000 "
-            "--req 'data: \"bgr\"'"
-        ],
-        shell=True, 
-        output="screen"
-    )
-    # --------------------------------------
-    # Car & Map specific nodes
     # --------------------------------------
 
-    # Car state publisher node
-    car_state_node = Node(
-        package="bgr_description",
-        executable="car_state_publisher.py",
-        output="screen",
-        parameters=[{"use_sim_time": True}],
-    )
-    # Car wheel publisher node
-    car_wheel_node = Node(
-        package="bgr_description",
-        executable="car_wheel_publisher.py",
-        output="screen",
-        parameters=[{"use_sim_time": True}],
-    )
-    # Car dashboard GUI node
-    car_dashboard_node = Node(
-    package="bgr_description",
-    executable="car_dashboard.py",
-    output="screen",
-    )
-    # Cone service node
-    cone_service_node = Node(
-        package="bgr_description",
-        executable="cone_service.py",
-        name="cone_service",
-        output="screen"
-    )
-
-    
-    # TF Bridge: Connects the Gazebo Lidar frame to the Robot base frame
-    # This makes the fix permanent
-    static_tf_node = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        # Arguments: x y z yaw pitch roll parent_frame child_frame
-        arguments=["0", "0", "0", "0", "0", "0", "base_link", "bgr/base_footprint/lidar"],
-        output="screen"
-    )
 
 
     # Return everything we want to start.
@@ -205,11 +138,5 @@ def generate_launch_description():
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
             track_gui_process,              # starts the track GUI
-            car_state_node,                 # starts the car state publisher node
-            car_wheel_node,                 # starts the car wheel publisher node
-            car_dashboard_node,             # starts the car dashboard GUI node
-            cone_service_node,               # starts the cone service node
-            static_tf_node,                # starts the static TF publisher node
-            car_tracker,                    # makes GUI follow the car
         ]
     )

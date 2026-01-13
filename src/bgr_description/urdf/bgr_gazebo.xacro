@@ -1,57 +1,28 @@
 <?xml version="1.0"?>
-
 <robot name="bgr" xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <xacro:macro name="wheel_gazebo_ref" params="reference">
+    <gazebo reference="${reference}">
+      <mu1>1.5</mu1>
+      <mu2>1.5</mu2>
+      <kp>1000000.0</kp>
+      <kd>10.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>0.1</maxVel>
+    </gazebo>
+  </xacro:macro>
 
-  <!-- Gazebo specific parameters -->
-  <gazebo reference="Wheel_fl">
-    <mu1>1.2</mu1><mu2>1.2</mu2> <!-- coefficient of friction -->
-    <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction> <!-- friction parameters -->
-      <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact> <!-- contact parameters -->
-    </surface>
-  </gazebo>
+  <xacro:wheel_gazebo_ref reference="Wheel_fl"/>
+  <xacro:wheel_gazebo_ref reference="Wheel_fr"/>
+  <xacro:wheel_gazebo_ref reference="Wheel_rl"/>
+  <xacro:wheel_gazebo_ref reference="Wheel_rr"/>
 
-  <gazebo reference="Wheel_fr">
-    <mu1>1.2</mu1><mu2>1.2</mu2>
-    <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
-      <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact>
-    </surface>
-  </gazebo>
-
-  <gazebo reference="Wheel_rl">
-    <mu1>1.2</mu1><mu2>1.2</mu2>
-    <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
-      <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact>
-    </surface>
-  </gazebo>
-
-  <gazebo reference="Wheel_rr">
-    <mu1>1.2</mu1><mu2>1.2</mu2>
-    <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
-      <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact>
-    </surface>
-  </gazebo>
-
-  <!-- Chassis friction -->
-  <gazebo reference="base_link">
-    <mu1>0.2</mu1><mu2>0.2</mu2>
-  </gazebo>
-
-
-  <!-- ROS 2 Control -->
   <gazebo>
-    <!-- ROS 2 Humble -->
     <xacro:if value="$(arg is_ignition)">
       <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
         <parameters>$(find bgr_controller)/config/bgr_controllers.yaml</parameters>
       </plugin>
     </xacro:if>
-
-    <!-- ROS 2 Iron or above -->
     <xacro:unless value="$(arg is_ignition)">
       <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <parameters>$(find bgr_controller)/config/bgr_controllers.yaml</parameters>
@@ -59,7 +30,6 @@
     </xacro:unless>
   </gazebo>
 
-  <!-- Publishes /joint_states for all defined joints -->
   <gazebo>
     <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
       <topic>joint_states</topic>
@@ -72,88 +42,12 @@
     </plugin>
   </gazebo>
 
-  <!-- Enforce steering mimic in physics (FL follows FR) -->
   <gazebo>
-    <plugin filename="gz-sim-mimic-joint-system" name="gz::sim::systems::MimicJoint">
-      <joint_name>Steering_fl_joint</joint_name>
-      <mimicked_joint>Steering_fr_joint</mimicked_joint>
-      <multiplier>-1.0</multiplier>
-      <offset>0.0</offset>
+    <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
+      <odom_frame>world</odom_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+      <odom_publish_frequency>50</odom_publish_frequency>
     </plugin>
   </gazebo>
 
-  <!-- Wheel slip plugin for better rolling behavior (all wheels) -->
-  <gazebo>
-    <plugin filename="gz-sim-wheel-slip-system" name="gz::sim::systems::WheelSlip">
-      <wheel link_name="Wheel_rr">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
-      </wheel>
-      <wheel link_name="Wheel_rl">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
-      </wheel>
-      <wheel link_name="Wheel_fr">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
-      </wheel>
-      <wheel link_name="Wheel_fl">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
-      </wheel>
-    </plugin>
-  </gazebo>
-
-
-    <!-- Publish ground-truth pose of the BGR car as /model/bgr/pose in Gazebo -->
-  <!-- GROUND TRUTH ODOMETRY (Perfect Position) -->
-  <gazebo>
-    <xacro:unless value="$(arg is_ignition)">
-      <plugin filename="gz-sim-odometry-publisher-system"
-              name="gz::sim::systems::OdometryPublisher">
-        <dimensions>3</dimensions> <!-- 3D Position -->
-        <odom_frame>world</odom_frame> <!-- Calculate relative to the World -->
-        <robot_base_frame>base_link</robot_base_frame>
-        <odom_publish_frequency>50</odom_publish_frequency>
-      </plugin>
-    </xacro:unless>
-  </gazebo>
-
-<!-- Lidar -->
-  <gazebo reference="lidar_link">
-    <sensor name="lidar" type="gpu_lidar"> 
-      <topic>lidar</topic>
-      <pose>0 0 0 0 0 0</pose>
-      <always_on>true</always_on>
-      <visualize>true</visualize>
-      <update_rate>10</update_rate>
-      <ray>
-         <scan>
-            <horizontal>
-              <samples>360</samples>
-              <resolution>1</resolution>
-              <min_angle>-1</min_angle>
-              <max_angle>1</max_angle>
-            </horizontal>
-            <vertical>
-            <samples>256</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.218</min_angle> <max_angle>0.218</max_angle>  </vertical>
-          </scan>
-          
-          <range>
-            <min>0.10</min>
-            <max>30.0</max>
-            <resolution>0.01</resolution>
-          </range>
-      </ray>
-    </sensor>
-  </gazebo>
-
-  <gazebo>
-    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
-      <render_engine>ogre2</render_engine>
-    </plugin>
-  </gazebo>
-  
 </robot>
