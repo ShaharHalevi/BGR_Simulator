@@ -57,10 +57,20 @@ def generate_launch_description():
         ],
     )
 
+    # 4) Joy Array Bridge
+    # Translates simple speed/steer topics into arrays for the hardware controllers
+    joy_array_bridge = Node(
+        package="bgr_controller",
+        executable="joy_array_bridge.py",
+        name="joy_array_bridge",
+        output="screen",
+    )
+
     return LaunchDescription(
         [
             joint_state_broadcaster_spawner, # start first
             velocity_controller,          # then velocity controller
             position_controller,          # then position controller
+            joy_array_bridge,             # start the bridge
         ]
     )

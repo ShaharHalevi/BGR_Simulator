@@ -63,17 +63,12 @@ You can manually drive the car around the track to test sensors and vehicle dyna
 > [!IMPORTANT]
 > Because these scripts run continuously, **you must open a new terminal tab for every command block below**. 
 
-**Terminal 1 (Controllers):** Connects to the simulator, sources the workspace, and spawns the wheel/steering controllers.
+**Terminal 1 (Controllers & Bridge):** Connects to the simulator, sources the workspace, and spawns the wheel/steering controllers along with the command bridge.
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_controller controller.launch.py"
 ```
 
-**Terminal 2 (Bridge):** Connects, sources, and runs the controller bridge node in the background.
-```bash
-docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller joy_array_bridge.py"
-```
-
-**Terminal 3 (Keyboard Input):** Connects, sources, and launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
+**Terminal 2 (Keyboard Input):** Connects, sources, and launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller keyboard_teleop.py"
 ```
