@@ -20,10 +20,8 @@ class ConeService(Node):
         # Service Name: '/get_track'
         self.srv = self.create_service(GetTrack, 'get_track', self.track_callback)
         
-        # NOTE: Update this path to your adjusted location
-        self.csv_base_dir = os.path.expanduser(
-            "~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/csv"
-        )
+        # The CSVs are mounted via Docker inside the /ros2_ws directory
+        self.csv_base_dir = "/ros2_ws/src/bgr_simulator/src/TracksV0/tracks/csv"
         
         self.get_logger().info(f'Cone Service Ready. Reading maps from: {self.csv_base_dir}')
 

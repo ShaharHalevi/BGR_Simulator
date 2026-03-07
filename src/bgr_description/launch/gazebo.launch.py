@@ -32,7 +32,7 @@ def generate_launch_description():
     #world_path = os.path.join(bgr_description, 'worlds', 'empty.sdf')
     
     # NOTE: Update this path to your adjusted location
-    fsa_models_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models")
+    fsa_models_path = "/ros2_ws/src/bgr_simulator/src/TracksV0/models"
 
     # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
@@ -47,11 +47,7 @@ def generate_launch_description():
     # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
-        value=[
-            str(Path(bgr_description).parent.resolve()), 
-            ":", 
-            fsa_models_path  
-        ]
+        value=f"{str(Path(bgr_description).parent.resolve())}:{fsa_models_path}"
     )
 
     # Launch argument for the robot model file to use.
@@ -106,9 +102,9 @@ def generate_launch_description():
             "-name",
             "bgr",
             "-x",
-            "0.0",
+            "52.8",
             "-y",
-            "0.0",
+            "81.2",
             "-z",
             "1.0",
         ],
@@ -132,7 +128,7 @@ def generate_launch_description():
     )
 
     # NOTE: Update this path to your adjusted location (change in track_gui.py too!)
-    gui_script_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/tracks/track_gui.py")
+    gui_script_path = "/ros2_ws/src/bgr_simulator/src/TracksV0/tracks/track_gui.py"
     
     track_gui_process = ExecuteProcess(
         cmd=['python3', gui_script_path],

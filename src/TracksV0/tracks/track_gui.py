@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 WORLD = "empty"
-TRACK_DIR = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models/tracks")
+TRACK_DIR = "/ros2_ws/src/bgr_simulator/src/TracksV0/models/tracks"
 
 # Map: track file -> model name inside that SDF
 # IMPORTANT: model name must match <model name="..."> in each track sdf
@@ -91,9 +91,7 @@ def refresh_tracks():
 
 root = tk.Tk()
 root.title("FSA Track Selector")
-
-root.geometry("-0-0") # Pops up at top-left of screen, edited by barak
-
+root.geometry("")
 frm = ttk.Frame(root, padding=12)
 frm.grid()
 

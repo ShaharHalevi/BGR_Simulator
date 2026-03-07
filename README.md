@@ -32,14 +32,12 @@ Since the simulator relies heavily on GUI applications, ensure your host machine
 
 Navigate to the root of the `BGR_Simulator` repository (where the `Dockerfile` is located).
 
-**Option A — Plain Docker (recommended for simulator only):**
-
 Build the image:
 ```bash
 docker build -t bgr_simulator .
 ```
 
-Run the container with GUI support:
+Run the container with GUI support and Live Volume Mounting (so edits to Python scripts instantly take effect!):
 ```bash
 docker run --rm -it \
   --name bgr_simulator \
@@ -47,10 +45,16 @@ docker run --rm -it \
   -e DISPLAY=$DISPLAY \
   -e QT_X11_NO_MITSHM=1 \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-  bgr_simulator
+  -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
+  bgr_simulator \
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
 ```
 
-**Option B — Docker Compose (for running multiple services together):**
+Because of `--symlink-install` in the command above, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect on your host machine without needing a rebuild! 
+
+*(Note: If you edit a `C++` file or a `.launch.py` file, you still must `docker exec -it bgr_simulator bash` and run `colcon build --symlink-install` inside the container before the changes take effect).*
+
+**Docker Compose (for running multiple services together):**
 
 Refer to the main `README.md` for instructions on running the simulator as part of the full autonomy stack.
 
@@ -81,26 +85,4 @@ The simulator bridges the following key Gazebo topics to standard ROS 2 topics:
 *   `/model/bgr/odometry` (`nav_msgs/Odometry`): Perfect odometry ground truth from Gazebo.
 *   `/tf` & `/tf_static`: Robot transforms published by `robot_state_publisher`.
 
----
 
-## 🛠️ Live Development (No Rebuild Required)
-
-By default, Docker `COPY` locks your source code at the time you run `docker build`. If you want to edit Python files on your host machine and see the changes instantly inside the container, you need to use a **Docker Volume Mount**.
-
-Instead of the standard `docker run` command, use this to mount your live `src` folder directly into the container's workspace:
-
-```bash
-docker run --rm -it \
-  --name bgr_simulator \
-  --network host \
-  -e DISPLAY=$DISPLAY \
-  -e QT_X11_NO_MITSHM=1 \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-  -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
-  bgr_simulator \
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
-```
-
-Because of `--symlink-install`, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect the next time you run `ros2 run`! 
-
-*(Note: If you edit a `C++` file or a `.launch.py` file, you still must `docker exec -it bgr_simulator bash` and run `colcon build --symlink-install` before the changes take effect).*
