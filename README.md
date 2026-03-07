@@ -54,6 +54,14 @@ Because of `--symlink-install` in the command above, any edits you make to Pytho
 
 *(Note: If you edit a `C++` file or a `.launch.py` file, you still must `docker exec -it bgr_simulator bash` and run `colcon build --symlink-install` inside the container before the changes take effect).*
 
+### 🖥️ Opening a New Terminal
+To interact with the running simulator (to launch nodes or echo topics), open a new terminal on your host machine and copy-paste these 3 commands to enter the container and source ROS 2:
+```bash
+docker exec -it bgr_simulator bash
+source /opt/ros/jazzy/setup.bash
+source /ros2_ws/install/setup.bash
+```
+
 **Docker Compose (for running multiple services together):**
 
 Refer to the main `README.md` for instructions on running the simulator as part of the full autonomy stack.
