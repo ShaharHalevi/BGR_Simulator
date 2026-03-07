@@ -7,32 +7,37 @@ class JoyArrayBridge(Node):
     def __init__(self):
         super().__init__('joy_array_bridge')
 
-        # Publishers אל הבקרים שלך
+        # Publishers to the ros2_control controllers
+        # The forward_velocity_controller expects a Float64MultiArray of 4 values (for the 4 wheels)
         self.pub_wheels = self.create_publisher(
             Float64MultiArray, '/forward_velocity_controller/commands', 10)
+        
+        # The forward_position_controller expects a Float64MultiArray of 1 value (for the steering rack)
         self.pub_steer  = self.create_publisher(
             Float64MultiArray, '/forward_position_controller/commands', 10)
 
-        # Subscribers מה-joy_teleop
+        # Subscribers receiving input from the keyboard_teleop node
         self.sub_speed = self.create_subscription(
             Float64, '/wheel_speed', self.on_speed, 10)
         self.sub_steer = self.create_subscription(
             Float64, '/steering_angle', self.on_steer, 10)
 
-        # ערכים אחרונים (לשמירה)
+        # Store the last received values
         self.last_speed = 0.0
         self.last_angle = 0.0
 
     def on_speed(self, msg: Float64):
         self.last_speed = msg.data
         out = Float64MultiArray()
-        out.data = [msg.data, msg.data, msg.data, msg.data]  # RL, RR, FL, FR
+        # Publish the target velocity to all four wheels: Rear-Left, Rear-Right, Front-Left, Front-Right
+        out.data = [msg.data, msg.data, msg.data, msg.data]  
         self.pub_wheels.publish(out)
 
     def on_steer(self, msg: Float64):
         self.last_angle = msg.data
         out = Float64MultiArray()
-        out.data = [msg.data]  # בקר ההיגוי שלך מצפה מערך בגודל 1
+        # The steering controller expects an array of size 1 containing the target steering angle in radians
+        out.data = [msg.data]  
         self.pub_steer.publish(out)
 
 def main():

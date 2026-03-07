@@ -29,13 +29,30 @@ Since the simulator relies heavily on GUI applications, ensure your host machine
 2. Ensure the simulator's environment variable is set to `DISPLAY=${DISPLAY}` and the `/tmp/.X11-unix` volume is mounted.
 
 ### 2. Build and Launch
-Navigate to the root directory of the repository (where `docker-compose.yml` is located) and explicitly start *only* the simulator service:
 
+Navigate to the root of the `BGR_Simulator` repository (where the `Dockerfile` is located).
+
+**Option A — Plain Docker (recommended for simulator only):**
+
+Build the image:
 ```bash
-docker compose up simulator --build
+docker build -t bgr_simulator .
 ```
 
-Gazebo will launch with the car spawned at the starting position, alongside your telemetry dashboards.
+Run the container with GUI support:
+```bash
+docker run --rm -it \
+  --name bgr_simulator \
+  --network host \
+  -e DISPLAY=$DISPLAY \
+  -e QT_X11_NO_MITSHM=1 \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  bgr_simulator
+```
+
+**Option B — Docker Compose (for running multiple services together):**
+
+Refer to the main `README.md` for instructions on running the simulator as part of the full autonomy stack.
 
 ---
 
@@ -43,21 +60,22 @@ Gazebo will launch with the car spawned at the starting position, alongside your
 
 You can manually drive the car around the track to test sensors and vehicle dynamics.
 
-Open a new terminal, and connect to the running simulator container:
+> [!IMPORTANT]
+> Because these scripts run continuously, **you must open a new terminal tab for every command block below**. 
 
+**Terminal 1 (Controllers):** Connects to the simulator, sources the workspace, and spawns the wheel/steering controllers.
 ```bash
-docker exec -it bgr_simulator bash
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_controller controller.launch.py"
 ```
 
-Source the workspace:
+**Terminal 2 (Bridge):** Connects, sources, and runs the controller bridge node in the background.
 ```bash
-source /opt/ros/jazzy/setup.bash
-source install/setup.bash
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller joy_array_bridge.py"
 ```
 
-Launch the keyboard teleop node to drive the car with your arrow keys or W/A/S/D:
+**Terminal 3 (Keyboard Input):** Connects, sources, and launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
 ```bash
-ros2 launch bgr_controller keyboard_teleop.launch.py
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller keyboard_teleop.py"
 ```
 
 ## Topics Exposed
@@ -67,3 +85,27 @@ The simulator bridges the following key Gazebo topics to standard ROS 2 topics:
 *   `/lidar/points` (`sensor_msgs/PointCloud2`): Pointcloud data from the onboard LiDAR.
 *   `/model/bgr/odometry` (`nav_msgs/Odometry`): Perfect odometry ground truth from Gazebo.
 *   `/tf` & `/tf_static`: Robot transforms published by `robot_state_publisher`.
+
+---
+
+## 🛠️ Live Development (No Rebuild Required)
+
+By default, Docker `COPY` locks your source code at the time you run `docker build`. If you want to edit Python files on your host machine and see the changes instantly inside the container, you need to use a **Docker Volume Mount**.
+
+Instead of the standard `docker run` command, use this to mount your live `src` folder directly into the container's workspace:
+
+```bash
+docker run --rm -it \
+  --name bgr_simulator \
+  --network host \
+  -e DISPLAY=$DISPLAY \
+  -e QT_X11_NO_MITSHM=1 \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
+  bgr_simulator \
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
+```
+
+Because of `--symlink-install`, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect the next time you run `ros2 run`! 
+
+*(Note: If you edit a `C++` file or a `.launch.py` file, you still must `docker exec -it bgr_simulator bash` and run `colcon build --symlink-install` before the changes take effect).*
