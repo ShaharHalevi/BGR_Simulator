@@ -32,12 +32,28 @@ Since the simulator relies heavily on GUI applications, ensure your host machine
 
 Navigate to the root of the `BGR_Simulator` repository (where the `Dockerfile` is located).
 
+> [!NOTE]
+> **Windows Users:** Ensure that **Docker Desktop** is open and running in the background before attempting to build or run the image.
+
 Build the image:
 ```bash
 docker build -t bgr_simulator .
 ```
 
 Run the container with GUI support and Live Volume Mounting (so edits to Python scripts instantly take effect!):
+
+**For Windows (PowerShell):**
+```powershell
+docker run --rm -it `
+  --name bgr_simulator `
+  -e DISPLAY=host.docker.internal:0 `
+  -e QT_X11_NO_MITSHM=1 `
+  -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
+  bgr_simulator `
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
+```
+
+**For Linux / WSL:**
 ```bash
 docker run --rm -it \
   --name bgr_simulator \
@@ -50,9 +66,29 @@ docker run --rm -it \
   bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
 ```
 
+> [!WARNING]
+> **Windows/Git Users (Line Endings Bug):** 
+> If you edit Python files on Windows, your editor might save them with Windows line endings (`CRLF`). When ROS 2 tries to run these scripts inside the Linux container, you will get a fatal crash like `python3\r: No such file or directory`. 
+> 
+> **To fix**: Ensure your code editor (e.g. VS Code) is set to save Python/Bash files as **`LF`** (Linux format), not `CRLF`. If a file crashes due to this, open it, change it to `LF`, save it, and then explicitly run the `docker exec ... colcon build` command again to update the ROS 2 cache.
+
 Because of `--symlink-install` in the command above, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect on your host machine without needing a rebuild! 
 
-*(Note: If you edit a `C++` file or a `.launch.py` file, you still must `docker exec -it bgr_simulator bash` and run `colcon build --symlink-install` inside the container before the changes take effect).*
+### 🔄 When to Rebuild the ROS 2 Workspace?
+Even with `--symlink-install`, there are specific cases where you **must** manually rebuild the ROS 2 cache inside the running container. 
+
+You need to rebuild if you:
+*   Add a **new** Python file or delete an existing one.
+*   Modify `setup.py`, `CMakeLists.txt`, or `package.xml`.
+*   Modify any `C++` source code.
+*   Modify `.launch.py` files.
+*   Change Python line endings (`CRLF` -> `LF`) to fix crash bugs.
+
+**How to rebuild without restarting Docker:**
+Open a new terminal on your host, execute into the running simulator, and run `colcon build`:
+```bash
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
+```
 
 ### 🖥️ Opening a New Terminal
 To interact with the running simulator (to launch nodes or echo topics), open a new terminal on your host machine and copy-paste these 3 commands to enter the container and source ROS 2:
