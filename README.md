@@ -33,7 +33,7 @@ Since the simulator relies heavily on GUI applications, ensure your host machine
 Navigate to the root of the `BGR_Simulator` repository (where the `Dockerfile` is located).
 
 > [!NOTE]
-> **Windows Users:** Ensure that **Docker Desktop** is open and running in the background before attempting to build or run the image.
+> **Windows Users:** Ensure that **Docker Desktop** and **VcXsrv** (with access control disabled) are open and running in the background before attempting to build or run the image.
 
 Build the image:
 ```bash
