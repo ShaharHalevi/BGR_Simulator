@@ -17,12 +17,20 @@ It also launches several custom GUI components:
 If you wish to test or drive the simulator manually without launching the `planning`, `mapping`, and `perception` containers, follow these instructions.
 
 ### 1. Configure the Display (X11)
+
+> [!CAUTION]
+> **Security Warning:** Proceeding with "Disable access control" in VcXsrv or running `xhost +local:root` in Linux weakens the security of your display server. This allows containerized (and potentially external network) applications to connect to your screen. It is highly recommended to only use these settings on trusted private networks.
+
 Since the simulator relies heavily on GUI applications, ensure your host machine is configured to render Docker displays:
 
 **If on Windows**:
-1. Install and run [VcXsrv](https://sourceforge.net/projects/vcxsrv/) via XLaunch.
-2. Ensure you check **"Disable access control"** during setup.
-3. Ensure the simulator's environment variable is set to `DISPLAY=host.docker.internal:0`.
+1. Download and install [VcXsrv](https://sourceforge.net/projects/vcxsrv/).
+2. Open **XLaunch** from your Start Menu to configure the server:
+   - **Display Settings:** Select **"Multiple windows"** and leave the Display number as `-1` (default). Click Next.
+   - **Client Startup:** Select **"Start no client"**. Click Next.
+   - **Extra Settings:** Ensure **"Clipboard"** is checked. **CRITICAL:** You must check the **"Disable access control"** box so Docker can communicate with it. Click Next.
+   - Click **Finish**. (You should see an 'X' icon appear in your Windows system tray).
+3. The `docker run` commands below already include `-e DISPLAY=host.docker.internal:0` which routes the simulation's GUI to this local X server.
 
 **If on Linux**:
 1. Run `xhost +local:root` on your host terminal.
@@ -40,7 +48,10 @@ Build the image:
 docker build -t bgr_simulator .
 ```
 
-Run the container with GUI support and Live Volume Mounting (so edits to Python scripts instantly take effect!):
+You can run the simulator in two modes: **Headed** (with gazibo GUI) or **Headless** (background physics and logic only, for lower PC resource usage).
+
+#### Option A: Headed Mode (With GUI)
+Run the container with full GUI support and Live Volume Mounting (so edits to Python scripts instantly take effect!).
 
 **For Windows (PowerShell):**
 ```powershell
@@ -64,6 +75,33 @@ docker run --rm -it \
   -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
   bgr_simulator \
   bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
+```
+
+#### Option B: Headless Gazebo (Python GUIs Only)
+If you want to run Gazebo headlessly (to save PC resources) but still want your Python GUIs (like the track selector and speed dashboard) to appear, use this option. We still map the `DISPLAY` environment variables here so your Python apps can render, but we inject a headless flag (`-s`) on-the-fly specifically for Gazebo.
+
+**For Windows (PowerShell):**
+```powershell
+docker run --rm -it `
+  --name bgr_simulator `
+  -e DISPLAY=host.docker.internal:0 `
+  -e QT_X11_NO_MITSHM=1 `
+  -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
+  bgr_simulator `
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && sed -i 's/-v 4/-s -v 4/g' /ros2_ws/src/bgr_simulator/src/bgr_description/launch/gazebo.launch.py && ros2 launch bgr_description gazebo.launch.py"
+```
+
+**For Linux / WSL:**
+```bash
+docker run --rm -it \
+  --name bgr_simulator \
+  --network host \
+  -e DISPLAY=$DISPLAY \
+  -e QT_X11_NO_MITSHM=1 \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
+  bgr_simulator \
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && sed -i 's/-v 4/-s -v 4/g' /ros2_ws/src/bgr_simulator/src/bgr_description/launch/gazebo.launch.py && ros2 launch bgr_description gazebo.launch.py"
 ```
 
 > [!WARNING]
@@ -90,8 +128,8 @@ Open a new terminal on your host, execute into the running simulator, and run `c
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
 ```
 
-### 🖥️ Opening a New Terminal
-To interact with the running simulator (to launch nodes or echo topics), open a new terminal on your host machine and copy-paste these 3 commands to enter the container and source ROS 2:
+### 🖥️ Exploring the Container Manually (Optional)
+If you want to manually poke around the files or just echo raw ROS 2 topics, you can open a new terminal on your host machine and drop directly into the container's shell:
 ```bash
 docker exec -it bgr_simulator bash
 source /opt/ros/jazzy/setup.bash
@@ -109,14 +147,16 @@ Refer to the main `README.md` for instructions on running the simulator as part 
 You can manually drive the car around the track to test sensors and vehicle dynamics.
 
 > [!IMPORTANT]
-> Because these scripts run continuously, **you must open a new terminal tab for every command block below**. 
+> The commands below are **all-in-one** convenience scripts designed to be pasted entirely into a **fresh Windows/Host terminal**. 
+> Do **NOT** paste these if you are already inside the container's `root@...:/ros2_ws#` bash shell, or they will crash!
+> Because these scripts run continuously, **you must open a separate, new Host terminal tab for each command block below**. 
 
-**Terminal 1 (Controllers & Bridge):** Connects to the simulator, sources the workspace, and spawns the wheel/steering controllers along with the command bridge.
+**Terminal 1 (Controllers & Bridge):** Spawns the wheel/steering controllers along with the command bridge.
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_controller controller.launch.py"
 ```
 
-**Terminal 2 (Keyboard Input):** Connects, sources, and launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
+**Terminal 2 (Keyboard Input):** Launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller keyboard_teleop.py"
 ```

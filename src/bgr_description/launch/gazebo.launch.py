@@ -79,7 +79,7 @@ def generate_launch_description():
 
     # Start GZ Sim. We use the 'empty.sdf' world.
     # Flags:
-    #   -v 4 : verbose logging
+    #   -s -s -s -v 4 : verbose logging
     #   -r   : run immediately
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -88,7 +88,7 @@ def generate_launch_description():
                 "/gz_sim.launch.py",
             ]
         ),
-        launch_arguments=[("gz_args", [" -v 4", " -r", " empty.sdf"])],
+        launch_arguments=[("gz_args", [" -s -s -s -v 4", " -r", " empty.sdf"])],
     )
 
     # Spawn the robot into the world from the 'robot_description' topic.
