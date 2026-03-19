@@ -48,4 +48,4 @@ RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-ins
 
 # Source the workspace and run the default simulator launch file
 # This command runs Step 1 from the README
-CMD ["bash", "-c", "sed -i 's/-v 4/-s -v 4/g' /ros2_ws/src/bgr_simulator/src/bgr_description/launch/gazebo.launch.py && source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"]
+CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"]

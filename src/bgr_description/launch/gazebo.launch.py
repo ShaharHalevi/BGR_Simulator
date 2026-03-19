@@ -57,6 +57,17 @@ def generate_launch_description():
         description="Absolute path to robot urdf file",
     )
 
+    headless_arg = DeclareLaunchArgument(
+        name="headless",
+        default_value="False",
+        description="Run Gazebo headlessly (server only)",
+    )
+
+    from launch.substitutions import PythonExpression
+    gz_args = PythonExpression([
+        '" -s -v 4 -r empty.sdf" if "', LaunchConfiguration("headless"), '" in ["True", "true", "1"] else " -v 4 -r empty.sdf"'
+    ])
+
     # Pick which Gazebo plugin family to use.
     # 'humble' uses Ignition; newer distros use GZ Sim.
     ros_distro = os.environ["ROS_DISTRO"]
@@ -79,7 +90,7 @@ def generate_launch_description():
 
     # Start GZ Sim. We use the 'empty.sdf' world.
     # Flags:
-    #   -s -s -s -v 4 : verbose logging
+    #   -s -s -s -s -v 4 : verbose logging
     #   -r   : run immediately
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -88,7 +99,7 @@ def generate_launch_description():
                 "/gz_sim.launch.py",
             ]
         ),
-        launch_arguments=[("gz_args", [" -s -s -s -v 4", " -r", " empty.sdf"])],
+        launch_arguments=[("gz_args", gz_args)],
     )
 
     # Spawn the robot into the world from the 'robot_description' topic.
@@ -194,6 +205,7 @@ def generate_launch_description():
     # Return everything we want to start.
     return LaunchDescription(
         [
+            headless_arg,                   # toggles headless mode
             model_arg,                      # lets you override the URDF path
             gazebo_resource_path,           # tells GZ where to find assets
             robot_state_publisher_node,     # starts robot_state_publisher

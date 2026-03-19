@@ -94,7 +94,7 @@ docker run --rm -it `
   -e QT_X11_NO_MITSHM=1 `
   -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
   bgr_simulator `
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && sed -i 's/-v 4/-s -v 4/g' /ros2_ws/src/bgr_simulator/src/bgr_description/launch/gazebo.launch.py && ros2 launch bgr_description gazebo.launch.py"
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"
 ```
 
 **For Linux / WSL:**
@@ -109,7 +109,7 @@ docker run --rm -it \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
   bgr_simulator \
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && sed -i 's/-v 4/-s -v 4/g' /ros2_ws/src/bgr_simulator/src/bgr_description/launch/gazebo.launch.py && ros2 launch bgr_description gazebo.launch.py"
+  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"
 ```
 
 > [!WARNING]
