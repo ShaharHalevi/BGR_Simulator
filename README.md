@@ -14,7 +14,7 @@ It also launches several custom GUI components:
 
 ## 🏎️ Running the Simulator (Standalone)
 
-If you wish to test or drive the simulator manually without launching the `planning`, `mapping`, and `perception` containers, follow these instructions.
+If you wish to test or drive the simulator manually without launching the `perception` and `localization` containers, follow these instructions.
 
 ### 1. Configure the Display (X11)
 
