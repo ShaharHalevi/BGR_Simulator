@@ -55,8 +55,10 @@ Run the container with full GUI support and Live Volume Mounting (so edits to Py
 
 **For Windows (PowerShell):**
 ```powershell
+$GPU_FLAG = if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) { "--gpus all" } else { "" }
 docker run --rm -it `
   --name bgr_simulator `
+  $GPU_FLAG `
   -e DISPLAY=host.docker.internal:0 `
   -e QT_X11_NO_MITSHM=1 `
   -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
@@ -66,9 +68,11 @@ docker run --rm -it `
 
 **For Linux / WSL:**
 ```bash
+GPU_FLAG=$(command -v nvidia-smi >/dev/null 2>&1 && echo "--gpus all" || echo "")
 docker run --rm -it \
   --name bgr_simulator \
   --network host \
+  $GPU_FLAG \
   -e DISPLAY=$DISPLAY \
   -e QT_X11_NO_MITSHM=1 \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
@@ -82,8 +86,10 @@ If you want to run Gazebo headlessly (to save PC resources) but still want your 
 
 **For Windows (PowerShell):**
 ```powershell
+$GPU_FLAG = if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) { "--gpus all" } else { "" }
 docker run --rm -it `
   --name bgr_simulator `
+  $GPU_FLAG `
   -e DISPLAY=host.docker.internal:0 `
   -e QT_X11_NO_MITSHM=1 `
   -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
@@ -93,9 +99,11 @@ docker run --rm -it `
 
 **For Linux / WSL:**
 ```bash
+GPU_FLAG=$(command -v nvidia-smi >/dev/null 2>&1 && echo "--gpus all" || echo "")
 docker run --rm -it \
   --name bgr_simulator \
   --network host \
+  $GPU_FLAG \
   -e DISPLAY=$DISPLAY \
   -e QT_X11_NO_MITSHM=1 \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \

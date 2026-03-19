@@ -1,5 +1,9 @@
 FROM osrf/ros:jazzy-desktop
 
+# Add NVIDIA GPU support for hardware acceleration
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
+
 # Install basic dependencies and tools
 RUN apt-get update && apt-get install -y \
     python3-pip \
