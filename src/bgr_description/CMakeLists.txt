@@ -18,8 +18,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 # Export typesupport runtime dependency
 ament_export_dependencies(rosidl_default_runtime)
 
-# Install description files (meshes, urdf, launch, rviz)
-install(DIRECTORY meshes urdf launch rviz worlds
+# Install description files (meshes, urdf, launch, rviz) and the TracksV0 folder
+install(DIRECTORY meshes urdf launch rviz worlds ../TracksV0
   DESTINATION share/${PROJECT_NAME}
 )
 

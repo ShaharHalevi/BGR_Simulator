@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 import csv
 import os
+from ament_index_python.packages import get_package_share_directory
 
 # --------------------------------
 # NOTE: To use, start gazebo.launch.py first, and enter:
@@ -20,8 +21,9 @@ class ConeService(Node):
         # Service Name: '/get_track'
         self.srv = self.create_service(GetTrack, 'get_track', self.track_callback)
         
-        # The CSVs are mounted via Docker inside the /ros2_ws directory
-        self.csv_base_dir = "/ros2_ws/src/bgr_simulator/src/TracksV0/tracks/csv"
+        # The CSVs are loaded relative to the dynamically found share directory
+        bgr_dir = get_package_share_directory('bgr_description')
+        self.csv_base_dir = os.path.join(bgr_dir, 'TracksV0', 'tracks', 'csv')
         
         self.get_logger().info(f'Cone Service Ready. Reading maps from: {self.csv_base_dir}')
 

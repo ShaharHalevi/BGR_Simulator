@@ -3,9 +3,11 @@ import os
 import subprocess
 import tkinter as tk
 from tkinter import ttk, messagebox
+from ament_index_python.packages import get_package_share_directory
 
 WORLD = "empty"
-TRACK_DIR = "/ros2_ws/src/bgr_simulator/src/TracksV0/models/tracks"
+bgr_dir = get_package_share_directory('bgr_description')
+TRACK_DIR = os.path.join(bgr_dir, 'TracksV0', 'models', 'tracks')
 
 # Map: track file -> model name inside that SDF
 # IMPORTANT: model name must match <model name="..."> in each track sdf
