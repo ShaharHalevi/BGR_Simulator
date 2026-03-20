@@ -25,6 +25,7 @@ from launch.substitutions import Command, LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
+from launch.substitutions import PythonExpression
 
 def generate_launch_description():
     # Where the package 'bgr_description' keeps its files.
@@ -63,7 +64,10 @@ def generate_launch_description():
         description="Run Gazebo headlessly (server only)",
     )
 
-    from launch.substitutions import PythonExpression
+    # Dynamically injects the "-s" (server-only/headless) flag if headless=True.
+    # The PythonExpression evaluates the string at runtime to determine the final args.
+    # If headless=True, it runs `gz sim -s -v 4 -r empty.sdf` (no GUI).
+    # Otherwise, it runs `gz sim -v 4 -r empty.sdf` (normal GUI).
     gz_args = PythonExpression([
         '" -s -v 4 -r empty.sdf" if "', LaunchConfiguration("headless"), '" in ["True", "true", "1"] else " -v 4 -r empty.sdf"'
     ])
