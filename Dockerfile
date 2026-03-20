@@ -21,8 +21,6 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-ros-gz-* \
     ros-jazzy-*-ros2-control \
     ros-jazzy-joint-state-publisher-gui \
-    ros-jazzy-turtlesim \
-    ros-jazzy-robot-localization \
     ros-jazzy-joy \
     ros-jazzy-joy-teleop \
     ros-jazzy-tf-transformations \
