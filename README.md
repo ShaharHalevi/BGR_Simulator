@@ -267,12 +267,20 @@ You can manually drive the car around the track to test sensors and vehicle dyna
 > Do **NOT** paste these if you are already inside the container's `root@...:/ros2_ws#` bash shell, or they will crash!
 > Because these scripts run continuously, **you must open a separate, new Host terminal tab for each command block below**. 
 
-**Terminal 1 (Controllers & Bridge):** Spawns the wheel/steering controllers along with the command bridge.
+**Terminal 1 (Controllers):** Spawns the joint state broadcaster, velocity controller, and steering position controller.
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_controller controller.launch.py"
 ```
 
-**Terminal 2 (Keyboard Input):** Launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
+> [!NOTE]
+> Wait for the controller spawners to finish (you'll see `[INFO] ... Successfully loaded controller ...` messages) before launching the bridge in Terminal 2.
+
+**Terminal 2 (Bridge):** Starts the `joy_array_bridge` — translates high-level speed/steer topics into joint-controller array commands.
+```bash
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller joy_array_bridge.py"
+```
+
+**Terminal 3 (Keyboard Input):** Launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller keyboard_teleop.py"
 ```
@@ -284,5 +292,7 @@ The simulator bridges the following key Gazebo topics to standard ROS 2 topics:
 *   `/lidar/points` (`sensor_msgs/PointCloud2`): Pointcloud data from the onboard LiDAR.
 *   `/model/bgr/odometry` (`nav_msgs/Odometry`): Perfect odometry ground truth from Gazebo.
 *   `/tf` & `/tf_static`: Robot transforms published by `robot_state_publisher`.
+
+
 
 
