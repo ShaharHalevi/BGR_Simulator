@@ -1,0 +1,5 @@
+# Enforce Unix line endings for scripts run inside Linux containers
+*.py text eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+*.launch.py text eol=lf

@@ -4,6 +4,7 @@
 # Keep the essentials
 !README.md
 !.gitignore
+!.gitattributes
 !Dockerfile
 !src/
 !doc/
