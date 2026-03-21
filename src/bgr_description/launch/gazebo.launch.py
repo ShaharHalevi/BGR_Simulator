@@ -114,6 +114,9 @@ def generate_launch_description():
             "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
+            #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
+            "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image", # Front camera bridge
         ],
         output="screen",
     )
