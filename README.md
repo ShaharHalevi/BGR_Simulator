@@ -289,9 +289,28 @@ docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && sourc
 
 The simulator bridges the following key Gazebo topics to standard ROS 2 topics:
 
-*   `/lidar/points` (`sensor_msgs/PointCloud2`): Pointcloud data from the onboard LiDAR.
-*   `/model/bgr/odometry` (`nav_msgs/Odometry`): Perfect odometry ground truth from Gazebo.
-*   `/tf` & `/tf_static`: Robot transforms published by `robot_state_publisher`.
+*   `/scan/points` (`sensor_msgs/PointCloud2`): Pointcloud data from the onboard LiDAR.
+    *   *To securely view the LiDAR data stream without freezing your terminal with numbers, use the `--no-arr` filter:*
+        `ros2 topic echo /scan/points --no-arr`
+    *   **Understanding the Output**: The `--no-arr` flag prevents ROS 2 from printing the massive list of point coordinates (which is nearly 3 million bytes of `data` per frame!). Instead, you'll see the core metadata of the LiDAR stream:
+        *   `header.frame_id`: `bgr/base_footprint/lidar` (the sensor's frame of reference).
+        *   `height` & `width`: The resolution of the scan (e.g., 256 vertical channels by 360 horizontal points).
+        *   `point_step` & `row_step`: Byte sizes defining how the raw data array is laid out in memory.
+*   `/imu` (`sensor_msgs/Imu`): Inertial Measurement Unit data (orientation, angular velocity, and linear acceleration).
+    *   *To view the real-time IMU data stream, open a fresh terminal inside the container and run:*
+        `ros2 topic echo /imu`
+
+
+## Services Exposed
+
+**Getting Track / Cone Poses:**
+To retrieve the ground-truth poses of all cones for a specific track, you can call the `/get_track` service. 
+
+For example, to get the cone positions for the `Acceleration` track, run the following command in a fresh terminal (make sure to be inside the container environment):
+```bash
+ros2 service call /get_track bgr_description/srv/GetTrack "{track_name: 'Acceleration'}"
+```
+This will return an array of `Cone` messages containing the `(x, y)` coordinates and `color` of each cone.
 
 
 
