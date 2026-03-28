@@ -32,7 +32,24 @@ WORLD_HEADER = """<?xml version="1.0" ?>
       <max_step_size>0.001</max_step_size>
       <real_time_update_rate>1000</real_time_update_rate>
     </physics>
-    <include><uri>model://sun</uri></include>
+    <!-- Required Gazebo system plugins -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+    <light name="sun" type="directional">
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.2 -1</direction>
+      <attenuation>
+        <range>300</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>true</cast_shadows>
+    </light>
     <model name='asphalt_ground'>
       <static>1</static>
       <link name='link'>
@@ -43,10 +60,9 @@ WORLD_HEADER = """<?xml version="1.0" ?>
         <visual name='visual'>
           <geometry><plane><normal>0 0 1</normal><size>300 300</size></plane></geometry>
           <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Asphalt</name>
-            </script>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
           </material>
         </visual>
       </link>

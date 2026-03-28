@@ -134,9 +134,18 @@ ros2 run bgr_controller keyboard_teleop.py
 
 **Robot not moving?** Ensure you ran Step 2 (Controllers). The robot won't respond to commands if the controllers aren't spawned.
 
-**Missing Models?** Ensure the environment variable `GZ_SIM_RESOURCE_PATH` is set correctly. The launch file handles this, but if you moved folders manually, check `gazebo.launch.py`.
+**Missing Models?** Ensure the environment variable is set correctly. The launch file handles this, but if you moved folders manually, check `gazebo.launch.py`.
 
 **Gazebo crashes on VM?** Ensure "Accelerate 3D Graphics" is enabled in your VM settings, or try running with `LIBGL_ALWAYS_SOFTWARE=1` if you lack a GPU.
+
+**Vehicle doesn't spawn or is invisible in GUI?** 
+1. Sometimes Gazebo takes longer than expected to load, causing a race condition where the vehicle spawns before the world is ready. The `gazebo.launch.py` now includes a 10-second delay for spawning to prevent this.
+2. If it still happens, it may be due to "zombie" background processes. Kill them and try again:
+   ```bash
+   pkill -9 -f "gz sim"
+   pkill -9 -f "ros_gz"
+   pkill -9 -f "robot_state_publisher"
+   ```
 
 ---
 

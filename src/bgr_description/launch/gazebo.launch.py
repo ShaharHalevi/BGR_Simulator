@@ -20,6 +20,7 @@ from launch.actions import (
     IncludeLaunchDescription,
     SetEnvironmentVariable,
     ExecuteProcess,
+    TimerAction,
 )
 from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -52,7 +53,7 @@ def generate_launch_description():
     #world_file_path = os.path.join(bgr_description, "worlds", "Acceleration.world")
     
     # NOTE: Update this path to your adjusted location
-    fsa_models_path = os.path.expanduser("~/bgr_ws/src/src/bgr_description/models")
+    fsa_models_path = os.path.expanduser("~/BGR_Simulator/BGR_Simulator/src/TracksV0/models")
 
     # Set the GZ_SIM_RESOURCE_PATH environment variable to include both the package's share directory and the FSA models path.
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
@@ -65,11 +66,15 @@ def generate_launch_description():
     # )
 
     # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
+    # We must explicitly prepend the current workspace's install and src directories
+    # to avoid conflicts with older `bgr_ws` workspaces that might be sourced in .bashrc.
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[
-            str(Path(bgr_description).parent.resolve()), 
-            ":", 
+            str(Path(bgr_description).parent.resolve()),
+            ":",
+            os.path.join(str(Path(bgr_description).parent.parent.parent.parent.resolve()), "src"),
+            ":",
             fsa_models_path  
         ]
     )
@@ -126,22 +131,24 @@ def generate_launch_description():
     #  )
 
     # Spawn the robot into the world from the 'robot_description' topic.
-    gz_spawn_entity = Node(
-        package="ros_gz_sim",
-        executable="create",
-        output="screen",
-        arguments=[
-            "-topic",
-            "robot_description",
-            "-name",
-            "bgr",
-            "-x",
-            "0.0",
-            "-y",
-            "0.0",
-            "-z",
-            "1.0",
-        ],
+    # Delayed to prevent race conditions with Gazebo server/GUI startup (20s handles huge maps)
+    gz_spawn_entity = TimerAction(
+        period=20.0,
+        actions=[
+            Node(
+                package="ros_gz_sim",
+                executable="create",
+                output="screen",
+                arguments=[
+                    "-world", "generated_world",
+                    "-topic", "robot_description",
+                    "-name", "bgr",
+                    "-x", "0.0",
+                    "-y", "0.0",
+                    "-z", "1.0",
+                ],
+            )
+        ]
     )
 
     # Bridge topics from GZ to ROS 2.
@@ -156,6 +163,7 @@ def generate_launch_description():
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image",
         ],
         remappings=[('/lidar/points', '/scan/points')],
 
@@ -170,10 +178,10 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Process to make GUI follow the car upon startup
+    # Process to make GUI follow the car upon startup (Wait 25s for big maps + car spawn)
     car_tracker = ExecuteProcess(
         cmd=[
-            "sleep 8; gz service -s /gui/follow "
+            "sleep 25; gz service -s /gui/follow "
             "--reqtype gz.msgs.StringMsg "
             "--reptype gz.msgs.Boolean "
             "--timeout 2000 "
@@ -213,6 +221,12 @@ def generate_launch_description():
         name="cone_service",
         output="screen"
     )
+    # IMU / Noisy Sensor Publisher node
+    noisy_sensor_node = Node(
+        package="bgr_description",
+        executable="noisy_sensor_publisher.py",
+        output="screen"
+    )
 
     
     # TF Bridge: Connects the Gazebo Lidar frame to the Robot base frame
@@ -240,9 +254,9 @@ def generate_launch_description():
             car_state_node,                 # starts the car state publisher node
             car_wheel_node,                 # starts the car wheel publisher node
             car_dashboard_node,             # starts the car dashboard GUI node
-            cone_service_node,               # starts the cone service node
-            static_tf_node,                # starts the static TF publisher node
-            car_tracker,                       # makes GUI follow the car
-            
+            noisy_sensor_node,              # starts the IMU and GPS simulation node
+            cone_service_node,              # starts the cone service node
+            static_tf_node,                 # starts the static TF publisher node
+            car_tracker,                    # makes GUI follow the car
         ]                   
     )
