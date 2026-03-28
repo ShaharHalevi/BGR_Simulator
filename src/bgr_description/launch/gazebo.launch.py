@@ -179,17 +179,23 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Process to make GUI follow the car upon startup (Wait 25s for big maps + car spawn)
-    car_tracker = ExecuteProcess(
-        cmd=[
-            "sleep 25; gz service -s /gui/follow "
-            "--reqtype gz.msgs.StringMsg "
-            "--reptype gz.msgs.Boolean "
-            "--timeout 2000 "
-            "--req 'data: \"bgr\"'"
-        ],
-        shell=True, 
-        output="screen"
+    # Camera tracking: uses gz service (the correct way in Harmonic)
+    # TimerAction(35s) ensures car has spawned (20s) + GUI has rendered it (~15s)
+    car_tracker = TimerAction(
+        period=35.0,
+        actions=[
+            ExecuteProcess(
+                cmd=[
+                    "gz service -s /gui/follow "
+                    "--reqtype gz.msgs.StringMsg "
+                    "--reptype gz.msgs.Boolean "
+                    "--timeout 2000 "
+                    "--req 'data: \"bgr\"'"
+                ],
+                shell=True,
+                output="screen"
+            )
+        ]
     )
     # --------------------------------------
     # Car & Map specific nodes
