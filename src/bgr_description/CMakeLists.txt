@@ -35,6 +35,7 @@ install(PROGRAMS
   car_state_publisher.py
   car_dashboard.py
   cone_service.py
+  noisy_sensor_publisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

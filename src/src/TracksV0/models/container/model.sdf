@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="container">
+    <static>true</static>
+
+    <link name="link">
+      <!-- collision OFF by default (enable later if you want) -->
+      <visual name="visual">
+        <geometry>
+          <box><size>6.0 2.5 2.6</size></box>
+        </geometry>
+        <material>
+          <ambient>0.20 0.25 0.70 1</ambient>
+          <diffuse>0.20 0.25 0.70 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

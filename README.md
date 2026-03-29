@@ -312,6 +312,17 @@ ros2 service call /get_track bgr_description/srv/GetTrack "{track_name: 'Acceler
 ```
 This will return an array of `Cone` messages containing the `(x, y)` coordinates and `color` of each cone.
 
+**Missing Models?** Ensure the environment variable is set correctly. The launch file handles this, but if you moved folders manually, check `gazebo.launch.py`.
 
 
+**Vehicle doesn't spawn or is invisible in GUI?** 
+1. Sometimes Gazebo takes longer than expected to load, causing a race condition where the vehicle spawns before the world is ready. The `gazebo.launch.py` now includes a 10-second delay for spawning to prevent this.
+2. If it still happens, it may be due to "zombie" background processes. Kill them and try again:
+   ```bash
+   pkill -9 -f "gz sim"
+   pkill -9 -f "ros_gz"
+   pkill -9 -f "robot_state_publisher"
+   ```
+
+---
 
