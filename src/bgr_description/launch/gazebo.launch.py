@@ -155,17 +155,16 @@ def generate_launch_description():
                 executable="create",
                 output="screen",
                 arguments=[
-                    "-world", "generated_world",
+                    "-world", "empty",
                     "-topic", "robot_description",
                     "-name", "bgr",
-                    "-x", "0.0",
-                    "-y", "0.0",
+                    "-x", "52.8",
+                    "-y", "81.2",
                     "-z", "1.0",
                 ],
             )
         ]
     )
-
     # Bridge topics from GZ to ROS 2.
     gz_ros2_bridge = Node(
         package="ros_gz_bridge",
@@ -173,7 +172,7 @@ def generate_launch_description():
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             # --- CHANGE: Updated topic name to match Acceleration world ---
-            "/world/generated_world/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
