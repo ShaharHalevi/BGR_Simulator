@@ -12,126 +12,87 @@ It also launches several custom GUI components:
 
 ---
 
-## 🛠️ Prerequisites: Installing Docker
+## 🛠️ Prerequisites & Setup
 
-Before running the simulator, you must have Docker installed on your machine. Follow the instructions for your operating system below.
+Before running the simulator, you must install Docker and configure your host machine's display server to allow GUI applications to run from the container. 
 
-### 🪟 Windows — Docker Desktop
+Follow the complete setup track below for your operating system.
+
+---
+
+### 🐧 Linux Setup
+
+**Part 1 — Install Docker Engine:**
+
+On Linux, you install the Docker Engine directly.
+
+> [!NOTE]
+> These instructions are for **Ubuntu/Debian-based** distributions. For other distros, refer to the [official Docker docs](https://docs.docker.com/engine/install/).
+
+1. Remove any old/conflicting Docker packages:
+   ```bash
+   sudo apt-get remove docker docker-engine docker.io containerd runc
+   ```
+2. Set up the Docker apt repository and install the Engine:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install -y ca-certificates curl gnupg
+   sudo install -m 0755 -d /etc/apt/keyrings
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+   sudo chmod a+r /etc/apt/keyrings/docker.gpg
+   
+   echo \
+     "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+     "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   
+   sudo apt-get update
+   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   ```
+3. Run Docker without `sudo` (Post-install):
+   ```bash
+   sudo usermod -aG docker $USER
+   ```
+   **Log out and log back in** for this change to take effect.
+4. Enable Docker to start on boot:
+   ```bash
+   sudo systemctl enable docker
+   sudo systemctl start docker
+   ```
+
+**Part 2 — Configure the Display (xhost):**
+
+Since the simulator relies heavily on GUI applications, ensure your host machine is configured to render Docker displays. Run the following command in your host terminal:
+
+> [!CAUTION]
+> **Security Warning:** Running `xhost +local:root` in Linux weakens the security of your display server. It is recommended to only use these settings on trusted private networks.
+
+```bash
+xhost +local:root
+```
+
+---
+
+### 🪟 Windows Setup
+
+**Part 1 — Install Docker Desktop:**
 
 Docker Desktop is the easiest way to run Docker on Windows. It bundles the Docker Engine, Docker CLI, and a GUI dashboard.
 
 > [!IMPORTANT]
-> Docker Desktop on Windows uses **WSL 2** (Windows Subsystem for Linux 2) as its backend. Make sure WSL 2 is enabled before installing.
-
-**Step 1 — Enable WSL 2 (if not already enabled):**
-
-Open PowerShell as Administrator and run:
-```powershell
-wsl --install
-```
-This installs WSL 2 and the default Ubuntu distribution. **Restart your PC** when prompted.
-
-You can verify WSL 2 is active at any time with:
-```powershell
-wsl --list --verbose
-```
-Make sure your distro shows `VERSION 2`.
-
-**Step 2 — Download & Install Docker Desktop:**
+> Docker Desktop on Windows uses **WSL 2** (Windows Subsystem for Linux 2) as its backend. Make sure WSL 2 is enabled before installing. Open PowerShell as Administrator and run `wsl --install`, then restart your PC.
 
 1. Go to [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop) and download the **Docker Desktop for Windows** installer.
-2. Run the installer. When prompted, ensure **"Use WSL 2 instead of Hyper-V"** is selected (it usually is by default).
-3. Follow the on-screen prompts and complete the installation.
-4. **Restart your PC** if asked.
+2. Run the installer and ensure **"Use WSL 2 instead of Hyper-V"** is selected.
+3. Launch Docker Desktop from the Start Menu. Wait for the engine to initialize.
 
-**Step 3 — Start Docker Desktop:**
-
-Launch Docker Desktop from the Start Menu. Wait for the whale 🐳 icon in your system tray to stop animating — this means the Docker Engine is ready.
-
-> [!NOTE]
-> Docker Desktop must be **running in the background** every time you use a `docker` command. If it is not open, commands like `docker build` or `docker run` will fail with a connection error.
-
-**Step 4 — Verify the installation:**
-
-Open a new PowerShell or Command Prompt terminal and run:
-```powershell
-docker --version
-docker run hello-world
-```
-If you see a version number and a "Hello from Docker!" message, your setup is complete.
-
----
-
-### 🐧 Linux — Docker Engine
-
-On Linux, you install the Docker Engine directly (no desktop GUI app is needed).
-
-> [!NOTE]
-> These instructions are for **Ubuntu/Debian-based** distributions (e.g., Ubuntu 22.04, Ubuntu 24.04). For other distros (Fedora, Arch, etc.), refer to the [official Docker docs](https://docs.docker.com/engine/install/).
-
-**Step 1 — Remove any old/conflicting Docker packages:**
-```bash
-sudo apt-get remove docker docker-engine docker.io containerd runc
-```
-
-**Step 2 — Set up the Docker apt repository:**
-```bash
-# Add Docker's official GPG key
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-# Add the Docker repository to apt sources
-echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-```
-
-**Step 3 — Install Docker Engine:**
-```bash
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-
-**Step 4 — Run Docker without `sudo` (Post-install):**
-
-By default, Docker requires `sudo`. To avoid typing `sudo` before every `docker` command, add your user to the `docker` group:
-```bash
-sudo usermod -aG docker $USER
-```
-**Log out and log back in** for this change to take effect.
-
-**Step 5 — Enable Docker to start on boot:**
-```bash
-sudo systemctl enable docker
-sudo systemctl start docker
-```
-
-**Step 6 — Verify the installation:**
-```bash
-docker --version
-docker run hello-world
-```
-If you see a version number and a "Hello from Docker!" message, your setup is complete.
-
----
-
-## 🏎️ Running the Simulator (Standalone)
-
-If you wish to test or drive the simulator manually without launching the `perception` and `localization` containers, follow these instructions.
-
-### 1. Configure the Display (X11)
-
-> [!CAUTION]
-> **Security Warning:** Proceeding with "Disable access control" in VcXsrv or running `xhost +local:root` in Linux weakens the security of your display server. This allows containerized (and potentially external network) applications to connect to your screen. It is highly recommended to only use these settings on trusted private networks.
+**Part 2 — Configure the Display (VcXsrv):**
 
 Since the simulator relies heavily on GUI applications, ensure your host machine is configured to render Docker displays:
 
-**If on Windows**:
+> [!CAUTION]
+> **Security Warning:** Proceeding with "Disable access control" in VcXsrv weakens the security of your display server. It is recommended to only use these settings on trusted private networks.
+
 1. Download and install [VcXsrv](https://sourceforge.net/projects/vcxsrv/).
 2. Open **XLaunch** from your Start Menu to configure the server:
    - **Display Settings:** Select **"Multiple windows"** and leave the Display number as `-1` (default). Click Next.
@@ -139,13 +100,16 @@ Since the simulator relies heavily on GUI applications, ensure your host machine
    - **Extra Settings:** Ensure **"Clipboard"** is checked. **CRITICAL:** You must check the **"Disable access control"** box so Docker can communicate with it. Click Next.
    - Click **Finish**. (You should see an 'X' icon appear in your Windows system tray).
 
-**If on Linux**:
-1. Run `xhost +local:root` on your host terminal.
-
 > [!NOTE]
-> **Windows Users:** Ensure that **Docker Desktop** and **VcXsrv** (with access control disabled) are open and running in the background before proceeding.
+> Ensure that both **Docker Desktop** and **VcXsrv** (with access control disabled) are open and running in the background before proceeding to launch the simulator.
 
-### 2. Build and Launch
+---
+
+## 🏎️ Running the Simulator (Standalone)
+
+If you wish to test or drive the simulator manually without launching the `perception` and `localization` containers, follow these instructions.
+
+### Build and Launch
 
 Navigate to the root of the `BGR_Simulator` repository. You can run the simulator in two modes: **Headed** (with Gazebo GUI) or **Headless** (background physics and logic only, for lower PC resource usage).
 
