@@ -6,6 +6,7 @@
 !.gitignore
 !.gitattributes
 !Dockerfile
+!docker-compose.yml
 !src/
 !doc/
 

@@ -1,0 +1,38 @@
+###############################################################################
+# BGR_Simulator – Docker Compose
+#
+# Usage:
+#   docker compose up --build                  (Headed – with Gazebo GUI)
+#   HEADLESS=True docker compose up --build    (Headless – physics only)
+#
+# After the first build, omit --build to start faster.
+###############################################################################
+
+services:
+  simulator:
+    build: .
+    image: bgr_simulator
+    container_name: bgr_simulator
+    stdin_open: true    # -i
+    tty: true           # -t
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY:-host.docker.internal:0}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - ./src:/ros2_ws/src/bgr_simulator/src:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    # Uncomment the following block to enable NVIDIA GPU acceleration
+    # (requires nvidia-container-toolkit to be installed on the host)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+    command: >
+      bash -c "source /opt/ros/jazzy/setup.bash &&
+               colcon build --symlink-install &&
+               source /ros2_ws/install/setup.bash &&
+               ros2 launch bgr_description gazebo.launch.py headless:=${HEADLESS:-False}"

@@ -138,87 +138,32 @@ Since the simulator relies heavily on GUI applications, ensure your host machine
    - **Client Startup:** Select **"Start no client"**. Click Next.
    - **Extra Settings:** Ensure **"Clipboard"** is checked. **CRITICAL:** You must check the **"Disable access control"** box so Docker can communicate with it. Click Next.
    - Click **Finish**. (You should see an 'X' icon appear in your Windows system tray).
-3. The `docker run` commands below already include `-e DISPLAY=host.docker.internal:0` which routes the simulation's GUI to this local X server.
 
 **If on Linux**:
 1. Run `xhost +local:root` on your host terminal.
-2. Ensure the simulator's environment variable is set to `DISPLAY=${DISPLAY}` and the `/tmp/.X11-unix` volume is mounted.
+
+> [!NOTE]
+> **Windows Users:** Ensure that **Docker Desktop** and **VcXsrv** (with access control disabled) are open and running in the background before proceeding.
 
 ### 2. Build and Launch
 
-Navigate to the root of the `BGR_Simulator` repository (where the `Dockerfile` is located).
-
-> [!NOTE]
-> **Windows Users:** Ensure that **Docker Desktop** and **VcXsrv** (with access control disabled) are open and running in the background before attempting to build or run the image.
-
-Build the image:
-```bash
-docker build -t bgr_simulator .
-```
-
-You can run the simulator in two modes: **Headed** (with gazibo GUI) or **Headless** (background physics and logic only, for lower PC resource usage).
+Navigate to the root of the `BGR_Simulator` repository. You can run the simulator in two modes: **Headed** (with Gazebo GUI) or **Headless** (background physics and logic only, for lower PC resource usage).
 
 #### Option A: Headed Mode (With GUI)
-Run the container with full GUI support and Live Volume Mounting (so edits to Python scripts instantly take effect!).
 
-**For Windows (PowerShell):**
-```powershell
-$GPU_FLAG = if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) { "--gpus all" } else { "" }
-docker run --rm -it `
-  --name bgr_simulator `
-  $GPU_FLAG `
-  -e DISPLAY=host.docker.internal:0 `
-  -e QT_X11_NO_MITSHM=1 `
-  -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
-  bgr_simulator `
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
-```
-
-**For Linux / WSL:**
 ```bash
-GPU_FLAG=$(command -v nvidia-smi >/dev/null 2>&1 && echo "--gpus all" || echo "")
-docker run --rm -it \
-  --name bgr_simulator \
-  --network host \
-  $GPU_FLAG \
-  -e DISPLAY=$DISPLAY \
-  -e QT_X11_NO_MITSHM=1 \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-  -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
-  bgr_simulator \
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py"
+docker compose up --build
 ```
 
 #### Option B: Headless Gazebo (Python GUIs Only)
-If you want to run Gazebo headlessly (to save PC resources) but still want your Python GUIs (like the track selector and speed dashboard) to appear, use this option. We still map the `DISPLAY` environment variables here so your Python apps can render, but we inject a headless flag (`-s`) on-the-fly specifically for Gazebo.
+Runs Gazebo headlessly (to save PC resources) but still renders your Python GUIs (track selector, speed dashboard).
 
-**For Windows (PowerShell):**
-```powershell
-$GPU_FLAG = if (Get-Command nvidia-smi -ErrorAction SilentlyContinue) { "--gpus all" } else { "" }
-docker run --rm -it `
-  --name bgr_simulator `
-  $GPU_FLAG `
-  -e DISPLAY=host.docker.internal:0 `
-  -e QT_X11_NO_MITSHM=1 `
-  -v ${PWD}/src:/ros2_ws/src/bgr_simulator/src:rw `
-  bgr_simulator `
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"
-```
-
-**For Linux / WSL:**
 ```bash
-GPU_FLAG=$(command -v nvidia-smi >/dev/null 2>&1 && echo "--gpus all" || echo "")
-docker run --rm -it \
-  --name bgr_simulator \
-  --network host \
-  $GPU_FLAG \
-  -e DISPLAY=$DISPLAY \
-  -e QT_X11_NO_MITSHM=1 \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-  -v $(pwd)/src:/ros2_ws/src/bgr_simulator/src:rw \
-  bgr_simulator \
-  bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"
+HEADLESS=True docker compose up --build
 ```
+
+> [!TIP]
+> After the first build, you can omit `--build` from subsequent runs to start faster.
 
 > [!WARNING]
 > **Windows/Git Users (Line Endings Bug):** 
@@ -226,7 +171,7 @@ docker run --rm -it \
 > 
 > **To fix**: Ensure your code editor (e.g. VS Code) is set to save Python/Bash files as **`LF`** (Linux format), not `CRLF`. If a file crashes due to this, open it, change it to `LF`, save it, and then explicitly run the `docker exec ... colcon build` command again to update the ROS 2 cache.
 
-Because of `--symlink-install` in the command above, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect on your host machine without needing a rebuild! 
+Because of `--symlink-install` in the compose configuration, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect on your host machine without needing a rebuild! 
 
 ### 🔄 When to Rebuild the ROS 2 Workspace?
 Even with `--symlink-install`, there are specific cases where you **must** manually rebuild the ROS 2 cache inside the running container. 
