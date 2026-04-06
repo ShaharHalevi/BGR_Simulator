@@ -1,16 +1,18 @@
-# Ignore everything in the repository root by default
-/*
+# ROS 2 Build Artifacts (The big ones)
+build/
+install/
+log/
 
-# Keep the essentials
-!README.md
-!.gitignore
-!.gitattributes
-!Dockerfile
-!docker-compose.yml
-!src/
-!doc/
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Allow all contents inside src and docs directories
-!src/**
-!doc/**
+# IDEs and System files
+.vscode/
+.idea/
+.DS_Store
 *.Identifier
+
+# Local environment files
+.env
