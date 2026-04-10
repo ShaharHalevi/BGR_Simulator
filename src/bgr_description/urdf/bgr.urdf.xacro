@@ -165,6 +165,22 @@
     </collision>
   </link>
 
+  <!-- IMU -->
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+    </inertial>
+  </link>
+
+
   <!-- Front Camera - To run: ros2 run rqt_image_view rqt_image_view after launching gazebo --> 
   <link name="front_cam_link">
     <inertial>

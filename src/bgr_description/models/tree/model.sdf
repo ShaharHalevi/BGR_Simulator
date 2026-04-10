@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="tree">
+    <static>true</static>
+
+    <link name="link">
+      <!-- No collision (visual landmark only) -->
+      <visual name="trunk">
+        <pose>0 0 1.5 0 0 0</pose>
+        <geometry>
+          <cylinder><radius>0.15</radius><length>3.0</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.40 0.30 0.20 1</ambient>
+          <diffuse>0.40 0.30 0.20 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="canopy">
+        <pose>0 0 3.4 0 0 0</pose>
+        <geometry>
+          <sphere><radius>1.2</radius></sphere>
+        </geometry>
+        <material>
+          <ambient>0.10 0.55 0.10 1</ambient>
+          <diffuse>0.10 0.55 0.10 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

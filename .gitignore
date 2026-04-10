@@ -10,3 +10,4 @@
 # Allow all contents inside src and docs directories
 !src/**
 !doc/**
+*.Identifier
