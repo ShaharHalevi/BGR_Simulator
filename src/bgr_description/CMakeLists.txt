@@ -11,15 +11,13 @@ find_package(rosidl_default_generators REQUIRED)
 # Generate message interfaces
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CarPose.msg"
-  "msg/Cone.msg"
-  "srv/GetTrack.srv"
 )
 
 # Export typesupport runtime dependency
 ament_export_dependencies(rosidl_default_runtime)
 
 # Install description files (meshes, urdf, launch, rviz)
-install(DIRECTORY meshes urdf launch rviz worlds
+install(DIRECTORY meshes urdf launch rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
