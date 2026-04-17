@@ -27,6 +27,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch.substitutions import PythonExpression
+from launch.conditions import UnlessCondition
 
 # Add this new import line at the end of your imports
 from launch_ros.substitutions import FindPackageShare
@@ -60,11 +61,6 @@ def generate_launch_description():
     # Make GZ Sim look for resources (meshes, textures, etc.) in this folder.
     # We point to the parent folder of the 'share' dir. This helps GZ find assets.
 
-    # # Gazebo Sim process
-    # gazebo = ExecuteProcess(
-    #     cmd=['gz', 'sim', '-r', world_path],
-    #     output='screen'
-    # )
 
     # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
     # We must explicitly prepend the current workspace's install and src directories
@@ -92,13 +88,13 @@ def generate_launch_description():
         default_value="False",
         description="Run Gazebo headlessly (server only)",
     )
+    headless = LaunchConfiguration("headless")
 
     # Dynamically injects the "-s" (server-only/headless) flag if headless=True.
     # The PythonExpression evaluates the string at runtime to determine the final args.
-    # If headless=True, it runs `gz sim -s -v 4 -r empty.sdf` (no GUI).
-    # Otherwise, it runs `gz sim -v 4 -r empty.sdf` (normal GUI).
+    # If headless=True, it runs without GUI.
     gz_args = PythonExpression([
-        '" -s -v 4 -r empty.sdf" if "', LaunchConfiguration("headless"), '" in ["True", "true", "1"] else " -v 4 -r empty.sdf"'
+        '" -s -v 4 -r " + "', world_file_path, '" if "', LaunchConfiguration("headless"), '" in ["True", "true", "1"] else " -v 4 -r " + "', world_file_path, '"'
     ])
 
     # Pick which Gazebo plugin family to use.
@@ -120,7 +116,7 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
-    # --- CHANGE 3: Pass the dynamic 'world_file_path' to Gazebo ---
+    # Pass the dynamic 'world_file_path' to Gazebo via gz_args.
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -130,20 +126,6 @@ def generate_launch_description():
         ),
         launch_arguments=[("gz_args", gz_args)],
     )
-    
-    
-    # ------ HardCoded-----
-    # gazebo = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         [
-    #              os.path.join(get_package_share_directory("ros_gz_sim"), "launch"),
-    #              "/gz_sim.launch.py",
-    #         ]
-    #     ),
-        
-    #      # --- CHANGE: Use the world_file_path variable we defined above ---
-    #     launch_arguments=[("gz_args", [" -v 4", " -r ", world_file_path])],
-    #  )
 
     # Spawn the robot into the world from the 'robot_description' topic.
     # Delayed to prevent race conditions with Gazebo server/GUI startup (20s handles huge maps)
@@ -155,11 +137,11 @@ def generate_launch_description():
                 executable="create",
                 output="screen",
                 arguments=[
-                    "-world", "empty",
+                    "-world", "generated_world",
                     "-topic", "robot_description",
                     "-name", "bgr",
-                    "-x", "52.8",
-                    "-y", "81.2",
+                    "-x", "0",
+                    "-y", "0",
                     "-z", "1.0",
                 ],
             )
@@ -171,8 +153,8 @@ def generate_launch_description():
         executable="parameter_bridge",
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
-            # --- CHANGE: Updated topic name to match Acceleration world ---
-            "/world/empty/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            # Bridging the world pose info (using 'generated_world' from the SDF files)
+            "/world/generated_world/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             #"/scan/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked@/lidar/points",
@@ -185,12 +167,6 @@ def generate_launch_description():
         output="screen",
     )
 
-    gui_script_path = os.path.join(bgr_description, "TracksV0", "tracks", "track_gui.py")
-    
-    track_gui_process = ExecuteProcess(
-        cmd=['python3', gui_script_path],
-        output='screen'
-    )
 
     # Camera tracking: uses gz service (the correct way in Harmonic)
     # TimerAction(35s) ensures car has spawned (20s) + GUI has rendered it (~15s)
@@ -208,7 +184,8 @@ def generate_launch_description():
                 shell=True,
                 output="screen"
             )
-        ]
+        ],
+        condition=UnlessCondition(headless)
     )
     # --------------------------------------
     # Car & Map specific nodes
@@ -230,9 +207,10 @@ def generate_launch_description():
     )
     # Car dashboard GUI node
     car_dashboard_node = Node(
-    package="bgr_description",
-    executable="car_dashboard.py",
-    output="screen",
+        package="bgr_description",
+        executable="car_dashboard.py",
+        output="screen",
+        condition=UnlessCondition(headless)
     )
     # Cone service node
     cone_service_node = Node(
@@ -271,7 +249,6 @@ def generate_launch_description():
             gazebo,                         # starts the simulator
             gz_spawn_entity,                # spawns the robot in GZ
             gz_ros2_bridge,                 # bridges /clock topic
-            track_gui_process,              # starts the track GUI
             car_state_node,                 # starts the car state publisher node
             car_wheel_node,                 # starts the car wheel publisher node
             car_dashboard_node,             # starts the car dashboard GUI node

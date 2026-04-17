@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
   <model name="cone_orange_big">
-    <static>true</static>
+    <static>0</static>
     <link name="link">
       <visual name="visual">
         <geometry>
