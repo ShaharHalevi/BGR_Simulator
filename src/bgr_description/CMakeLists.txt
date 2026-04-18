@@ -24,10 +24,8 @@ install(DIRECTORY meshes urdf launch rviz worlds ../TracksV0
 )
 
 if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_copyright_FOUND TRUE)
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
+  find_package(launch_testing_ament_cmake REQUIRED)
+  add_launch_test(test/test_simulation.py TIMEOUT 300)
 endif()
 
 install(PROGRAMS

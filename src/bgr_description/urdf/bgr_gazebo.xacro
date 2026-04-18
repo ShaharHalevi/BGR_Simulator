@@ -88,18 +88,22 @@
       <wheel link_name="Wheel_rr">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>0.24</wheel_radius>
       </wheel>
       <wheel link_name="Wheel_rl">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>0.24</wheel_radius>
       </wheel>
       <wheel link_name="Wheel_fr">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>0.24</wheel_radius>
       </wheel>
       <wheel link_name="Wheel_fl">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>0.24</wheel_radius>
       </wheel>
     </plugin>
   </gazebo>
