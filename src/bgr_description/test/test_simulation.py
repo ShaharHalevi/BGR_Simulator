@@ -55,29 +55,31 @@ class BaseTestFixture(unittest.TestCase):
 
         suite_logger.info("\n🚀 [STARTUP] Initializing BGR Simulation Test Suite")
         
-        # Instead of waiting for just the clock, wait for the vehicle odometry to ensure Gazebo has fully spawned the car.
-        suite_logger.info("⏲️  [WAIT] Waiting for Gazebo to spawn the vehicle and publish /model/bgr/odometry...")
+        # Instead of just waiting for Odometry (Stage 2), we wait for /robot/wheels_status.
+        # This topic is published by car_wheel_publisher.py in Stage 3, proving that 
+        # the ENTIRE launch pipeline has fully executed and all nodes are live.
+        suite_logger.info("⏲️  [WAIT] Waiting for Stage 3 tooling to publish /robot/wheels_status...")
         startup_node = rclpy.create_node('test_startup_node')
-        odom_ready = False
-        def odom_callback(msg):
-            nonlocal odom_ready
-            odom_ready = True
+        stage3_ready = False
+        def stage3_callback(msg):
+            nonlocal stage3_ready
+            stage3_ready = True
 
-        sub = startup_node.create_subscription(Odometry, '/model/bgr/odometry', odom_callback, qos_profile_sensor_data)
+        sub = startup_node.create_subscription(Float64MultiArray, '/robot/wheels_status', stage3_callback, qos_profile_sensor_data)
         
         start_wait = time.time()
-        # Allow up to 120s for Gazebo to cold-start, load the world, and spawn the car
-        while not odom_ready and time.time() - start_wait < 120.0:
+        # Allow up to 120s for Gazebo to cold-start, load the world, and spawn the car and tools
+        while not stage3_ready and time.time() - start_wait < 120.0:
             rclpy.spin_once(startup_node, timeout_sec=0.1)
             
         startup_node.destroy_node()
         
-        if odom_ready:
-            suite_logger.info("✅ [READY] Vehicle Odometry is active. Sensors are live. Proceeding to tests.")
-            suite_logger.info("⏲️  [WAIT] Waiting 2s for Gazebo UI to settle...")
-            time.sleep(2)
+        if stage3_ready:
+            suite_logger.info("✅ [READY] Stage 3 is active (/robot/wheels_status). Sensors and Tools are live. Proceeding to tests.")
+            suite_logger.info("⏲️  [WAIT] Waiting 5s for internal sensor pipelines to settle...")
+            time.sleep(5)
         else:
-            suite_logger.error("❌ [FATAL] Timeout waiting for /model/bgr/odometry. Spawner or physics failed to start.")
+            suite_logger.error("❌ [FATAL] Timeout waiting for /robot/wheels_status. Stage 3 logic failed to launch.")
 
     @classmethod
     def tearDownClass(cls):
