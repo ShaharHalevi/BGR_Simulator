@@ -140,6 +140,29 @@ def generate_launch_description():
         output='screen'
     )
 
+    # STAGE 1.5 GATE: GUI READINESS
+    # Deterministically waits for the Gazebo GUI to finish initializing its rendering 
+    # pipeline by checking for the existence of /gui/ services.
+    gui_ready_gate = ExecuteProcess(
+        cmd=['sh', '-c', 
+             'if [ "$1" = "True" ] || [ "$1" = "true" ] || [ "$1" = "1" ]; then '
+             '  echo "[STAGE 1.5] Headless mode detected. Skipping GUI readiness check."; '
+             '  exit 0; '
+             'fi; '
+             'echo "[STAGE 1.5] Waiting for Gazebo GUI services to initialize..."; '
+             'for i in $(seq 1 60); do '
+             '  if gz service -l | grep -q "/gui/"; then '
+             '    echo "[STAGE 1.5 COMPLETE] Gazebo GUI is ready."; '
+             '    exit 0; '
+             '  fi; '
+             '  sleep 1; '
+             'done; '
+             'echo "[STAGE 1.5 WARNING] GUI services not found after 60s. Proceeding anyway..."; '
+             'exit 0;',
+             'gui_gate_script', headless],
+        output='screen'
+    )
+
     # STAGE 2: VEHICLE SPAWN
     # Activates immediately upon Stage 1 completion.
     gz_spawn_entity = Node(
@@ -189,12 +212,14 @@ def generate_launch_description():
         package="bgr_description",
         executable="cone_service.py",
         name="cone_service",
-        output="screen"
+        output="screen",
+        parameters=[{"use_sim_time": True}],
     )
     noisy_sensor_node = Node(
         package="bgr_description",
         executable="noisy_sensor_publisher.py",
-        output="screen"
+        output="screen",
+        parameters=[{"use_sim_time": True}],
     )
     static_tf_node = Node(
         package="tf2_ros",
@@ -224,19 +249,22 @@ def generate_launch_description():
     # Each RegisterEventHandler watches for it's designated process to exit and
     # then executes the next step.
 
-    # Stage 1 → Stage 2: once /clock >= 0.1s, wait 3 seconds for GUI rendering to settle, then spawn vehicle + monitor odometry.
-    stage1_to_stage2 = RegisterEventHandler(
+    # Stage 1 → Stage 1.5: once /clock >= 0.1s, start checking for GUI.
+    stage1_to_stage15 = RegisterEventHandler(
         OnProcessExit(
             target_action=stage1_gate,
+            on_exit=[gui_ready_gate]
+        )
+    )
+
+    # Stage 1.5 → Stage 2: once GUI is ready (or skipped), spawn vehicle.
+    stage15_to_stage2 = RegisterEventHandler(
+        OnProcessExit(
+            target_action=gui_ready_gate,
             on_exit=[
-                LogInfo(msg='[STAGE 2 START] World fully loaded. Buffering 3s for GUI rendering...'),
-                TimerAction(
-                    period=3.0,
-                    actions=[
-                        gz_spawn_entity,
-                        stage2_gate,
-                    ]
-                )
+                LogInfo(msg='[STAGE 2 START] Spawning vehicle and monitoring odometry...'),
+                gz_spawn_entity,
+                stage2_gate,
             ]
         )
     )
@@ -269,6 +297,7 @@ def generate_launch_description():
         gazebo,                     # starts the simulator
         gz_ros2_bridge,             # bridges /clock and sensor topics
         stage1_gate,                # starts immediately, watches for /clock
-        stage1_to_stage2,           # chains Stage 1 → Stage 2 on /clock ready
+        stage1_to_stage15,          # chains Stage 1 → Stage 1.5
+        stage15_to_stage2,          # chains Stage 1.5 → Stage 2
         stage2_to_stage3,           # chains Stage 2 → Stage 3 on odometry ready
     ])
