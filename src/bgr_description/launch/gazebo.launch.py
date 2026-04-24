@@ -133,40 +133,34 @@ def generate_launch_description():
     )
 
     # STAGE 1 GATE
-    # Process blocks until single /clock message is received, meaning Gazebo
-    # and ROS bridge are loaded. Triggers Stage 2 when message received.
+    # Triggers Stage 2 when simulation time ticks past 0.1s, guaranteeing that the world 
+    # is fully loaded (avoiding long waits on heavy maps with low RTF).
     stage1_gate = ExecuteProcess(
-        cmd=['ros2', 'topic', 'echo', '--once', '/clock'],
+        cmd=['python3', '-c', "import rclpy; from rosgraph_msgs.msg import Clock; rclpy.init(); node=rclpy.create_node('gate'); node.create_subscription(Clock, '/clock', lambda msg: exit(0) if (msg.clock.sec > 0 or msg.clock.nanosec >= 100000000) else None, 1); rclpy.spin(node)"],
         output='screen'
     )
 
     # STAGE 2: VEHICLE SPAWN
-    # Activates after Stage 1. Added 7 sec buffer to allow extra loading time.
-    gz_spawn_entity = TimerAction(
-        period=7.0,
-        actions=[
-            LogInfo(msg='[STAGE 2 START] Clock detected. Buffering for physics meshes...'),
-            Node(
-                package="ros_gz_sim",
-                executable="create",
-                output="screen",
-                arguments=[
-                    "-world", "generated_world",
-                    "-topic", "robot_description",
-                    "-name", "bgr",
-                    "-x", "0.0",
-                    "-y", "0.0",
-                    "-z", "1",
-                ],
-            )
-        ]
+    # Activates immediately upon Stage 1 completion.
+    gz_spawn_entity = Node(
+        package="ros_gz_sim",
+        executable="create",
+        output="screen",
+        arguments=[
+            "-world", "generated_world",
+            "-topic", "robot_description",
+            "-name", "bgr",
+            "-x", "0.0",
+            "-y", "0.0",
+            "-z", "1",
+        ],
     )
 
     # STAGE 2 GATE
-    # Blocks until the vehicle's odometry topic appears,
+    # Blocks until the vehicle's odometry topic starts publishing.
     # This happens once the URDF loaded into the Gazebo.
     stage2_gate = ExecuteProcess(
-        cmd=['ros2', 'topic', 'echo', '--once', '/model/bgr/odometry'],
+        cmd=['python3', '-c', "import rclpy; from nav_msgs.msg import Odometry; rclpy.init(); node=rclpy.create_node('gate'); node.create_subscription(Odometry, '/model/bgr/odometry', lambda msg: exit(0), 1); rclpy.spin(node)"],
         output='screen'
     )
 
@@ -209,8 +203,8 @@ def generate_launch_description():
         output="screen"
     )
 
-    # STAGE 3 GATE: GUI TRACKER WITH RETRY LOOP
-    # Tries to send follow command up repeatedly, when the GUI is up.
+    # STAGE 3 GATE: GUI tracker with tracking loop.
+    # Sends follow command up repeatedly until the GUI successfully follows the car.
     # Skipped in headless.
     car_tracker = ExecuteProcess(
         cmd=['bash', '-c',
@@ -230,13 +224,19 @@ def generate_launch_description():
     # Each RegisterEventHandler watches for it's designated process to exit and
     # then executes the next step.
 
-    # Stage 1 → Stage 2: once /clock is seen, spawn vehicle + monitor odometry.
+    # Stage 1 → Stage 2: once /clock >= 0.1s, wait 3 seconds for GUI rendering to settle, then spawn vehicle + monitor odometry.
     stage1_to_stage2 = RegisterEventHandler(
         OnProcessExit(
             target_action=stage1_gate,
             on_exit=[
-                gz_spawn_entity,
-                stage2_gate,
+                LogInfo(msg='[STAGE 2 START] World fully loaded. Buffering 3s for GUI rendering...'),
+                TimerAction(
+                    period=3.0,
+                    actions=[
+                        gz_spawn_entity,
+                        stage2_gate,
+                    ]
+                )
             ]
         )
     )
