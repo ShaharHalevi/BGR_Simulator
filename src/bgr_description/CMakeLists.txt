@@ -12,6 +12,7 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CarPose.msg"
   "msg/Cone.msg"
+  "msg/ConeArray.msg"
   "srv/GetTrack.srv"
 )
 
@@ -33,6 +34,7 @@ install(PROGRAMS
   car_state_publisher.py
   car_dashboard.py
   cone_service.py
+  visible_cones.py
   noisy_sensor_publisher.py
   reset_car.py
   DESTINATION lib/${PROJECT_NAME}

@@ -215,6 +215,16 @@ def generate_launch_description():
         output="screen",
         parameters=[{"use_sim_time": True}],
     )
+    visible_cones_node = Node(
+        package="bgr_description",
+        executable="visible_cones.py",
+        name="visible_cones_node",
+        output="screen",
+        parameters=[{
+            "use_sim_time": True,
+            "world_name": LaunchConfiguration("world_name")
+        }],
+    )
     noisy_sensor_node = Node(
         package="bgr_description",
         executable="noisy_sensor_publisher.py",
@@ -280,6 +290,7 @@ def generate_launch_description():
                 car_dashboard_node,             # starts the car dashboard GUI node
                 noisy_sensor_node,              # starts the IMU and GPS simulation node
                 cone_service_node,              # starts the cone service node
+                visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node
                 car_tracker,                    # makes GUI follow the car
             ]
