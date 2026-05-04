@@ -128,7 +128,7 @@ def generate_launch_description():
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image",
         ],
-        remappings=[('/lidar/points', '/scan/points')],
+        remappings=[('/lidar/points', '/lidar/raw')],
         output="screen",
     )
 

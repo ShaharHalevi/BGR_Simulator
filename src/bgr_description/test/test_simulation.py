@@ -131,7 +131,7 @@ class BaseTestFixture(unittest.TestCase):
     def test_01_lidar_active(self):
         """Verification Phase 1: LiDAR Connectivity and Density"""
         self.node.get_logger().info('--- Verification Phase 1: LiDAR ---')
-        msg = self.wait_for_topic(PointCloud2, '/scan/points')
+        msg = self.wait_for_topic(PointCloud2, '/lidar/raw')
         self.assertIsNotNone(msg, "Failed: No PointCloud2 data on /scan/points (LiDAR)")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] LiDAR PointCloud detected with {msg.width * msg.height} points.')
 
