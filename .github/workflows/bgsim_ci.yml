@@ -2,14 +2,14 @@ name: ROS 2 CI
 
 on:
   push:
-    branches: [ main, GitActionsDocker, fix-sim-cones, Docker-CI_Flow-main ]
+    branches: [ main, Docker-CI_Flow-main ]
     paths:
       - 'src/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - '.github/workflows/bgsim_ci.yml'
   pull_request:
-    branches: [ main, GitActionsDocker, fix-sim-cones, Docker-CI_Flow-main ]
+    branches: [ main, Docker-CI_Flow-main ]
     paths:
       - 'src/**'
       - 'Dockerfile'
@@ -18,7 +18,7 @@ on:
 
 jobs:
   ros-build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4

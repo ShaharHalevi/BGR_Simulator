@@ -189,7 +189,12 @@ docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && sourc
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller joy_array_bridge.py"
 ```
 
-**Terminal 3 (Keyboard Input):** Launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
+**Terminal 3 (Keyboard Launch):** Launches the keyboard controller.
+```bash
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_controller keyboard_teleop.launch.py"
+```
+
+**Terminal 4 (Keyboard Input):** Launches the interactive keyboard script. *(Keep this terminal focused to capture your `w, a, s, d, x, q` keystrokes)*
 ```bash
 docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 run bgr_controller keyboard_teleop.py"
 ```
