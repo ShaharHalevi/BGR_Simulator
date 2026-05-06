@@ -12,22 +12,21 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CarPose.msg"
   "msg/Cone.msg"
+  "msg/ConeArray.msg"
   "srv/GetTrack.srv"
 )
 
 # Export typesupport runtime dependency
 ament_export_dependencies(rosidl_default_runtime)
 
-# Install description files (meshes, urdf, launch, rviz)
-install(DIRECTORY meshes urdf launch rviz worlds
+# Install description files (meshes, urdf, launch, rviz) and the TracksV0 folder
+install(DIRECTORY meshes urdf launch rviz worlds ../TracksV0
   DESTINATION share/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_copyright_FOUND TRUE)
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
+  find_package(launch_testing_ament_cmake REQUIRED)
+  add_launch_test(test/test_simulation.py TIMEOUT 300)
 endif()
 
 install(PROGRAMS
@@ -35,7 +34,9 @@ install(PROGRAMS
   car_state_publisher.py
   car_dashboard.py
   cone_service.py
+  visible_cones.py
   noisy_sensor_publisher.py
+  reset_car.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

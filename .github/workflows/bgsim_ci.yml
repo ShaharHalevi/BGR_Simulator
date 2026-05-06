@@ -1,0 +1,53 @@
+name: ROS 2 CI
+
+on:
+  push:
+    branches: [ main, Docker-CI_Flow-main ]
+    paths:
+      - 'src/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.github/workflows/bgsim_ci.yml'
+  pull_request:
+    branches: [ main, Docker-CI_Flow-main ]
+    paths:
+      - 'src/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.github/workflows/bgsim_ci.yml'
+
+jobs:
+  ros-build-and-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          load: true
+          tags: bgr_simulator:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run ROS 2 Tests
+        run: |
+          mkdir -p test_results
+          docker run --rm -v $(pwd)/test_results:/ros2_ws/test_results bgr_simulator:ci bash -c "
+            source /opt/ros/jazzy/setup.bash &&
+            source install/setup.bash &&
+            colcon test --event-handlers console_direct+ --test-result-base test_results &&
+            colcon test-result --all --test-result-base test_results
+          "
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ros2-test-results
+          path: test_results/**/*.xml

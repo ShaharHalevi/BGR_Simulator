@@ -72,15 +72,8 @@
     </plugin>
   </gazebo>
 
-  <!-- Enforce steering mimic in physics (FL follows FR) -->
-  <gazebo>
-    <plugin filename="gz-sim-mimic-joint-system" name="gz::sim::systems::MimicJoint">
-      <joint_name>Steering_fl_joint</joint_name>
-      <mimicked_joint>Steering_fr_joint</mimicked_joint>
-      <multiplier>-1.0</multiplier>
-      <offset>0.0</offset>
-    </plugin>
-  </gazebo>
+  <!-- Note: Steering mimic handling in Gazebo Harmonic dart is not natively supported 
+       via the gz-sim-mimic-joint-system plugin. It relies on ros2_control to enforce it. -->
 
   <!-- Wheel slip plugin for better rolling behavior (all wheels) -->
   <gazebo>

@@ -50,8 +50,7 @@ class DashboardApp:
         self.root = root
         self.ros_node = ros_node
         self.root.title("Car Dashboard")
-        self.root.geometry("350x750-0+0") 
-        
+        self.root.geometry("350x750-0+0")
         # --- Internal Data Storage ---
         self.vel = [0.0, 0.0, 0.0]
         self.acc = [0.0, 0.0, 0.0]
@@ -213,6 +212,7 @@ def main():
     finally:
         if rclpy.ok():
             ros_node.destroy_node()
+        if rclpy.ok():
             rclpy.shutdown()
 
 if __name__ == '__main__':
