@@ -1,0 +1,66 @@
+# EKF publisher configuration
+#
+# /robot/datalogger_* = [abs_speed, pos_x, pos_y, pos_z, acc_x, acc_y, acc_z, roll_rate, pitch_rate, yaw_rate]
+# /robot/mcu_*        = [steering_angle, rpm_fl, rpm_fr, rpm_rl, rpm_rr]
+#
+# Units:
+# speed -> m/s
+# position -> m
+# acceleration -> m/s^2
+# angular rates -> rad/s
+# steering_angle -> rad
+# wheel speeds -> rpm
+
+ekf_publisher:
+  ros__parameters:
+    publish_rate_hz: 50.0
+    random_seed: 12345
+    gps_update_every_n_ticks: 5
+    enable_noise: true
+    publish_stamped_topics: true
+    max_joint_odom_skew_s: 0.05
+
+    steering_sign: 1.0
+    yaw_rate_sign: 1.0
+    rpm_fl_sign: 1.0
+    rpm_fr_sign: 1.0
+    rpm_rl_sign: 1.0
+    rpm_rr_sign: 1.0
+
+    gps_speed_noise_std: 0.05
+    gps_pos_x_noise_std: 2.0
+    gps_pos_y_noise_std: 2.0
+    gps_pos_z_noise_std: 0.10
+
+    acc_x_bias_initial: 0.0
+    acc_y_bias_initial: 0.0
+    gyro_z_bias_initial: 0.0
+
+    acc_x_noise_std: 0.05
+    acc_y_noise_std: 0.05
+    acc_z_noise_std: 0.05
+    roll_rate_noise_std: 0.001
+    pitch_rate_noise_std: 0.001
+    gyro_z_noise_std: 0.001
+
+    acc_x_bias_rw_std: 0.0003
+    acc_y_bias_rw_std: 0.0003
+    gyro_z_bias_rw_std: 0.0005
+
+    steering_bias: 0.0
+    steering_noise_std: 0.005
+    wheel_speed_scale: 0.0
+    rpm_fl_noise_std: 4.0
+    rpm_fr_noise_std: 4.0
+    rpm_rl_noise_std: 4.0
+    rpm_rr_noise_std: 4.0
+
+    # Mild wheel-speed non-idealities for sim-to-real realism without turning the
+    # publisher into a full slip simulator.
+    wheel_speed_common_scale_bias_std: 0.01
+    wheel_speed_per_wheel_scale_bias_std: 0.005
+    wheel_speed_dynamic_scale_base_std: 0.0015
+    wheel_speed_dynamic_scale_ax_gain: 0.004
+    wheel_speed_dynamic_scale_yaw_gain: 0.02
+    wheel_speed_dynamic_scale_tau_s: 0.35
+    wheel_speed_dynamic_scale_max_abs: 0.05

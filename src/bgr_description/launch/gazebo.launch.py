@@ -38,6 +38,7 @@ def generate_launch_description():
 
     # Where the package 'bgr_description' keeps its files.
     bgr_description = get_package_share_directory("bgr_description")
+    ekf_config = os.path.join(bgr_description, "config", "ekf_publisher.yaml")
 
     world_arg = DeclareLaunchArgument(
         'world_name',
@@ -231,6 +232,13 @@ def generate_launch_description():
         output="screen",
         parameters=[{"use_sim_time": True}],
     )
+    ekf_publisher_node = Node(
+        package="bgr_description",
+        executable="ekf_publisher.py",
+        name="ekf_publisher",
+        output="screen",
+        parameters=[ekf_config, {"use_sim_time": True}],
+    )
     static_tf_node = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
@@ -289,6 +297,7 @@ def generate_launch_description():
                 car_wheel_node,                 # starts the car wheel publisher node
                 car_dashboard_node,             # starts the car dashboard GUI node
                 noisy_sensor_node,              # starts the IMU and GPS simulation node
+                ekf_publisher_node,             # starts the ekf publisher node
                 cone_service_node,              # starts the cone service node
                 visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node
