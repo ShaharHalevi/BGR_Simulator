@@ -37,7 +37,6 @@ https://github.com/user-attachments/assets/27b3cb61-808b-4af2-99aa-c85f0a2a9ecf
 * **ROS 2 Control Integration:** Velocity and Position controllers for precise wheel command.
 * **Dynamic Tracks:** Load CSV based tracks (cones) directly into the simulation.
 * **Interactive Tools:**
-    * `track_gui.py`: Visual track selection and management.
     * `car_dashboard.py`: Real-time vehicle telemetry.
 * **Sensor Simulation:** Simulated Odometry, IMU (via Gazebo plugins), and Cameras.
 
@@ -101,8 +100,26 @@ Open a new terminal and enter:
 ```bash
 source install/setup.bash && ros2 launch bgr_description gazebo.launch.py
 ```
+**Note on Worlds:** You can select different tracks by passing the `world_name` argument. Available worlds:
+* `Acceleration.world` (Default)
+* `Skidpad.world`
+* `TrainingMap.world`
+* `CompetitionMap1.world`, `CompetitionMap2.world`, `CompetitionMap3.world`
+* `CompetitionMapTestday1.world`, `CompetitionMapTestday2.world`, `CompetitionMapTestday3.world`
 
-**Tip:** This also starts the car_dashboard and track_gui automatically.
+**Command to launch a specific world:**
+```bash
+source install/setup.bash && ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world
+```
+
+**Headless Mode:**
+If you want to run the simulation without the GUI (e.g., in Docker or on a server), use:
+```bash
+source install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True
+```
+
+
+**Tip:** To run both headless and world, combine both arguments above into the same line (with a space inbetween). Additionally, this also starts the car_dashboard automatically. 
 
 ### Step 2: Activate Controllers
 Once the simulation is running, spawn the ros2_control managers:
@@ -114,7 +131,7 @@ source install/setup.bash && ros2 launch bgr_controller controller.launch.py
 You should see output confirming `joint_state_broadcaster`, `forward_velocity_controller`, and `forward_position_controller` are active.
 
 ### Step 3: Drive the Car (Keyboard Teleop)
-To drive the car using your keyboard, run the teleoperation script:
+To drive the car using your keyboard, run the teleoperation script in order:
 Keyboard setup launcher:
 Open a new terminal and enter:
 ```bash
@@ -144,11 +161,15 @@ source install/setup.bash && ros2 run bgr_controller keyboard_teleop.py
 
 **Gazebo crashes on VM?** Ensure "Accelerate 3D Graphics" is enabled in your VM settings, or try running with `LIBGL_ALWAYS_SOFTWARE=1` if you lack a GPU.
 
+
+> [!IMPORTANT]
+> **Graceful Shutdown:** To ensure all nodes and the simulation state are saved/closed correctly, always shut down your terminals in the **reverse order** they were opened (LIFO/Stack order). Close Step 3 (Teleop), then Step 2 (Controllers), and finally Step 1 (Gazebo).
+
 ---
 
 **Maintained by:** BGRacing Simulator Team
 
-
+---
 
 #  🏎️ Docker Setup
 
