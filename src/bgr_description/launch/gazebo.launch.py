@@ -6,9 +6,10 @@ Unlike gazebo.launch.py (which uses blind TimerActions), this file uses
 Readiness Verification Gates: each stage only fires when the previous one
 is *actually* ready, not after an arbitrary fixed delay.
 
-Stage 1 → Gazebo + Bridge start. Gate: wait for /clock.
-Stage 2 → Vehicle spawns.         Gate: wait for /model/bgr/odometry.
-Stage 3 → All tooling launches.   Gate: GUI tracker retry-loop.
+Stage 1 → Gazebo + Clock Bridge. Gate: wait for /clock.
+Stage 2 → GUI readiness check.   Gate: wait for /gui/ services.
+Stage 3 → Vehicle + Sensor Bridge. Gate: wait for /model/bgr/odometry.
+Stage 4 → All tooling launches.   Gate: GUI tracker retry-loop.
 """
 
 import os
@@ -140,54 +141,53 @@ def generate_launch_description():
         output='screen'
     )
 
-    # STAGE 1.5 GATE: GUI READINESS
+    # STAGE 2 GATE: GUI READINESS
     # Deterministically waits for the Gazebo GUI to finish initializing its rendering 
     # pipeline by checking for the existence of /gui/ services.
     gui_ready_gate = ExecuteProcess(
         cmd=['sh', '-c', 
              'if [ "$1" = "True" ] || [ "$1" = "true" ] || [ "$1" = "1" ]; then '
-             '  echo "[STAGE 1.5] Headless mode detected. Skipping GUI readiness check."; '
+             '  echo "[STAGE 2] Headless mode detected. Skipping GUI readiness check."; '
              '  exit 0; '
              'fi; '
-             'echo "[STAGE 1.5] Waiting for Gazebo GUI services to initialize..."; '
+             'echo "[STAGE 2] Waiting for Gazebo GUI services to initialize..."; '
              'for i in $(seq 1 60); do '
              '  if gz service -l | grep -q "/gui/"; then '
-             '    echo "[STAGE 1.5 COMPLETE] Gazebo GUI is ready."; '
+             '    echo "[STAGE 2 COMPLETE] Gazebo GUI is ready."; '
              '    exit 0; '
              '  fi; '
              '  sleep 1; '
              'done; '
-             'echo "[STAGE 1.5 WARNING] GUI services not found after 60s. Proceeding anyway..."; '
+             'echo "[STAGE 2 WARNING] GUI services not found after 60s. Proceeding anyway..."; '
              'exit 0;',
              'gui_gate_script', headless],
         output='screen'
     )
 
-    # STAGE 2: VEHICLE SPAWN
-    # Activates immediately upon Stage 1 completion.
-    gz_spawn_entity = Node(
-        package="ros_gz_sim",
-        executable="create",
-        output="screen",
-        arguments=[
-            "-world", "generated_world",
-            "-topic", "robot_description",
-            "-name", "bgr",
-            "-x", "0.0",
-            "-y", "0.0",
-            "-z", "1",
-        ],
+    # STAGE 3: VEHICLE SPAWN
+    # Activates immediately upon Stage 2 completion.
+    # Wraps the spawn command in a retry loop to prevent timeouts on slow hardware
+    # when loading heavy worlds (like CompetitionMap1.world).
+    gz_spawn_entity = ExecuteProcess(
+        cmd=['bash', '-c',
+             'for i in $(seq 1 30); do '
+             'echo "[STAGE 3] Attempting to spawn vehicle..." && '
+             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 1 && '
+             'echo "[STAGE 3 SUCCESS] Vehicle spawn request accepted!" && break; '
+             'echo "[STAGE 3 WARNING] Spawn request timed out or failed. Gazebo is busy loading world. Retrying in 2s..." && '
+             'sleep 2; done'],
+        output='screen'
     )
 
-    # STAGE 2 GATE
+    # STAGE 3 GATE
     # Blocks until the vehicle's odometry topic starts publishing.
     # This happens once the URDF loaded into the Gazebo.
-    stage2_gate = ExecuteProcess(
+    stage3_gate = ExecuteProcess(
         cmd=['python3', '-c', "import rclpy; from nav_msgs.msg import Odometry; rclpy.init(); node=rclpy.create_node('gate'); node.create_subscription(Odometry, '/model/bgr/odometry', lambda msg: exit(0), 1); rclpy.spin(node)"],
         output='screen'
     )
 
-    # STAGE 3 NODES
+    # STAGE 4 NODES
     # Originally all nodes fired at once. Now the car nodes fire up only after
     # the previous stages completed, making sure the car physically exists.
     car_state_node = Node(
@@ -259,32 +259,32 @@ def generate_launch_description():
     # Each RegisterEventHandler watches for it's designated process to exit and
     # then executes the next step.
 
-    # Stage 1 → Stage 1.5: once /clock >= 0.1s, start checking for GUI.
-    stage1_to_stage15 = RegisterEventHandler(
+    # Stage 1 → Stage 2: once /clock >= 0.1s, start checking for GUI.
+    stage1_to_stage2 = RegisterEventHandler(
         OnProcessExit(
             target_action=stage1_gate,
             on_exit=[gui_ready_gate]
         )
     )
 
-    # Stage 1.5 → Stage 2: once GUI is ready (or skipped), spawn vehicle.
-    stage15_to_stage2 = RegisterEventHandler(
+    # Stage 2 → Stage 3: once GUI is ready (or skipped), spawn vehicle and sensor bridge.
+    stage2_to_stage3 = RegisterEventHandler(
         OnProcessExit(
             target_action=gui_ready_gate,
             on_exit=[
-                LogInfo(msg='[STAGE 2 START] Spawning vehicle and monitoring odometry...'),
+                LogInfo(msg='[STAGE 3 START] Spawning vehicle and monitoring odometry...'),
                 gz_spawn_entity,
-                stage2_gate,
+                stage3_gate,
             ]
         )
     )
 
-    # Stage 2 → Stage 3: when odometry appears, launch the car related nodes.
-    stage2_to_stage3 = RegisterEventHandler(
+    # Stage 3 → Stage 4: when odometry appears, launch the car related nodes.
+    stage3_to_stage4 = RegisterEventHandler(
         OnProcessExit(
-            target_action=stage2_gate,
+            target_action=stage3_gate,
             on_exit=[
-                LogInfo(msg='[STAGE 3 START] Vehicle is responsive. Launching tooling...'),
+                LogInfo(msg='[STAGE 4 START] Vehicle is responsive. Launching tooling...'),
                 car_state_node,                 # starts the car state publisher node
                 car_wheel_node,                 # starts the car wheel publisher node
                 car_dashboard_node,             # starts the car dashboard GUI node
@@ -308,7 +308,7 @@ def generate_launch_description():
         gazebo,                     # starts the simulator
         gz_ros2_bridge,             # bridges /clock and sensor topics
         stage1_gate,                # starts immediately, watches for /clock
-        stage1_to_stage15,          # chains Stage 1 → Stage 1.5
-        stage15_to_stage2,          # chains Stage 1.5 → Stage 2
-        stage2_to_stage3,           # chains Stage 2 → Stage 3 on odometry ready
+        stage1_to_stage2,           # chains Stage 1 → Stage 2
+        stage2_to_stage3,           # chains Stage 2 → Stage 3
+        stage3_to_stage4,           # chains Stage 3 → Stage 4 on odometry ready
     ])
