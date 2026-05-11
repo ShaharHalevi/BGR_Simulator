@@ -101,14 +101,14 @@ class SuperStateSpy(Node):
         
         # 8. Console Logging (Optional - for debugging)
         # Using carriage return (\r) to update the same line
-        print(
-            f"\r"
-            f"POS: [{pos_x:.2f}, {pos_y:.2f}] | "
-            f"VEL: [{vel_x:.2f}, {vel_y:.2f}] | "
-            f"ACC: [{acc_x:.2f}, {acc_y:.2f}] | "
-            f"YAW: {math.degrees(yaw):.1f}°   ", 
-            end=""
-        )
+        # print(
+        #     f"\r"
+        #     f"POS: [{pos_x:.2f}, {pos_y:.2f}] | "
+        #     f"VEL: [{vel_x:.2f}, {vel_y:.2f}] | "
+        #     f"ACC: [{acc_x:.2f}, {acc_y:.2f}] | "
+        #     f"YAW: {math.degrees(yaw):.1f}°   ", 
+        #     end=""
+        # )
 
     # Movement helper function
     def euler_from_quaternion(self, x, y, z, w):
