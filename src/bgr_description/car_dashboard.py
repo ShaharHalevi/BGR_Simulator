@@ -158,8 +158,16 @@ class DashboardApp:
         self.velocity_graph = VelocityGraph(graph_card)
 
     def process_ros_events(self):
-        rclpy.spin_once(self.ros_node, timeout_sec=0)
-        self.update_display()
+        if not rclpy.ok():
+            self.root.destroy()
+            return
+
+        try:
+            rclpy.spin_once(self.ros_node, timeout_sec=0)
+            self.update_display()
+        except Exception:
+            pass
+
         self.root.after(50, self.process_ros_events)
 
     def update_data(self, data):
