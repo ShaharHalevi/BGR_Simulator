@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FastDDS profile: forces UDP transport (disables shared memory).
+
+  WHY: By default, Fast DDS detects that publisher and subscriber are
+  on the "same machine" and uses shared memory (/dev/shm) for speed.
+  Even with `ipc: host` in docker-compose, the SHM segment paths can
+  mismatch between host and container namespaces, silently dropping
+  data payloads while topic discovery still works via UDP.
+
+  USAGE:
+    Export this on the HOST before running any ros2 command:
+      export FASTRTPS_DEFAULT_PROFILES_FILE=<absolute path to this file>
+
+    It is also set automatically inside the container via docker-compose.
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>udp_transport</transport_id>
+            <type>UDPv4</type>
+        </transport_descriptor>
+    </transport_descriptors>
+
+    <participant profile_name="no_shm_participant" is_default_participant="true">
+        <rtps>
+            <userTransports>
+                <transport_id>udp_transport</transport_id>
+            </userTransports>
+            <useBuiltinTransports>false</useBuiltinTransports>
+        </rtps>
+    </participant>
+
+</profiles>

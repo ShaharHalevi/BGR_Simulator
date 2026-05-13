@@ -216,7 +216,7 @@ def generate_launch_description():
         package="bgr_description",
         executable="car_dashboard.py",
         output="screen",
-        condition=UnlessCondition(headless) # In headless mode this is irrelevant
+        # condition=UnlessCondition(headless) # In headless mode this is irrelevant
     )
     cone_service_node = Node(
         package="bgr_description",
