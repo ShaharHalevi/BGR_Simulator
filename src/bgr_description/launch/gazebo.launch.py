@@ -247,6 +247,11 @@ def generate_launch_description():
         arguments=["--x", "0", "--y", "0", "--z", "0", "--roll", "0", "--pitch", "0", "--yaw", "0", "--frame-id", "base_link", "--child-frame-id", "bgr/base_footprint/lidar"],
         output="screen"
     )
+    controller_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            FindPackageShare('bgr_controller'), '/launch/controller.launch.py'
+        ])
+    )
 
     # STAGE 3 GATE: GUI tracker with tracking loop.
     # Sends follow command up repeatedly until the GUI successfully follows the car.
@@ -290,6 +295,16 @@ def generate_launch_description():
         )
     )
 
+    stage4_to_controllers = RegisterEventHandler(
+        OnProcessExit(
+            target_action=stage3_gate,
+            on_exit=[
+                LogInfo(msg='[CONTROLLERS] Spawning joint controllers...'),
+                controller_launch,              # spawns joint_state_broadcaster + velocity/position controllers
+            ]
+        )
+    )
+
     # Stage 3 → Stage 4: when odometry appears, launch the car related nodes.
     stage3_to_stage4 = RegisterEventHandler(
         OnProcessExit(
@@ -322,4 +337,5 @@ def generate_launch_description():
         stage1_to_stage2,           # chains Stage 1 → Stage 2
         stage2_to_stage3,           # chains Stage 2 → Stage 3
         stage3_to_stage4,           # chains Stage 3 → Stage 4 on odometry ready
+        stage4_to_controllers,      # chains Stage 3 → Controllers (runs in parallel with Stage 4)
     ])
