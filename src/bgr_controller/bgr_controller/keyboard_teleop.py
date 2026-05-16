@@ -31,9 +31,9 @@ class KeyboardTeleop(Node):
         self.speed = 0.0
         self.steer = 0.0
         self.speed_step = 1.0   
-        self.steer_step = 0.1   
+        self.steer_step = 0.05
         self.max_speed = 20.0
-        self.max_steer = 1.0
+        self.max_steer = 0.384
 
         self.settings = termios.tcgetattr(sys.stdin)
 

@@ -20,8 +20,8 @@
   <xacro:property name="wheelbase"    value="2.0368"/>   
 
    <!-- Mass and steering limits -->
-  <xacro:property name="body_mass"    value="50.0"/>
-  <xacro:property name="steer_limit"  value="0.6"/>     
+  <xacro:property name="body_mass"    value="286.0"/>
+  <xacro:property name="steer_limit"  value="0.384"/>     
   
   <!-- Bounding box used for base_link collision and inertia -->
   <xacro:property name="body_size_x"  value="2.0"/>

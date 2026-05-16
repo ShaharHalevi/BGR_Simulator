@@ -5,33 +5,33 @@
 
   <!-- Gazebo specific parameters -->
   <gazebo reference="Wheel_fl">
-    <mu1>1.2</mu1><mu2>1.2</mu2> <!-- coefficient of friction -->
+    <mu1>1</mu1><mu2>1</mu2> <!-- coefficient of friction -->
     <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction> <!-- friction parameters -->
+      <friction><ode><mu>1</mu><mu2>1</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction> <!-- friction parameters -->
       <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact> <!-- contact parameters -->
     </surface>
   </gazebo>
 
   <gazebo reference="Wheel_fr">
-    <mu1>1.2</mu1><mu2>1.2</mu2>
+    <mu1>1</mu1><mu2>1</mu2>
     <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
+      <friction><ode><mu>1</mu><mu2>1</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
       <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact>
     </surface>
   </gazebo>
 
   <gazebo reference="Wheel_rl">
-    <mu1>1.2</mu1><mu2>1.2</mu2>
+    <mu1>1</mu1><mu2>1</mu2>
     <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
+      <friction><ode><mu>1</mu><mu2>1</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
       <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact>
     </surface>
   </gazebo>
 
   <gazebo reference="Wheel_rr">
-    <mu1>1.2</mu1><mu2>1.2</mu2>
+    <mu1>1</mu1><mu2>1</mu2>
     <surface>
-      <friction><ode><mu>1.2</mu><mu2>1.2</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
+      <friction><ode><mu>1</mu><mu2>1</mu2><slip1>0.01</slip1><slip2>0.01</slip2></ode></friction>
       <contact><ode><kp>1000000.0</kp><kd>1.0</kd><max_vel>0.1</max_vel><min_depth>0.001</min_depth></ode></contact>
     </surface>
   </gazebo>
@@ -79,20 +79,20 @@
   <gazebo>
     <plugin filename="gz-sim-wheel-slip-system" name="gz::sim::systems::WheelSlip">
       <wheel link_name="Wheel_rr">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.0000333</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.0001</slip_compliance_longitudinal>
       </wheel>
       <wheel link_name="Wheel_rl">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.0000333</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.0001</slip_compliance_longitudinal>
       </wheel>
       <wheel link_name="Wheel_fr">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.0000333</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.0001</slip_compliance_longitudinal>
       </wheel>
       <wheel link_name="Wheel_fl">
-        <slip_compliance_lateral>0.05</slip_compliance_lateral>
-        <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <slip_compliance_lateral>0.0000333</slip_compliance_lateral>
+        <slip_compliance_longitudinal>0.0001</slip_compliance_longitudinal>
       </wheel>
     </plugin>
   </gazebo>
