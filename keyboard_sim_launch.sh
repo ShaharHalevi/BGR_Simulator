@@ -5,6 +5,16 @@
 # (Tmux Edition)
 # ==========================================
 
+# Tmux must be installed to run this script
+if ! command -v tmux &> /dev/null; then
+    echo "tmux is not installed. Attempting to install..."
+    if command -v apt-get &> /dev/null; then
+        sudo apt-get update && sudo apt-get install -y tmux
+    else
+        echo "Error: tmux is required but not installed, and apt-get is not available."
+        exit 1
+    fi
+fi
 
 
 
@@ -12,18 +22,22 @@
 # killall -9 ros2 ros2-daemon gz ruby rviz2 tmux 2>/dev/null && pkill -9 -f "bgr_"
 
 
-
-# 1. Killing all previous processes to verify startup is secure
+# ==============================================================================
+# 1. NUCLEAR CLEANUP
+# This step ensures a clean, secure startup by terminating any orphaned processes,
+# container conflicts, or leftover cache files from previous runs. Specifically:
+# - Stops conflicting Docker containers (e.g., bgr_simulator) running on the host network.
+# - Kills wrapper scripts, multiplexers, and bridges (ros2, tmux, parameter_bridge).
+# - Terminates all Gazebo Sim / Ignition Gazebo server and GUI processes.
+# - Cleans up core ROS 2 nodes (state publishers, control nodes) that easily get orphaned.
+# - Stops specific simulation nodes and Python utilities (bgr_description, bgr_controller, car_dashboard, keyboard_teleop).
+# - Clears temporary directory caches, Ignition/Gazebo configuration, and FastDDS shared memory.
+# ==============================================================================
 echo "[1/3] Running Nuclear Cleanup..."
-# Stop clashing Docker containers if running on host network
 docker stop bgr_simulator 2>/dev/null || true
-# Kill wrapper scripts, multiplexers, and bridges
 killall -9 ros2 ros2-daemon gz ruby rviz2 tmux parameter_bridge 2>/dev/null
-# Kill actual Gazebo Sim C++ engines (server and GUI)
 killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
-# Kill core ROS 2 C++ nodes that easily get orphaned
 killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
-# Kill specific python scripts and package nodes
 pkill -9 -f "bgr_description" 2>/dev/null
 pkill -9 -f "bgr_controller" 2>/dev/null
 pkill -9 -f "car_dashboard.py" 2>/dev/null
@@ -32,8 +46,9 @@ rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps
 echo "Cleanup complete."
 sleep 1
 
-# 2. Build Workspace
+# 2. Build Workspace (Clearing the build, install, log folders to avoid conflicts)
 echo "[2/3] Building Workspace..."
+rm -rf build/ install/ log/
 colcon build --symlink-install
 
 echo "[3/3] Launching Tmux Session..."
