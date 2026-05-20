@@ -216,7 +216,7 @@ def generate_launch_description():
         package="bgr_description",
         executable="car_dashboard.py",
         output="screen",
-        # condition=UnlessCondition(headless) # In headless mode this is irrelevant
+        condition=UnlessCondition('true' if os.environ.get('GITHUB_ACTIONS') == 'true' else 'false') # Won't display in Git Actions
     )
     cone_service_node = Node(
         package="bgr_description",
