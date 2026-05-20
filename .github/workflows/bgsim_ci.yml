@@ -35,10 +35,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Run ROS 2 Tests
+      - name: Run Simulation Launch & Tests
         run: |
           mkdir -p test_results
-          docker run --rm -v $(pwd)/test_results:/ros2_ws/test_results bgr_simulator:ci bash -c "
+          docker run --rm -e GITHUB_ACTIONS=true -v $(pwd)/test_results:/ros2_ws/test_results bgr_simulator:ci bash -c "
             source /opt/ros/jazzy/setup.bash &&
             source install/setup.bash &&
             colcon test --event-handlers console_direct+ --test-result-base test_results &&

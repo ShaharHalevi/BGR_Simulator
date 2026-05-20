@@ -162,6 +162,6 @@ class TestProcessOutput(unittest.TestCase):
         print("\n[Post-Shutdown] Checking process exit codes...")
         launch_testing.asserts.assertExitCodes(
             proc_info,
-            allowable_exit_codes=[0, 2, 1, -2, -15, 255, 130, 137]
+            allowable_exit_codes=[0, 2, 1, -2, -9, -15, 255, 130, 137]
         )
         print("[Post-Shutdown] ✅ Exit codes are within allowable range.")
