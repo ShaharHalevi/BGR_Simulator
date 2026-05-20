@@ -74,7 +74,8 @@ cleanup() {
     killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null
     killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
     killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
-    pkill -9 -f "bgr_" 2>/dev/null
+    pkill -9 -f "bgr_description" 2>/dev/null
+    pkill -9 -f "bgr_controller" 2>/dev/null
     pkill -9 -f "car_dashboard.py" 2>/dev/null
     pkill -9 -f "keyboard_teleop" 2>/dev/null
     rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds*
