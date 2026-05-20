@@ -19,7 +19,7 @@ fi
 
 
 # NOTE: If for any reason you do not close the simulator down gracefully, please enter this into the terminal to kill all zombie processes in the background!!
-# killall -9 ros2 ros2-daemon gz ruby rviz2 tmux 2>/dev/null && pkill -9 -f "bgr_"
+# killall -9 ros2 ros2-daemon gz ruby rviz2 2>/dev/null && pkill -9 -f "bgr_"
 
 
 # ==============================================================================
@@ -35,7 +35,7 @@ fi
 # ==============================================================================
 echo "[1/3] Running Nuclear Cleanup..."
 docker stop bgr_simulator 2>/dev/null || true
-killall -9 ros2 ros2-daemon gz ruby rviz2 tmux parameter_bridge 2>/dev/null
+killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null
 killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
 killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
 pkill -9 -f "bgr_description" 2>/dev/null
@@ -127,7 +127,7 @@ cleanup() {
     
     echo "Running final nuclear sweep..."
     docker stop bgr_simulator 2>/dev/null || true
-    killall -9 ros2 ros2-daemon gz ruby rviz2 tmux parameter_bridge 2>/dev/null
+    killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null
     killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
     killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
     pkill -9 -f "bgr_" 2>/dev/null

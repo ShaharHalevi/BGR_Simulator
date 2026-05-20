@@ -10,7 +10,7 @@ echo "[1/3] Running Nuclear Cleanup..."
 # Stop clashing Docker containers if running on host network
 docker stop bgr_simulator 2>/dev/null || true
 # Kill wrapper scripts, multiplexers, and bridges
-killall -9 ros2 ros2-daemon gz ruby rviz2 tmux parameter_bridge 2>/dev/null
+killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null
 # Kill actual Gazebo Sim C++ engines (server and GUI)
 killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
 # Kill core ROS 2 C++ nodes that easily get orphaned
@@ -71,7 +71,7 @@ cleanup() {
     
     echo "Running final nuclear sweep..."
     docker stop bgr_simulator 2>/dev/null || true
-    killall -9 ros2 ros2-daemon gz ruby rviz2 tmux parameter_bridge 2>/dev/null
+    killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null
     killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
     killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
     pkill -9 -f "bgr_" 2>/dev/null
