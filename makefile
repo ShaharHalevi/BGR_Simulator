@@ -13,7 +13,7 @@ clean:
 	rm -rf build/
 
 build: 
-	colcon build --symlink-install
+	colcon build
 
 gz:
 	source install/setup.bash && ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-false}

@@ -38,6 +38,7 @@ services:
     #           capabilities: [gpu]
     command: >
       bash -c "source /opt/ros/jazzy/setup.bash &&
-               colcon build --symlink-install &&
+               rm -rf build/ install/ log/ &&
+               colcon build &&
                source /ros2_ws/install/setup.bash &&
-               ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-true}"
+               ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-false}"

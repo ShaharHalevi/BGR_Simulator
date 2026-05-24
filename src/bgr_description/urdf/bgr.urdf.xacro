@@ -5,10 +5,6 @@
   <xacro:arg name="is_ignition" default="true"/>
 
 
-  <!-- External includes-->
-  <xacro:include filename="$(find bgr_description)/urdf/bgr_gazebo.xacro"/>
-  <xacro:include filename="$(find bgr_description)/urdf/bgr_ros2_control.xacro"/>
-
   <!-- === Basic params === -->
    
   <!-- Wheel geometry (radius/width) and chassis dimensions -->
@@ -27,6 +23,10 @@
   <xacro:property name="body_size_x"  value="2.0"/>
   <xacro:property name="body_size_y"  value="1.0"/>
   <xacro:property name="body_size_z"  value="0.5"/>
+
+  <!-- External includes-->
+  <xacro:include filename="$(find bgr_description)/urdf/bgr_gazebo.xacro"/>
+  <xacro:include filename="$(find bgr_description)/urdf/bgr_ros2_control.xacro"/>
   
   <!-- === Base footprint === -->
   <link name="base_footprint"/>
@@ -53,7 +53,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://bgr_description/meshes/visual/base_link.STL"/>
+        <mesh filename="package://bgr_description/meshes/visual/base_link.stl"/>
       </geometry>
       <material name=""><color rgba="0.79216 0.81961 0.93333 1"/></material>
     </visual>
@@ -115,15 +115,15 @@
 
   <!-- === Wheels and Joints === -->
   <!-- rear wheels -->
-  <xacro:wheel_link name="Wheel_rl" visual_mesh="package://bgr_description/meshes/visual/Wheel_rl.STL"/>
-  <xacro:wheel_link name="Wheel_rr" visual_mesh="package://bgr_description/meshes/visual/Wheel_rr.STL"/>
+  <xacro:wheel_link name="Wheel_rl" visual_mesh="package://bgr_description/meshes/visual/Wheel_rl.stl"/>
+  <xacro:wheel_link name="Wheel_rr" visual_mesh="package://bgr_description/meshes/visual/Wheel_rr.stl"/>
 
   <!-- front wheels with steering stubs -->
   <xacro:stub_link name="Steering_fl"/>
-  <xacro:wheel_link name="Wheel_fl" visual_mesh="package://bgr_description/meshes/visual/Wheel_fl.STL"/>
+  <xacro:wheel_link name="Wheel_fl" visual_mesh="package://bgr_description/meshes/visual/Wheel_fl.stl"/>
 
   <xacro:stub_link name="Steering_fr"/>
-  <xacro:wheel_link name="Wheel_fr" visual_mesh="package://bgr_description/meshes/visual/Wheel_fr.STL"/>
+  <xacro:wheel_link name="Wheel_fr" visual_mesh="package://bgr_description/meshes/visual/Wheel_fr.stl"/>
 
   <!-- === Joints === -->
   <!-- rear left -->

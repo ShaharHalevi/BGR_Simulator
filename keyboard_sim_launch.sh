@@ -49,7 +49,7 @@ sleep 1
 # 2. Build Workspace (Clearing the build, install, log folders to avoid conflicts)
 echo "[2/3] Building Workspace..."
 rm -rf build/ install/ log/
-colcon build --symlink-install
+colcon build
 
 echo "[3/3] Launching Tmux Session..."
 

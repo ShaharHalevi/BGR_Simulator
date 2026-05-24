@@ -81,18 +81,26 @@
       <wheel link_name="Wheel_rr">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>100</wheel_normal_force>
       </wheel>
       <wheel link_name="Wheel_rl">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>100</wheel_normal_force>
       </wheel>
       <wheel link_name="Wheel_fr">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>100</wheel_normal_force>
       </wheel>
       <wheel link_name="Wheel_fl">
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>100</wheel_normal_force>
       </wheel>
     </plugin>
   </gazebo>
