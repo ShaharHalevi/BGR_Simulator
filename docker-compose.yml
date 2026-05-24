@@ -16,12 +16,14 @@ services:
     stdin_open: true # -i
     tty: true # -t
     network_mode: host
+    ipc: host # Fixes ROS 2 topic payload visibility outside docker
     devices:
       - /dev/dri:/dev/dri # Enables the integrated graphics of the cpu to be used (in case a dedicated gpu is not available)
     environment:
       - GZ_PARTITION=bgr_sim
       - DISPLAY=${DISPLAY:-host.docker.internal:0}
       - QT_X11_NO_MITSHM=1
+      - FASTDDS_BUILTIN_TRANSPORTS=UDPv4 # Force UDP, disable SHM transport (fixes host visibility)
     volumes:
       - ./src:/ros2_ws/src/bgr_simulator/src:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
@@ -38,4 +40,4 @@ services:
       bash -c "source /opt/ros/jazzy/setup.bash &&
                colcon build --symlink-install &&
                source /ros2_ws/install/setup.bash &&
-               ros2 launch bgr_description gazebo.launch.py headless:=${HEADLESS:-False}"
+               ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-true}"

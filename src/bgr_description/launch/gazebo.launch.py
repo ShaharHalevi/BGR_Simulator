@@ -117,11 +117,21 @@ def generate_launch_description():
         launch_arguments=[("gz_args", gz_args)],
     )
 
-    gz_ros2_bridge = Node(
+    # BRIDGE 1: SYSTEM CLOCK
+    # Only bridge /clock initially to keep startup overhead low.
+    gz_ros2_clock_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
+        output="screen",
+    )
+
+    # BRIDGE 2: VEHICLE SENSORS
+    # Bridges all vehicle-specific topics once the car is actually spawned.
+    gz_ros2_vehicle_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/world/generated_world/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
@@ -206,7 +216,7 @@ def generate_launch_description():
         package="bgr_description",
         executable="car_dashboard.py",
         output="screen",
-        condition=UnlessCondition(headless) # In headless mode this is irrelevant
+        condition=UnlessCondition('true' if os.environ.get('GITHUB_ACTIONS') == 'true' else 'false') # Won't display in Git Actions
     )
     cone_service_node = Node(
         package="bgr_description",
@@ -273,6 +283,7 @@ def generate_launch_description():
             target_action=gui_ready_gate,
             on_exit=[
                 LogInfo(msg='[STAGE 3 START] Spawning vehicle and monitoring odometry...'),
+                gz_ros2_vehicle_bridge,
                 gz_spawn_entity,
                 stage3_gate,
             ]
@@ -306,7 +317,7 @@ def generate_launch_description():
         gazebo_resource_path,       # tells GZ where to find assets
         robot_state_publisher_node, # starts robot_state_publisher
         gazebo,                     # starts the simulator
-        gz_ros2_bridge,             # bridges /clock and sensor topics
+        gz_ros2_clock_bridge,       # bridges /clock ONLY
         stage1_gate,                # starts immediately, watches for /clock
         stage1_to_stage2,           # chains Stage 1 → Stage 2
         stage2_to_stage3,           # chains Stage 2 → Stage 3

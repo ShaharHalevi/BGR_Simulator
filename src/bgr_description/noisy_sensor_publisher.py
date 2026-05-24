@@ -143,7 +143,7 @@ class NoisySensorPublisher(Node):
 
         # --- 6. Print Comparison (For you to see the effect) ---
         # We print True X vs Noisy X to show the drift
-        print(f"\rREAL X: {true_pos_x:6.2f}m  VS  NOISY GPS X: {noisy_pos_x:6.2f}m (Err: {abs(true_pos_x - noisy_pos_x):.2f}m)   ", end="")
+        # print(f"\rREAL X: {true_pos_x:6.2f}m  VS  NOISY GPS X: {noisy_pos_x:6.2f}m (Err: {abs(true_pos_x - noisy_pos_x):.2f}m)   ", end="")
 
     def euler_from_quaternion(self, x, y, z, w):
         """ Helper for quaternion conversion """
