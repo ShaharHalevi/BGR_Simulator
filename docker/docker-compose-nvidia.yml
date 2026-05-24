@@ -1,0 +1,15 @@
+###############################################################################
+# BGR_Simulator – NVIDIA Docker Compose Override
+#
+# Adds NVIDIA GPU access.
+#
+# Requires NVIDIA driver + NVIDIA Container Toolkit / Docker GPU support.
+###############################################################################
+
+services:
+  simulator:
+    gpus: all
+
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=graphics,compute,utility

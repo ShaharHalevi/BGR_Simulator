@@ -79,7 +79,7 @@ cleanup() {
     pkill -9 -f "car_dashboard.py" 2>/dev/null
     pkill -9 -f "keyboard_teleop" 2>/dev/null
     rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds*
-    echo "Graceful shutdown complete."
+    echo "Graceful shutdown complete ."
 }
 
 # Attach to the tmux session

@@ -1,0 +1,43 @@
+###############################################################################
+# BGR_Simulator – Base Docker Compose
+#
+# Shared by Windows and Linux.
+# OS/GPU-specific settings are added using override files.
+###############################################################################
+
+services:
+  simulator:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+
+    image: bgr_simulator
+    container_name: bgr_simulator
+
+    stdin_open: true # -i
+    tty: true # -t
+
+    # Works best on Linux.
+    # On Docker Desktop for Windows, behavior is different but usually okay for basic use.
+    network_mode: host
+
+    # Helps ROS 2 topic visibility between host/container on Linux.
+    ipc: host
+
+    environment:
+      - GZ_PARTITION=bgr_sim
+      - DISPLAY=${DISPLAY:-host.docker.internal:0}
+      - QT_X11_NO_MITSHM=1
+      - FASTDDS_BUILTIN_TRANSPORTS=UDPv4
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/ros2_ws/fastdds_no_shm.xml
+
+    volumes:
+      - ../src:/ros2_ws/src/bgr_simulator/src:rw
+      - ./fastdds_no_shm.xml:/ros2_ws/fastdds_no_shm.xml:ro
+
+    command: >
+      bash -c "source /opt/ros/jazzy/setup.bash &&
+               cd /ros2_ws &&
+               colcon build --symlink-install &&
+               source /ros2_ws/install/setup.bash &&
+               ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-true}"

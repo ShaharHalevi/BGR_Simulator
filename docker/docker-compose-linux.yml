@@ -1,0 +1,23 @@
+###############################################################################
+# BGR_Simulator – Linux Docker Compose Override
+#
+# Adds Linux-only GUI / integrated graphics support.
+#
+# Use with:
+#   docker compose \
+#     -f docker/docker-compose-base.yml \
+#     -f docker/docker-compose-linux.yml \
+#     up --build
+###############################################################################
+
+services:
+  simulator:
+    devices:
+      - /dev/dri:/dev/dri
+
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
