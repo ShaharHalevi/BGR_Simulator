@@ -153,22 +153,23 @@ def generate_launch_description():
 
     # STAGE 2 GATE: GUI READINESS
     # Deterministically waits for the Gazebo GUI to finish initializing its rendering 
-    # pipeline by checking for the existence of /gui/ services.
+    # pipeline by checking for the existence of the user camera pose topic.
     gui_ready_gate = ExecuteProcess(
         cmd=['sh', '-c', 
              'if [ "$1" = "True" ] || [ "$1" = "true" ] || [ "$1" = "1" ]; then '
              '  echo "[STAGE 2] Headless mode detected. Skipping GUI readiness check."; '
              '  exit 0; '
              'fi; '
-             'echo "[STAGE 2] Waiting for Gazebo GUI services to initialize..."; '
+             'echo "[STAGE 2] Waiting for Gazebo GUI rendering pipeline to initialize..."; '
              'for i in $(seq 1 60); do '
-             '  if gz service -l | grep -q "/gui/"; then '
-             '    echo "[STAGE 2 COMPLETE] Gazebo GUI is ready."; '
+             '  if gz topic -l | grep -q "/gui/camera/pose"; then '
+             '    echo "[STAGE 2 COMPLETE] Gazebo GUI rendering pipeline is ready. Delaying 2s for buffering..."; '
+             '    sleep 2; '
              '    exit 0; '
              '  fi; '
              '  sleep 1; '
              'done; '
-             'echo "[STAGE 2 WARNING] GUI services not found after 60s. Proceeding anyway..."; '
+             'echo "[STAGE 2 WARNING] GUI camera topic not found after 60s. Proceeding anyway..."; '
              'exit 0;',
              'gui_gate_script', headless],
         output='screen'

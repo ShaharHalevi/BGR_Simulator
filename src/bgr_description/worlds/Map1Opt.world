@@ -1,0 +1,5294 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.7">
+  <world name="generated_world">
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+      <grid>false</grid>
+      <shadows>0</shadows>
+    </scene>
+    <physics type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_update_rate>500</real_time_update_rate>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact" />
+    <light name="sun" type="directional">
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.2 -1</direction>
+      <attenuation>
+        <range>300</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+    <model name="asphalt_ground">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>300 300</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>300 300</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="competition_track_cones">
+      <static>true</static>
+      <link name="link">
+        <visual name="visual_cone_yellow_001">
+          <pose>3.652 1.924 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_001">
+          <pose>3.652 1.924 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_002">
+          <pose>7.629 1.917 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_002">
+          <pose>7.629 1.917 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_003">
+          <pose>11.625 1.952 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_003">
+          <pose>11.625 1.952 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_004">
+          <pose>15.642 1.986 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_004">
+          <pose>15.642 1.986 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_005">
+          <pose>19.684 1.963 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_005">
+          <pose>19.684 1.963 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_006">
+          <pose>23.754 1.815 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_006">
+          <pose>23.754 1.815 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_007">
+          <pose>27.854 1.445 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_007">
+          <pose>27.854 1.445 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_008">
+          <pose>31.963 0.713 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_008">
+          <pose>31.963 0.713 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_009">
+          <pose>36.036 -0.588 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_009">
+          <pose>36.036 -0.588 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_010">
+          <pose>39.873 -2.700 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_010">
+          <pose>39.873 -2.700 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_011">
+          <pose>43.125 -5.626 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_011">
+          <pose>43.125 -5.626 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_012">
+          <pose>45.771 -9.038 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_012">
+          <pose>45.771 -9.038 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_013">
+          <pose>47.641 -13.033 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_013">
+          <pose>47.641 -13.033 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_014">
+          <pose>48.392 -17.434 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_014">
+          <pose>48.392 -17.434 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_015">
+          <pose>48.017 -21.802 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_015">
+          <pose>48.017 -21.802 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_016">
+          <pose>46.966 -25.795 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_016">
+          <pose>46.966 -25.795 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_017">
+          <pose>46.149 -29.564 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_017">
+          <pose>46.149 -29.564 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_018">
+          <pose>45.277 -33.598 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_018">
+          <pose>45.277 -33.598 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_019">
+          <pose>43.793 -37.652 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_019">
+          <pose>43.793 -37.652 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_020">
+          <pose>41.598 -41.347 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_020">
+          <pose>41.598 -41.347 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_021">
+          <pose>37.934 -44.355 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_021">
+          <pose>37.934 -44.355 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_022">
+          <pose>33.863 -45.938 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_022">
+          <pose>33.863 -45.938 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_023">
+          <pose>29.857 -46.933 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_023">
+          <pose>29.857 -46.933 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_024">
+          <pose>25.870 -47.703 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_024">
+          <pose>25.870 -47.703 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_025">
+          <pose>21.928 -48.417 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_025">
+          <pose>21.928 -48.417 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_026">
+          <pose>18.073 -49.209 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_026">
+          <pose>18.073 -49.209 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_027">
+          <pose>14.416 -50.241 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_027">
+          <pose>14.416 -50.241 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_028">
+          <pose>11.181 -51.786 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_028">
+          <pose>11.181 -51.786 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_029">
+          <pose>8.331 -54.049 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_029">
+          <pose>8.331 -54.049 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_030">
+          <pose>5.748 -56.854 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_030">
+          <pose>5.748 -56.854 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_031">
+          <pose>3.111 -59.956 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_031">
+          <pose>3.111 -59.956 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_032">
+          <pose>-0.276 -62.874 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_032">
+          <pose>-0.276 -62.874 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_033">
+          <pose>-4.787 -64.365 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_033">
+          <pose>-4.787 -64.365 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_034">
+          <pose>-9.115 -64.327 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_034">
+          <pose>-9.115 -64.327 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_035">
+          <pose>-13.230 -63.705 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_035">
+          <pose>-13.230 -63.705 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_036">
+          <pose>-17.165 -62.908 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_036">
+          <pose>-17.165 -62.908 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_037">
+          <pose>-20.944 -62.311 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_037">
+          <pose>-20.944 -62.311 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_038">
+          <pose>-24.433 -62.395 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_038">
+          <pose>-24.433 -62.395 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_039">
+          <pose>-27.963 -63.388 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_039">
+          <pose>-27.963 -63.388 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_040">
+          <pose>-31.055 -65.082 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_040">
+          <pose>-31.055 -65.082 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_041">
+          <pose>-33.514 -67.540 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_041">
+          <pose>-33.514 -67.540 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_042">
+          <pose>-35.276 -70.671 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_042">
+          <pose>-35.276 -70.671 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_043">
+          <pose>-36.653 -74.300 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_043">
+          <pose>-36.653 -74.300 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_044">
+          <pose>-38.279 -78.206 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_044">
+          <pose>-38.279 -78.206 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_045">
+          <pose>-40.953 -81.861 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_045">
+          <pose>-40.953 -81.861 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_046">
+          <pose>-44.646 -84.457 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_046">
+          <pose>-44.646 -84.457 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_047">
+          <pose>-48.720 -86.004 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_047">
+          <pose>-48.720 -86.004 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_048">
+          <pose>-53.001 -86.723 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_048">
+          <pose>-53.001 -86.723 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_049">
+          <pose>-57.412 -86.499 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_049">
+          <pose>-57.412 -86.499 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_050">
+          <pose>-61.706 -85.013 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_050">
+          <pose>-61.706 -85.013 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_051">
+          <pose>-65.245 -82.108 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_051">
+          <pose>-65.245 -82.108 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_052">
+          <pose>-67.822 -78.701 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_052">
+          <pose>-67.822 -78.701 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_053">
+          <pose>-69.826 -74.926 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_053">
+          <pose>-69.826 -74.926 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_054">
+          <pose>-71.206 -70.881 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_054">
+          <pose>-71.206 -70.881 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_055">
+          <pose>-71.930 -66.673 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_055">
+          <pose>-71.930 -66.673 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_056">
+          <pose>-71.989 -62.406 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_056">
+          <pose>-71.989 -62.406 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_057">
+          <pose>-71.002 -57.839 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_057">
+          <pose>-71.002 -57.839 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_058">
+          <pose>-67.750 -54.320 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_058">
+          <pose>-67.750 -54.320 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_059">
+          <pose>-64.374 -52.143 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_059">
+          <pose>-64.374 -52.143 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_060">
+          <pose>-61.411 -49.832 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_060">
+          <pose>-61.411 -49.832 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_061">
+          <pose>-58.929 -47.133 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_061">
+          <pose>-58.929 -47.133 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_062">
+          <pose>-56.823 -44.033 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_062">
+          <pose>-56.823 -44.033 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_063">
+          <pose>-55.012 -40.551 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_063">
+          <pose>-55.012 -40.551 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_064">
+          <pose>-53.829 -37.119 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_064">
+          <pose>-53.829 -37.119 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_065">
+          <pose>-53.377 -33.541 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_065">
+          <pose>-53.377 -33.541 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_066">
+          <pose>-53.711 -29.909 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_066">
+          <pose>-53.711 -29.909 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_067">
+          <pose>-54.655 -26.220 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_067">
+          <pose>-54.655 -26.220 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_068">
+          <pose>-55.826 -22.353 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_068">
+          <pose>-55.826 -22.353 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_069">
+          <pose>-56.610 -18.094 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_069">
+          <pose>-56.610 -18.094 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_070">
+          <pose>-56.173 -13.595 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_070">
+          <pose>-56.173 -13.595 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_071">
+          <pose>-54.329 -9.536 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_071">
+          <pose>-54.329 -9.536 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_072">
+          <pose>-51.590 -6.027 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_072">
+          <pose>-51.590 -6.027 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_073">
+          <pose>-48.498 -3.112 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_073">
+          <pose>-48.498 -3.112 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_074">
+          <pose>-44.954 -0.727 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_074">
+          <pose>-44.954 -0.727 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_075">
+          <pose>-41.035 1.021 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_075">
+          <pose>-41.035 1.021 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_076">
+          <pose>-36.902 2.102 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_076">
+          <pose>-36.902 2.102 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_077">
+          <pose>-32.749 2.604 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_077">
+          <pose>-32.749 2.604 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_078">
+          <pose>-28.630 2.732 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_078">
+          <pose>-28.630 2.732 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_079">
+          <pose>-24.725 2.809 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_079">
+          <pose>-24.725 2.809 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_080">
+          <pose>-20.642 2.807 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_080">
+          <pose>-20.642 2.807 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_081">
+          <pose>-16.613 2.729 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_081">
+          <pose>-16.613 2.729 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_082">
+          <pose>-12.584 2.610 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_082">
+          <pose>-12.584 2.610 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_083">
+          <pose>-8.563 2.462 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_083">
+          <pose>-8.563 2.462 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_084">
+          <pose>-4.525 2.289 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_084">
+          <pose>-4.525 2.289 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_yellow_085">
+          <pose>-0.503 2.090 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_yellow_085">
+          <pose>-0.503 2.090 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_001">
+          <pose>3.615 -1.576 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_001">
+          <pose>3.615 -1.576 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_002">
+          <pose>7.648 -1.583 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_002">
+          <pose>7.648 -1.583 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_003">
+          <pose>11.662 -1.547 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_003">
+          <pose>11.662 -1.547 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_004">
+          <pose>15.655 -1.514 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_004">
+          <pose>15.655 -1.514 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_005">
+          <pose>19.622 -1.536 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_005">
+          <pose>19.622 -1.536 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_006">
+          <pose>23.549 -1.679 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_006">
+          <pose>23.549 -1.679 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_007">
+          <pose>27.412 -2.027 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_007">
+          <pose>27.412 -2.027 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_008">
+          <pose>31.155 -2.693 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_008">
+          <pose>31.155 -2.693 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_009">
+          <pose>34.689 -3.819 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_009">
+          <pose>34.689 -3.819 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_010">
+          <pose>37.838 -5.547 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_010">
+          <pose>37.838 -5.547 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_011">
+          <pose>40.565 -8.013 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_011">
+          <pose>40.565 -8.013 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_012">
+          <pose>42.805 -10.896 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_012">
+          <pose>42.805 -10.896 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_013">
+          <pose>44.305 -14.093 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_013">
+          <pose>44.305 -14.093 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_014">
+          <pose>44.894 -17.549 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_014">
+          <pose>44.894 -17.549 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_015">
+          <pose>44.581 -21.135 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_015">
+          <pose>44.581 -21.135 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_016">
+          <pose>43.586 -24.886 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_016">
+          <pose>43.586 -24.886 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_017">
+          <pose>42.709 -28.914 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_017">
+          <pose>42.709 -28.914 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_018">
+          <pose>41.898 -32.686 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_018">
+          <pose>41.898 -32.686 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_019">
+          <pose>40.634 -36.144 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_019">
+          <pose>40.634 -36.144 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_020">
+          <pose>38.749 -39.315 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_020">
+          <pose>38.749 -39.315 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_021">
+          <pose>36.321 -41.249 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_021">
+          <pose>36.321 -41.249 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_022">
+          <pose>32.866 -42.583 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_022">
+          <pose>32.866 -42.583 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_023">
+          <pose>29.132 -43.509 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_023">
+          <pose>29.132 -43.509 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_024">
+          <pose>25.247 -44.259 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_024">
+          <pose>25.247 -44.259 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_025">
+          <pose>21.286 -44.976 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_025">
+          <pose>21.286 -44.976 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_026">
+          <pose>17.279 -45.800 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_026">
+          <pose>17.279 -45.800 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_027">
+          <pose>13.258 -46.938 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_027">
+          <pose>13.258 -46.938 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_028">
+          <pose>9.292 -48.840 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_028">
+          <pose>9.292 -48.840 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_029">
+          <pose>5.914 -51.517 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_029">
+          <pose>5.914 -51.517 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_030">
+          <pose>3.071 -54.599 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_030">
+          <pose>3.071 -54.599 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_031">
+          <pose>0.526 -57.595 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_031">
+          <pose>0.526 -57.595 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_032">
+          <pose>-2.103 -59.889 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_032">
+          <pose>-2.103 -59.889 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_033">
+          <pose>-5.119 -60.881 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_033">
+          <pose>-5.119 -60.881 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_034">
+          <pose>-8.779 -60.843 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_034">
+          <pose>-8.779 -60.843 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_035">
+          <pose>-12.572 -60.268 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_035">
+          <pose>-12.572 -60.268 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_036">
+          <pose>-16.486 -59.475 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_036">
+          <pose>-16.486 -59.475 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_037">
+          <pose>-20.611 -58.826 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_037">
+          <pose>-20.611 -58.826 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_038">
+          <pose>-25.080 -58.955 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_038">
+          <pose>-25.080 -58.955 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_039">
+          <pose>-29.249 -60.133 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_039">
+          <pose>-29.249 -60.133 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_040">
+          <pose>-33.140 -62.271 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_040">
+          <pose>-33.140 -62.271 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_041">
+          <pose>-36.319 -65.447 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_041">
+          <pose>-36.319 -65.447 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_042">
+          <pose>-38.486 -69.277 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_042">
+          <pose>-38.486 -69.277 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_043">
+          <pose>-39.947 -73.118 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_043">
+          <pose>-39.947 -73.118 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_044">
+          <pose>-41.384 -76.590 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_044">
+          <pose>-41.384 -76.590 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_045">
+          <pose>-43.396 -79.355 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_045">
+          <pose>-43.396 -79.355 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_046">
+          <pose>-46.229 -81.335 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_046">
+          <pose>-46.229 -81.335 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_047">
+          <pose>-49.631 -82.625 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_047">
+          <pose>-49.631 -82.625 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_048">
+          <pose>-53.230 -83.230 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_048">
+          <pose>-53.230 -83.230 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_049">
+          <pose>-56.795 -83.053 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_049">
+          <pose>-56.795 -83.053 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_050">
+          <pose>-60.021 -81.945 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_050">
+          <pose>-60.021 -81.945 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_051">
+          <pose>-62.630 -79.781 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_051">
+          <pose>-62.630 -79.781 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_052">
+          <pose>-64.871 -76.818 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_052">
+          <pose>-64.871 -76.818 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_053">
+          <pose>-66.614 -73.536 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_053">
+          <pose>-66.614 -73.536 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_054">
+          <pose>-67.814 -70.018 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_054">
+          <pose>-67.814 -70.018 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_055">
+          <pose>-68.445 -66.352 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_055">
+          <pose>-68.445 -66.352 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_056">
+          <pose>-68.496 -62.630 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_056">
+          <pose>-68.496 -62.630 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_057">
+          <pose>-67.862 -59.386 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_057">
+          <pose>-67.862 -59.386 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_058">
+          <pose>-65.752 -57.194 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_058">
+          <pose>-65.752 -57.194 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_059">
+          <pose>-62.425 -55.050 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_059">
+          <pose>-62.425 -55.050 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_060">
+          <pose>-59.039 -52.405 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_060">
+          <pose>-59.039 -52.405 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_061">
+          <pose>-56.175 -49.293 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_061">
+          <pose>-56.175 -49.293 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_062">
+          <pose>-53.811 -45.815 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_062">
+          <pose>-53.811 -45.815 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_063">
+          <pose>-51.816 -41.979 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_063">
+          <pose>-51.816 -41.979 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_064">
+          <pose>-50.425 -37.934 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_064">
+          <pose>-50.425 -37.934 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_065">
+          <pose>-49.877 -33.588 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_065">
+          <pose>-49.877 -33.588 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_066">
+          <pose>-50.272 -29.262 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_066">
+          <pose>-50.272 -29.262 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_067">
+          <pose>-51.306 -25.204 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_067">
+          <pose>-51.306 -25.204 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_068">
+          <pose>-52.451 -21.426 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_068">
+          <pose>-52.451 -21.426 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_069">
+          <pose>-53.118 -17.859 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_069">
+          <pose>-53.118 -17.859 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_070">
+          <pose>-52.799 -14.527 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_070">
+          <pose>-52.799 -14.527 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_071">
+          <pose>-51.376 -11.415 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_071">
+          <pose>-51.376 -11.415 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_072">
+          <pose>-49.005 -8.386 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_072">
+          <pose>-49.005 -8.386 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_073">
+          <pose>-46.305 -5.840 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_073">
+          <pose>-46.305 -5.840 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_074">
+          <pose>-43.257 -3.788 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_074">
+          <pose>-43.257 -3.788 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_075">
+          <pose>-39.886 -2.285 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_075">
+          <pose>-39.886 -2.285 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_076">
+          <pose>-36.271 -1.341 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_076">
+          <pose>-36.271 -1.341 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_077">
+          <pose>-32.517 -0.889 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_077">
+          <pose>-32.517 -0.889 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_078">
+          <pose>-28.598 -0.767 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_078">
+          <pose>-28.598 -0.767 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_079">
+          <pose>-24.668 -0.691 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_079">
+          <pose>-24.668 -0.691 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_080">
+          <pose>-20.685 -0.692 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_080">
+          <pose>-20.685 -0.692 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_081">
+          <pose>-16.701 -0.770 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_081">
+          <pose>-16.701 -0.770 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_082">
+          <pose>-12.701 -0.888 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_082">
+          <pose>-12.701 -0.888 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_083">
+          <pose>-8.702 -1.035 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_083">
+          <pose>-8.702 -1.035 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_084">
+          <pose>-4.685 -1.207 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_084">
+          <pose>-4.685 -1.207 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_blue_085">
+          <pose>-0.691 -1.404 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_blue_085">
+          <pose>-0.691 -1.404 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_orange_001">
+          <pose>0.000 -1.726 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_orange/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 0.35 0.0 1</ambient>
+            <diffuse>1.0 0.35 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_orange_001">
+          <pose>0.000 -1.726 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_orange_002">
+          <pose>0.000 1.726 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_orange/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 0.35 0.0 1</ambient>
+            <diffuse>1.0 0.35 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_orange_002">
+          <pose>0.000 1.726 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_orange_003">
+          <pose>1.300 1.726 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_orange/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 0.35 0.0 1</ambient>
+            <diffuse>1.0 0.35 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_orange_003">
+          <pose>1.300 1.726 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual_cone_orange_004">
+          <pose>1.300 -1.726 0.000 0.000 0.000 0.000</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_orange/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 0.35 0.0 1</ambient>
+            <diffuse>1.0 0.35 0.0 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision_cone_orange_004">
+          <pose>1.300 -1.726 0.150 0.000 0.000 0.000</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.1</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+      </link>
+    </model>
+  </world>
+</sdf>

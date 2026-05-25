@@ -81,7 +81,7 @@ Install python dependencies (if any) and build the workspace:
 ```bash
 cd ~/bgr_ws
 rosdep install --from-paths src --ignore-src -r -y
-colcon build --symlink-install
+colcon build
 ```
 
 ---
@@ -308,12 +308,11 @@ HEADLESS=True docker compose up --build
 > 
 > **To fix**: Ensure your code editor (e.g. VS Code) is set to save Python/Bash files as **`LF`** (Linux format), not `CRLF`. If a file crashes due to this, open it, change it to `LF`, save it, and then explicitly run the `docker exec ... colcon build` command again to update the ROS 2 cache.
 
-Because of `--symlink-install` in the compose configuration, any edits you make to Python scripts (like those in `bgr_controller`) will instantly take effect on your host machine without needing a rebuild! 
-
 ### 🔄 When to Rebuild the ROS 2 Workspace?
-Even with `--symlink-install`, there are specific cases where you **must** manually rebuild the ROS 2 cache inside the running container. 
+You must manually rebuild the ROS 2 cache inside the running container after making changes to the source code.
 
 You need to rebuild if you:
+*   Modify any Python files.
 *   Add a **new** Python file or delete an existing one.
 *   Modify `setup.py`, `CMakeLists.txt`, or `package.xml`.
 *   Modify any `C++` source code.
@@ -323,7 +322,7 @@ You need to rebuild if you:
 **How to rebuild without restarting Docker:**
 Open a new terminal on your host, execute into the running simulator, and run `colcon build`:
 ```bash
-docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
+docker exec -it bgr_simulator bash -c "source /opt/ros/jazzy/setup.bash && colcon build"
 ```
 
 ### 🖥️ Exploring the Container Manually (Optional)

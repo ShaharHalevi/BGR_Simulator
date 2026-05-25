@@ -42,7 +42,7 @@ RUN apt-get update && rosdep init || true \
     && rm -rf /var/lib/apt/lists/*
 
 # Build the workspace
-RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
+RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build"
 
 # Source the workspace and run the default simulator launch file
 # This command runs Step 1 from the README
