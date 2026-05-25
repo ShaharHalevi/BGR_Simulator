@@ -40,6 +40,7 @@ killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
 killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
 pkill -9 -f "bgr_description" 2>/dev/null
 pkill -9 -f "bgr_controller" 2>/dev/null
+pkill -9 -f "controller_manager/spawner" 2>/dev/null
 pkill -9 -f "car_dashboard.py" 2>/dev/null
 pkill -9 -f "keyboard_teleop" 2>/dev/null
 rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds*
@@ -59,38 +60,26 @@ tmux kill-session -t $SESSION 2>/dev/null
 # Create a new detached tmux session
 tmux new-session -d -s $SESSION
 
-# Split the window into 4 panes
+# Split the window into 3 panes
 # Layout:
+# +---------------------------------+
+# |             Pane 0              |
+# |            (Gazebo)             |
 # +----------------+----------------+
-# | Pane 0         | Pane 2         |
-# | (Gazebo)       | (Controllers)  |
-# +----------------+----------------+
-# | Pane 1         | Pane 3         |
-# | (Bridge)       | (Drive Console)|
+# |     Pane 1     |     Pane 2     |
+# | (Keyboard Bgr) | (Drive Console)|
 # +----------------+----------------+
 
+tmux split-window -v
+tmux select-pane -t 1
 tmux split-window -h
-tmux select-pane -t 0
-tmux split-window -v
-tmux select-pane -t 2
-tmux split-window -v
 
 # -------------------------
-# PANE 0: GAZEBO (Top-Left)
+# PANE 0: GAZEBO (Top)
 # -------------------------
 tmux send-keys -t $SESSION:0.0 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map1Opt.world" C-m
-
-# -------------------------
-# PANE 2: CONTROLLERS (Top-Right)
-# -------------------------
-tmux send-keys -t $SESSION:0.2 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
-tmux send-keys -t $SESSION:0.2 "clear; echo -e '\e[1;33mWaiting for Gazebo to fully spawn...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.2 "until ros2 topic list 2>/dev/null | grep -q '/robot/full_state'; do sleep 1; done" C-m
-tmux send-keys -t $SESSION:0.2 "echo -e '\e[1;32mGazebo active! Delaying 2s...\e[0m'; sleep 2" C-m
-tmux send-keys -t $SESSION:0.2 "echo -e '\e[1;32m[STAGE 2] Launching Controllers...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.2 "ros2 launch bgr_controller controller.launch.py" C-m
 
 # -------------------------
 # PANE 1: KEYBOARD BRIDGE (Bottom-Left)
@@ -98,27 +87,27 @@ tmux send-keys -t $SESSION:0.2 "ros2 launch bgr_controller controller.launch.py"
 tmux send-keys -t $SESSION:0.1 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.1 "clear; echo -e '\e[1;33mWaiting for Controllers...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.1 "until ros2 control list_controllers 2>/dev/null | grep -q 'forward_velocity_controller.*active' && ros2 control list_controllers 2>/dev/null | grep -q 'forward_position_controller.*active'; do sleep 1; done" C-m
-tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32mControllers active! Delaying 2s...\e[0m'; sleep 2" C-m
+tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32mControllers active! Delaying 1s...\e[0m'; sleep 1" C-m
 tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32m[STAGE 3] Launching Keyboard Bridge...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.1 "ros2 launch bgr_controller keyboard_teleop.launch.py" C-m
 
 # -------------------------
-# PANE 3: DRIVE CONSOLE (Bottom-Right)
+# PANE 2: DRIVE CONSOLE (Bottom-Right)
 # -------------------------
-tmux send-keys -t $SESSION:0.3 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
-tmux send-keys -t $SESSION:0.3 "clear; echo -e '\e[1;33mWaiting for Bridge...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.3 "until ros2 node list 2>/dev/null | grep -q 'joy_array_bridge'; do sleep 1; done" C-m
-tmux send-keys -t $SESSION:0.3 "echo -e '\e[1;32mBridge active! Delaying 2s...\e[0m'; sleep 2" C-m
-tmux send-keys -t $SESSION:0.3 "clear" C-m
-tmux send-keys -t $SESSION:0.3 "echo '=========================================='" C-m
-tmux send-keys -t $SESSION:0.3 "echo '  Simulation is fully launched & ready!   '" C-m
-tmux send-keys -t $SESSION:0.3 "echo '                                          '" C-m
-tmux send-keys -t $SESSION:0.3 "echo '  -> Press Ctrl+C HERE to shut down <-    '" C-m
-tmux send-keys -t $SESSION:0.3 "echo '=========================================='" C-m
+tmux send-keys -t $SESSION:0.2 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.2 "clear; echo -e '\e[1;33mWaiting for Bridge...\e[0m'" C-m
+tmux send-keys -t $SESSION:0.2 "until ros2 node list 2>/dev/null | grep -q 'joy_array_bridge'; do sleep 1; done" C-m
+tmux send-keys -t $SESSION:0.2 "echo -e '\e[1;32mBridge active! Delaying 1s...\e[0m'; sleep 1" C-m
+tmux send-keys -t $SESSION:0.2 "clear" C-m
+tmux send-keys -t $SESSION:0.2 "echo '=========================================='" C-m
+tmux send-keys -t $SESSION:0.2 "echo '  Simulation is fully launched & ready!   '" C-m
+tmux send-keys -t $SESSION:0.2 "echo '                                          '" C-m
+tmux send-keys -t $SESSION:0.2 "echo '  -> Press Ctrl+C HERE to shut down <-    '" C-m
+tmux send-keys -t $SESSION:0.2 "echo '=========================================='" C-m
 
 # Chain the teleop node with the automated shutdown sequence.
 # When teleop exits (via Ctrl+C), it kills the tmux session to trigger the host-side cleanup.
-tmux send-keys -t $SESSION:0.3 "ros2 run bgr_controller keyboard_teleop.py; tmux kill-session -t $SESSION" C-m
+tmux send-keys -t $SESSION:0.2 "ros2 run bgr_controller keyboard_teleop.py; tmux kill-session -t $SESSION" C-m
 
 # Define clean closure handler
 cleanup() {
@@ -132,6 +121,7 @@ cleanup() {
     killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
     pkill -9 -f "bgr_description" 2>/dev/null
     pkill -9 -f "bgr_controller" 2>/dev/null
+    pkill -9 -f "controller_manager/spawner" 2>/dev/null
     pkill -9 -f "car_dashboard.py" 2>/dev/null
     pkill -9 -f "keyboard_teleop" 2>/dev/null
     rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds*

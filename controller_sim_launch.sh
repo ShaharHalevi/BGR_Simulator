@@ -2,7 +2,7 @@
 
 # ==========================================
 # BGR Simulation Automated Startup Script
-# (No Keyboard Edition)
+# (No Keyboard Edition - Tmux 1-Pane)
 # ==========================================
 
 # 1. Killing all previous processes to verify startup is secure
@@ -18,6 +18,7 @@ killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>
 # Kill specific python scripts and package nodes
 pkill -9 -f "bgr_description" 2>/dev/null
 pkill -9 -f "bgr_controller" 2>/dev/null
+pkill -9 -f "controller_manager/spawner" 2>/dev/null
 pkill -9 -f "car_dashboard.py" 2>/dev/null
 pkill -9 -f "keyboard_teleop" 2>/dev/null
 rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds*
@@ -38,31 +39,18 @@ tmux kill-session -t $SESSION 2>/dev/null
 # Create a new detached tmux session
 tmux new-session -d -s $SESSION
 
-# Split the window into 2 panes (Left and Right)
 # Layout:
-# +----------------+----------------+
-# | Pane 0         | Pane 1         |
-# | (Gazebo)       | (Controllers)  |
-# +----------------+----------------+
-
-tmux split-window -h
+# +----------------+
+# |     Pane 0     |
+# |    (Gazebo)    |
+# +----------------+
 
 # -------------------------
-# PANE 0: GAZEBO (Left)
+# PANE 0: GAZEBO
 # -------------------------
 tmux send-keys -t $SESSION:0.0 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world" C-m
-
-# -------------------------
-# PANE 1: CONTROLLERS (Right)
-# -------------------------
-tmux send-keys -t $SESSION:0.1 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
-tmux send-keys -t $SESSION:0.1 "clear; echo -e '\e[1;33mWaiting for Gazebo to fully spawn...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.1 "until ros2 topic list 2>/dev/null | grep -q '/robot/full_state'; do sleep 1; done" C-m
-tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32mGazebo active! Delaying 2s...\e[0m'; sleep 2" C-m
-tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32m[STAGE 2] Launching Controllers...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.1 "ros2 launch bgr_controller controller.launch.py" C-m
+tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map1Opt.world" C-m
 
 # Define clean closure handler
 cleanup() {
@@ -76,6 +64,7 @@ cleanup() {
     killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null
     pkill -9 -f "bgr_description" 2>/dev/null
     pkill -9 -f "bgr_controller" 2>/dev/null
+    pkill -9 -f "controller_manager/spawner" 2>/dev/null
     pkill -9 -f "car_dashboard.py" 2>/dev/null
     pkill -9 -f "keyboard_teleop" 2>/dev/null
     rm -rf ~/.ignition/ ~/.gz/ /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds*

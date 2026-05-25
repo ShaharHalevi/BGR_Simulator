@@ -65,7 +65,7 @@ class ConeService(Node):
                 response.message = f"Invalid SDF: No <world> tag found in {filename}"
                 return response
 
-            # Iterate through all <include> models
+            # 1. Parse original include-style world files
             for include in world_tag.findall('include'):
                 uri_tag = include.find('uri')
                 name_tag = include.find('name')
@@ -78,11 +78,17 @@ class ConeService(Node):
                     c.id = name_tag.text if name_tag is not None else "unknown_cone"
                     
                     # 2. Extract Color from URI (model://cone_yellow -> yellow)
-                    uri = uri_tag.text
-                    if 'cone_' in uri.lower():
-                        c.color = uri.lower().split('cone_')[-1]
+                    uri = uri_tag.text.lower()
+                    if 'cone_yellow' in uri:
+                        c.color = 'yellow'
+                    elif 'cone_blue' in uri:
+                        c.color = 'blue'
+                    elif 'cone_orange_big' in uri:
+                        c.color = 'orange_big'
+                    elif 'cone_orange' in uri:
+                        c.color = 'orange'
                     else:
-                        c.color = "unknown"
+                        c.color = 'unknown'
 
                     # 3. Parse Pose (x y z roll pitch yaw)
                     if pose_tag is not None:
@@ -93,8 +99,51 @@ class ConeService(Node):
                         else:
                             c.x = 0.0
                             c.y = 0.0
-                    
                     loaded_cones.append(c)
+
+            # 2. Parse optimized single-link model style world files (e.g. Map1Opt.world)
+            for model_tag in world_tag.findall('model'):
+                for link_tag in model_tag.findall('link'):
+                    for visual_tag in link_tag.findall('visual'):
+                        vis_name = visual_tag.get('name', '')
+                        geom_tag = visual_tag.find('geometry')
+                        mesh_tag = geom_tag.find('mesh') if geom_tag is not None else None
+                        uri_tag = mesh_tag.find('uri') if mesh_tag is not None else None
+                        
+                        is_cone = False
+                        uri_text = uri_tag.text.lower() if uri_tag is not None and uri_tag.text else ""
+                        if 'cone' in uri_text or 'cone' in vis_name.lower():
+                            is_cone = True
+                            
+                        if is_cone:
+                            c = Cone()
+                            # Clean ID: visual_cone_yellow_001 -> cone_yellow_001
+                            if vis_name.startswith('visual_'):
+                                c.id = vis_name[7:]
+                            else:
+                                c.id = vis_name
+                            
+                            if 'cone_yellow' in uri_text or 'cone_yellow' in vis_name.lower():
+                                c.color = 'yellow'
+                            elif 'cone_blue' in uri_text or 'cone_blue' in vis_name.lower():
+                                c.color = 'blue'
+                            elif 'cone_orange_big' in uri_text or 'cone_orange_big' in vis_name.lower():
+                                c.color = 'orange_big'
+                            elif 'cone_orange' in uri_text or 'cone_orange' in vis_name.lower():
+                                c.color = 'orange'
+                            else:
+                                c.color = 'unknown'
+
+                            pose_tag = visual_tag.find('pose')
+                            if pose_tag is not None and pose_tag.text:
+                                pose_parts = pose_tag.text.split()
+                                if len(pose_parts) >= 2:
+                                    c.x = float(pose_parts[0])
+                                    c.y = float(pose_parts[1])
+                                else:
+                                    c.x = 0.0
+                                    c.y = 0.0
+                            loaded_cones.append(c)
 
             response.cones = loaded_cones
             response.success = True

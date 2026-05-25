@@ -163,8 +163,8 @@ def generate_launch_description():
              'echo "[STAGE 2] Waiting for Gazebo GUI rendering pipeline to initialize..."; '
              'for i in $(seq 1 60); do '
              '  if gz topic -l | grep -q "/gui/camera/pose"; then '
-             '    echo "[STAGE 2 COMPLETE] Gazebo GUI rendering pipeline is ready. Delaying 2s for buffering..."; '
-             '    sleep 2; '
+             '    echo "[STAGE 2 COMPLETE] Gazebo GUI rendering pipeline is ready. Delaying 1s for buffering..."; '
+             '    sleep 1; '
              '    exit 0; '
              '  fi; '
              '  sleep 1; '
@@ -248,6 +248,12 @@ def generate_launch_description():
         arguments=["--x", "0", "--y", "0", "--z", "0", "--roll", "0", "--pitch", "0", "--yaw", "0", "--frame-id", "base_link", "--child-frame-id", "bgr/base_footprint/lidar"],
         output="screen"
     )
+    controllers_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory("bgr_controller"), "launch"),
+            "/controller.launch.py"
+        ])
+    )
 
     # STAGE 3 GATE: GUI tracker with tracking loop.
     # Sends follow command up repeatedly until the GUI successfully follows the car.
@@ -305,6 +311,7 @@ def generate_launch_description():
                 visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node
                 car_tracker,                    # makes GUI follow the car
+                controllers_launch,             # starts the vehicle controllers
             ]
         )
     )
