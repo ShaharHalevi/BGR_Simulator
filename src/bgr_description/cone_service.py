@@ -25,7 +25,33 @@ class ConeService(Node):
         bgr_dir = get_package_share_directory('bgr_description')
         self.world_base_dir = os.path.join(bgr_dir, 'worlds')
         
+        # Cache parsed results so repeated calls skip disk I/O
+        self._cache: dict = {}
+        
         self.get_logger().info(f'Cone Service Ready. Reading worlds from: {self.world_base_dir}')
+
+    @staticmethod
+    def _color_from_text(text: str) -> str:
+        """Determine cone color from a URI or visual name string."""
+        t = text.lower()
+        if 'cone_orange_big' in t:
+            return 'orange_big'
+        if 'cone_orange' in t:
+            return 'orange'
+        if 'cone_yellow' in t:
+            return 'yellow'
+        if 'cone_blue' in t:
+            return 'blue'
+        return 'unknown'
+
+    @staticmethod
+    def _parse_xy(pose_tag) -> tuple:
+        """Return (x, y) from an SDF <pose> tag, or (0.0, 0.0) on failure."""
+        if pose_tag is not None and pose_tag.text:
+            parts = pose_tag.text.split()
+            if len(parts) >= 2:
+                return float(parts[0]), float(parts[1])
+        return 0.0, 0.0
 
     def track_callback(self, request, response):
         """
@@ -36,11 +62,7 @@ class ConeService(Node):
         requested_name = request.track_name
         
         # Add .world extension if the user didn't provide it
-        if not requested_name.endswith('.world'):
-            filename = f"{requested_name}.world"
-        else:
-            filename = requested_name
-
+        filename = requested_name if requested_name.endswith('.world') else f"{requested_name}.world"
         full_path = os.path.join(self.world_base_dir, filename)
         
         self.get_logger().info(f"Client requested world data for track: {requested_name}")
@@ -51,14 +73,20 @@ class ConeService(Node):
             self.get_logger().warn(response.message)
             return response
 
+        # Serve from cache if available
+        if filename in self._cache:
+            response.cones = self._cache[filename]
+            response.success = True
+            response.message = f"Successfully loaded {len(response.cones)} cones from {filename} (cached)"
+            self.get_logger().info(response.message)
+            return response
+
         try:
             loaded_cones = []
             
-            # Parse the Gazebo World XML (SDF)
             tree = ET.parse(full_path)
             root = tree.getroot()
             
-            # Find the <world> tag
             world_tag = root.find('world')
             if world_tag is None:
                 response.success = False
@@ -67,85 +95,41 @@ class ConeService(Node):
 
             # 1. Parse original include-style world files
             for include in world_tag.findall('include'):
-                uri_tag = include.find('uri')
+                uri_tag  = include.find('uri')
                 name_tag = include.find('name')
                 pose_tag = include.find('pose')
                 
-                if uri_tag is not None and 'cone' in uri_tag.text.lower():
-                    c = Cone()
-                    
-                    # 1. Set ID from the name tag
-                    c.id = name_tag.text if name_tag is not None else "unknown_cone"
-                    
-                    # 2. Extract Color from URI (model://cone_yellow -> yellow)
-                    uri = uri_tag.text.lower()
-                    if 'cone_yellow' in uri:
-                        c.color = 'yellow'
-                    elif 'cone_blue' in uri:
-                        c.color = 'blue'
-                    elif 'cone_orange_big' in uri:
-                        c.color = 'orange_big'
-                    elif 'cone_orange' in uri:
-                        c.color = 'orange'
-                    else:
-                        c.color = 'unknown'
+                if uri_tag is None or 'cone' not in uri_tag.text.lower():
+                    continue
 
-                    # 3. Parse Pose (x y z roll pitch yaw)
-                    if pose_tag is not None:
-                        pose_parts = pose_tag.text.split()
-                        if len(pose_parts) >= 2:
-                            c.x = float(pose_parts[0])
-                            c.y = float(pose_parts[1])
-                        else:
-                            c.x = 0.0
-                            c.y = 0.0
-                    loaded_cones.append(c)
+                c = Cone()
+                c.id    = name_tag.text if name_tag is not None else "unknown_cone"
+                c.color = self._color_from_text(uri_tag.text)
+                c.x, c.y = self._parse_xy(pose_tag)
+                loaded_cones.append(c)
 
-            # 2. Parse optimized single-link model style world files (e.g. Map1Opt.world)
+            # 2. Parse optimized single-link model style world files (e.g. SkidpadOpt.world)
             for model_tag in world_tag.findall('model'):
                 for link_tag in model_tag.findall('link'):
                     for visual_tag in link_tag.findall('visual'):
-                        vis_name = visual_tag.get('name', '')
-                        geom_tag = visual_tag.find('geometry')
-                        mesh_tag = geom_tag.find('mesh') if geom_tag is not None else None
-                        uri_tag = mesh_tag.find('uri') if mesh_tag is not None else None
-                        
-                        is_cone = False
-                        uri_text = uri_tag.text.lower() if uri_tag is not None and uri_tag.text else ""
-                        if 'cone' in uri_text or 'cone' in vis_name.lower():
-                            is_cone = True
-                            
-                        if is_cone:
-                            c = Cone()
-                            # Clean ID: visual_cone_yellow_001 -> cone_yellow_001
-                            if vis_name.startswith('visual_'):
-                                c.id = vis_name[7:]
-                            else:
-                                c.id = vis_name
-                            
-                            if 'cone_yellow' in uri_text or 'cone_yellow' in vis_name.lower():
-                                c.color = 'yellow'
-                            elif 'cone_blue' in uri_text or 'cone_blue' in vis_name.lower():
-                                c.color = 'blue'
-                            elif 'cone_orange_big' in uri_text or 'cone_orange_big' in vis_name.lower():
-                                c.color = 'orange_big'
-                            elif 'cone_orange' in uri_text or 'cone_orange' in vis_name.lower():
-                                c.color = 'orange'
-                            else:
-                                c.color = 'unknown'
+                        vis_name  = visual_tag.get('name', '')
+                        geom_tag  = visual_tag.find('geometry')
+                        mesh_tag  = geom_tag.find('mesh') if geom_tag is not None else None
+                        uri_tag   = mesh_tag.find('uri') if mesh_tag is not None else None
+                        uri_text  = uri_tag.text if uri_tag is not None and uri_tag.text else ''
 
-                            pose_tag = visual_tag.find('pose')
-                            if pose_tag is not None and pose_tag.text:
-                                pose_parts = pose_tag.text.split()
-                                if len(pose_parts) >= 2:
-                                    c.x = float(pose_parts[0])
-                                    c.y = float(pose_parts[1])
-                                else:
-                                    c.x = 0.0
-                                    c.y = 0.0
-                            loaded_cones.append(c)
+                        if 'cone' not in uri_text.lower() and 'cone' not in vis_name.lower():
+                            continue
 
-            response.cones = loaded_cones
+                        c = Cone()
+                        # Strip leading "visual_" prefix from the ID
+                        c.id    = vis_name[7:] if vis_name.startswith('visual_') else vis_name
+                        c.color = self._color_from_text(uri_text or vis_name)
+                        c.x, c.y = self._parse_xy(visual_tag.find('pose'))
+                        loaded_cones.append(c)
+
+            self._cache[filename] = loaded_cones
+            response.cones   = loaded_cones
             response.success = True
             response.message = f"Successfully loaded {len(loaded_cones)} cones from {filename}"
             self.get_logger().info(response.message)

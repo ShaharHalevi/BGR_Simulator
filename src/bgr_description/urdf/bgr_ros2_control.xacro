@@ -3,20 +3,10 @@
 
     <ros2_control name="RobotSystem" type="system">
 
-        <!-- ros2_control Gazebo -->
-        <!-- ROS 2 Humble -->
-        <xacro:if value="$(arg is_ignition)">
-            <hardware>
-                <plugin>ign_ros2_control/IgnitionSystem</plugin>
-            </hardware>
-        </xacro:if>
-
-        <!-- ROS 2 Iron or above -->
-        <xacro:unless value="$(arg is_ignition)">
-            <hardware>
-                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-            </hardware>
-        </xacro:unless>
+        <!-- ros2_control hardware plugin (Jazzy / gz-sim) -->
+        <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
 
          <!-- Rear wheels: velocity-controlled by controllers -->
         <joint name="Wheel_rl_joint">

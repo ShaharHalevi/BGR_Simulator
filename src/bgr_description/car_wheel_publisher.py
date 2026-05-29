@@ -80,15 +80,15 @@ class WheelsMonitor(Node):
 
             # --- 4. Console Display ---
             # Formatting for clean output
-            print(
-                f"\r"
-                f"Steer: {steering_angle:5.1f}° | "
-                f"FL: {rpms[0]:5.1f} | "
-                f"FR: {rpms[1]:5.1f} | "
-                f"RL: {rpms[2]:5.1f} | "
-                f"RR: {rpms[3]:5.1f} (RPM)   ", 
-                end=""
-            )
+            # print(
+            #     f"\r"
+            #     f"Steer: {steering_angle:5.1f}° | "
+            #     f"FL: {rpms[0]:5.1f} | "
+            #     f"FR: {rpms[1]:5.1f} | "
+            #     f"RL: {rpms[2]:5.1f} | "
+            #     f"RR: {rpms[3]:5.1f} (RPM)   ", 
+            #     end=""
+            # )
 
         except Exception as e:
             self.get_logger().warn(f"Data error: {e}")

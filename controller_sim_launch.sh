@@ -5,7 +5,7 @@
 # (No Keyboard Edition - Tmux 1-Pane)
 # ==========================================
 
-export ROS_LOCALHOST_ONLY=1
+export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 
 # 1. Killing all previous processes to verify startup is secure
 echo "[1/3] Running Nuclear Cleanup..."
@@ -31,6 +31,9 @@ sleep 1
 # 2. Build Workspace (Clearing the build, install, log folders to avoid conflicts)
 echo "[2/3] Building Workspace..."
 rm -rf build/ install/ log/
+# Reset environment variables pointing to deleted install paths to prevent colcon warnings
+unset AMENT_PREFIX_PATH CMAKE_PREFIX_PATH COLCON_PREFIX_PATH
+source /opt/ros/jazzy/setup.bash
 colcon build
 
 # 3. Launching Tmux Session...
@@ -51,7 +54,7 @@ tmux new-session -d -s $SESSION
 # -------------------------
 # PANE 0: GAZEBO
 # -------------------------
-tmux send-keys -t $SESSION:0.0 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.0 "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map1Opt.world" C-m
 

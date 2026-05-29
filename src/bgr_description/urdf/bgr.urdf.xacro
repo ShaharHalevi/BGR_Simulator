@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <robot name="bgr" xmlns:xacro="http://ros.org/wiki/xacro">
 
-   <!-- Select Gazebo flavor (Ignition/GZ) to load the matching ros2_control hardware plugin -->
-  <xacro:arg name="is_ignition" default="true"/>
-
 
   <!-- External includes-->
   <xacro:include filename="$(find bgr_description)/urdf/bgr_gazebo.xacro"/>

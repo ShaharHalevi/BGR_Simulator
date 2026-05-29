@@ -10,7 +10,7 @@ all:
 	gnome-terminal -- bash -c "make ctrl; exec bash"
 
 clean:
-	rm -rf build/
+	rm -rf build/ install/ log/
 
 build: 
 	colcon build

@@ -42,7 +42,8 @@ jobs:
             source /opt/ros/jazzy/setup.bash &&
             source install/setup.bash &&
             colcon test --event-handlers console_direct+ --test-result-base test_results &&
-            colcon test-result --all --test-result-base test_results
+            colcon test-result --all --test-result-base test_results &&
+            cp output_result.png test_results/ 2>/dev/null || true
           "
 
       - name: Upload Test Results
@@ -50,4 +51,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ros2-test-results
-          path: test_results/**/*.xml
+          path: |
+            test_results/**/*.xml
+            test_results/output_result.png

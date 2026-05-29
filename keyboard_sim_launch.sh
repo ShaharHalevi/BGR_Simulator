@@ -5,7 +5,7 @@
 # (Tmux Edition)
 # ==========================================
 
-export ROS_LOCALHOST_ONLY=1
+export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 
 # Tmux must be installed to run this script
 if ! command -v tmux &> /dev/null; then
@@ -53,6 +53,9 @@ sleep 1
 # 2. Build Workspace (Clearing the build, install, log folders to avoid conflicts)
 echo "[2/3] Building Workspace..."
 rm -rf build/ install/ log/
+# Reset environment variables pointing to deleted install paths to prevent colcon warnings
+unset AMENT_PREFIX_PATH CMAKE_PREFIX_PATH COLCON_PREFIX_PATH
+source /opt/ros/jazzy/setup.bash
 colcon build
 
 echo "[3/3] Launching Tmux Session..."
@@ -80,14 +83,14 @@ tmux split-window -h
 # -------------------------
 # PANE 0: GAZEBO (Top)
 # -------------------------
-tmux send-keys -t $SESSION:0.0 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.0 "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map3Opt.world" C-m
+tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=SkidpadOpt.world" C-m
 
 # -------------------------
 # PANE 1: KEYBOARD BRIDGE (Bottom-Left)
 # -------------------------
-tmux send-keys -t $SESSION:0.1 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.1 "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.1 "clear; echo -e '\e[1;33mWaiting for Controllers...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.1 "until ros2 control list_controllers 2>/dev/null | grep -q 'forward_velocity_controller.*active' && ros2 control list_controllers 2>/dev/null | grep -q 'forward_position_controller.*active'; do sleep 1; done" C-m
 tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32mControllers active! Delaying 1s...\e[0m'; sleep 1" C-m
@@ -97,7 +100,7 @@ tmux send-keys -t $SESSION:0.1 "ros2 launch bgr_controller keyboard_teleop.launc
 # -------------------------
 # PANE 2: DRIVE CONSOLE (Bottom-Right)
 # -------------------------
-tmux send-keys -t $SESSION:0.2 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.2 "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.2 "clear; echo -e '\e[1;33mWaiting for Bridge...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.2 "until ros2 node list 2>/dev/null | grep -q 'joy_array_bridge'; do sleep 1; done" C-m
 tmux send-keys -t $SESSION:0.2 "echo -e '\e[1;32mBridge active! Delaying 1s...\e[0m'; sleep 1" C-m

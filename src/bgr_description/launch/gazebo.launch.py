@@ -15,6 +15,11 @@ Stage 4 → All tooling launches.   Gate: GUI tracker retry-loop.
 import os
 from pathlib import Path
 from ament_index_python.packages import get_package_share_directory
+
+# Force localhost discovery loopback only if not running in GitHub Actions CI
+if not os.environ.get('GITHUB_ACTIONS') == 'true':
+    os.environ['ROS_AUTOMATIC_DISCOVERY_RANGE'] = 'LOCALHOST'
+
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -87,15 +92,9 @@ def generate_launch_description():
         '" -s -v 4 -r " + "', world_file_path, '" if "', LaunchConfiguration("headless"), '" in ["True", "true", "1"] else " -v 4 -r " + "', world_file_path, '"'
     ])
 
-    # Pick which Gazebo plugin family to use.
-    ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "humble" else "False"
-
     # Create robot_description parameter from xacro file.
     robot_description = ParameterValue(
-        Command(
-            ["xacro ", LaunchConfiguration("model"), " is_ignition:=", is_ignition]
-        ),
+        Command(["xacro ", LaunchConfiguration("model")]),
         value_type=str,
     )
 
@@ -183,7 +182,7 @@ def generate_launch_description():
         cmd=['bash', '-c',
              'for i in $(seq 1 30); do '
              'echo "[STAGE 3] Attempting to spawn vehicle..." && '
-             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 0.3 && '
+             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 1 && '
              'echo "[STAGE 3 SUCCESS] Vehicle spawn request accepted!" && break; '
              'echo "[STAGE 3 WARNING] Spawn request timed out or failed. Gazebo is busy loading world. Retrying in 2s..." && '
              'sleep 2; done'],

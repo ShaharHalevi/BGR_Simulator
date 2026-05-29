@@ -146,7 +146,7 @@ class VisibleConesNode(Node):
                 
                 # If this is a NEW overlap (not already overlapping from previous frame)
                 if cone.id not in self.currently_overlapping_cones:
-                    self.get_logger().warn(f"[COLLISION] Ghost hit detected! Cone: {cone.id} ({cone.color}) at x:{cone.x:.2f}, y:{cone.y:.2f}")
+                    # self.get_logger().warn(f"[COLLISION] Ghost hit detected! Cone: {cone.id} ({cone.color}) at x:{cone.x:.2f}, y:{cone.y:.2f}")
                     
                     # Register hit event
                     self.all_hit_events.append(cone)
