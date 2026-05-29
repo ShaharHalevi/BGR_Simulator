@@ -54,7 +54,7 @@ def generate_launch_description():
     ])
 
     # The models are now installed dynamically via CMakeLists
-    fsa_models_path = os.path.join(bgr_description, "TracksV0", "models")
+    fsa_models_path = os.path.join(bgr_description, "tracks", "models")
 
     # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
     # We must explicitly prepend the current workspace's install and src directories
@@ -183,7 +183,7 @@ def generate_launch_description():
         cmd=['bash', '-c',
              'for i in $(seq 1 30); do '
              'echo "[STAGE 3] Attempting to spawn vehicle..." && '
-             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 1 && '
+             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 0.3 && '
              'echo "[STAGE 3 SUCCESS] Vehicle spawn request accepted!" && break; '
              'echo "[STAGE 3 WARNING] Spawn request timed out or failed. Gazebo is busy loading world. Retrying in 2s..." && '
              'sleep 2; done'],

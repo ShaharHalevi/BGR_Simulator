@@ -11,6 +11,9 @@ from rosgraph_msgs.msg import Clock
 from std_msgs.msg import Float64MultiArray
 from bgr_description.msg import ConeArray
 
+# Force ROS 2 to run locally only to prevent local network interference
+os.environ['ROS_LOCALHOST_ONLY'] = '1'
+
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -51,6 +54,7 @@ class BaseTestFixture(unittest.TestCase):
         suite_logger.info("🚀 [ENVIRONMENT] BGR Test Suite Diagnostics")
         suite_logger.info(f"   - ROS_DISTRO: {os.environ.get('ROS_DISTRO', 'N/A')}")
         suite_logger.info(f"   - ROS_DOMAIN_ID: {os.environ.get('ROS_DOMAIN_ID', '0')}")
+        suite_logger.info(f"   - ROS_LOCALHOST_ONLY: {os.environ.get('ROS_LOCALHOST_ONLY', 'N/A')}")
         suite_logger.info(f"   - WORKSPACE: {os.getcwd()}")
         suite_logger.info("="*50)
 

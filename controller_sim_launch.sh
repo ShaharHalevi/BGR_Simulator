@@ -5,8 +5,11 @@
 # (No Keyboard Edition - Tmux 1-Pane)
 # ==========================================
 
+export ROS_LOCALHOST_ONLY=1
+
 # 1. Killing all previous processes to verify startup is secure
 echo "[1/3] Running Nuclear Cleanup..."
+ros2 daemon stop 2>/dev/null || true
 # Stop clashing Docker containers if running on host network
 docker stop bgr_simulator 2>/dev/null || true
 # Kill wrapper scripts, multiplexers, and bridges
@@ -48,7 +51,7 @@ tmux new-session -d -s $SESSION
 # -------------------------
 # PANE 0: GAZEBO
 # -------------------------
-tmux send-keys -t $SESSION:0.0 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.0 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map1Opt.world" C-m
 

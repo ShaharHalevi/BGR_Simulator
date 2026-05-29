@@ -5,6 +5,8 @@
 # (Tmux Edition)
 # ==========================================
 
+export ROS_LOCALHOST_ONLY=1
+
 # Tmux must be installed to run this script
 if ! command -v tmux &> /dev/null; then
     echo "tmux is not installed. Attempting to install..."
@@ -34,6 +36,7 @@ fi
 # - Clears temporary directory caches, Ignition/Gazebo configuration, and FastDDS shared memory.
 # ==============================================================================
 echo "[1/3] Running Nuclear Cleanup..."
+ros2 daemon stop 2>/dev/null || true
 docker stop bgr_simulator 2>/dev/null || true
 killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null
 killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null
@@ -77,14 +80,14 @@ tmux split-window -h
 # -------------------------
 # PANE 0: GAZEBO (Top)
 # -------------------------
-tmux send-keys -t $SESSION:0.0 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.0 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map3Opt.world" C-m
 
 # -------------------------
 # PANE 1: KEYBOARD BRIDGE (Bottom-Left)
 # -------------------------
-tmux send-keys -t $SESSION:0.1 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.1 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.1 "clear; echo -e '\e[1;33mWaiting for Controllers...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.1 "until ros2 control list_controllers 2>/dev/null | grep -q 'forward_velocity_controller.*active' && ros2 control list_controllers 2>/dev/null | grep -q 'forward_position_controller.*active'; do sleep 1; done" C-m
 tmux send-keys -t $SESSION:0.1 "echo -e '\e[1;32mControllers active! Delaying 1s...\e[0m'; sleep 1" C-m
@@ -94,7 +97,7 @@ tmux send-keys -t $SESSION:0.1 "ros2 launch bgr_controller keyboard_teleop.launc
 # -------------------------
 # PANE 2: DRIVE CONSOLE (Bottom-Right)
 # -------------------------
-tmux send-keys -t $SESSION:0.2 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
+tmux send-keys -t $SESSION:0.2 "export ROS_LOCALHOST_ONLY=1 && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.2 "clear; echo -e '\e[1;33mWaiting for Bridge...\e[0m'" C-m
 tmux send-keys -t $SESSION:0.2 "until ros2 node list 2>/dev/null | grep -q 'joy_array_bridge'; do sleep 1; done" C-m
 tmux send-keys -t $SESSION:0.2 "echo -e '\e[1;32mBridge active! Delaying 1s...\e[0m'; sleep 1" C-m
