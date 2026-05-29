@@ -68,9 +68,9 @@
     <model name="competition_track_cones">
       <static>true</static>
       <link name="link">
-        <pose>0 0 0 0 -0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <visual name="visual_cone_yellow_001">
-          <pose>3.652 1.924 0.000 0.000 0.000 0.000</pose>
+          <pose>2.761 1.924 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -83,7 +83,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_002">
-          <pose>7.629 1.917 0.000 0.000 0.000 0.000</pose>
+          <pose>6.880 1.650 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -96,7 +96,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_003">
-          <pose>11.625 1.952 0.000 0.000 0.000 0.000</pose>
+          <pose>10.928 1.195 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -109,7 +109,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_004">
-          <pose>15.642 1.986 0.000 0.000 0.000 0.000</pose>
+          <pose>14.926 0.665 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -122,7 +122,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_005">
-          <pose>19.684 1.963 0.000 0.000 0.000 0.000</pose>
+          <pose>18.923 0.068 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -135,7 +135,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_006">
-          <pose>23.754 1.815 0.000 0.000 0.000 0.000</pose>
+          <pose>22.911 -0.598 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -148,7 +148,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_007">
-          <pose>27.854 1.445 0.000 0.000 0.000 0.000</pose>
+          <pose>26.898 -1.348 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -161,7 +161,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_008">
-          <pose>31.963 0.713 0.000 0.000 0.000 0.000</pose>
+          <pose>30.904 -2.231 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -174,7 +174,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_009">
-          <pose>36.036 -0.588 0.000 0.000 0.000 0.000</pose>
+          <pose>34.934 -3.383 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -187,7 +187,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_010">
-          <pose>39.873 -2.700 0.000 0.000 0.000 0.000</pose>
+          <pose>38.603 -4.675 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -200,7 +200,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_011">
-          <pose>43.125 -5.626 0.000 0.000 0.000 0.000</pose>
+          <pose>42.947 -7.273 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -213,7 +213,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_012">
-          <pose>45.771 -9.038 0.000 0.000 0.000 0.000</pose>
+          <pose>44.191 -11.782 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -226,7 +226,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_013">
-          <pose>47.641 -13.033 0.000 0.000 0.000 0.000</pose>
+          <pose>44.596 -15.865 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -239,7 +239,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_014">
-          <pose>48.392 -17.434 0.000 0.000 0.000 0.000</pose>
+          <pose>44.782 -19.944 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -252,7 +252,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_015">
-          <pose>48.017 -21.802 0.000 0.000 0.000 0.000</pose>
+          <pose>44.815 -24.026 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -265,7 +265,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_016">
-          <pose>46.966 -25.795 0.000 0.000 0.000 0.000</pose>
+          <pose>44.764 -28.075 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -278,7 +278,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_017">
-          <pose>46.149 -29.564 0.000 0.000 0.000 0.000</pose>
+          <pose>44.654 -32.074 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -291,7 +291,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_018">
-          <pose>45.277 -33.598 0.000 0.000 0.000 0.000</pose>
+          <pose>44.495 -36.110 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -304,7 +304,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_019">
-          <pose>43.793 -37.652 0.000 0.000 0.000 0.000</pose>
+          <pose>44.293 -40.142 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -317,7 +317,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_020">
-          <pose>41.598 -41.347 0.000 0.000 0.000 0.000</pose>
+          <pose>44.051 -44.158 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -330,7 +330,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_021">
-          <pose>37.934 -44.355 0.000 0.000 0.000 0.000</pose>
+          <pose>43.765 -48.195 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -343,7 +343,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_022">
-          <pose>33.863 -45.938 0.000 0.000 0.000 0.000</pose>
+          <pose>43.433 -52.212 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -356,7 +356,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_023">
-          <pose>29.857 -46.933 0.000 0.000 0.000 0.000</pose>
+          <pose>43.047 -56.184 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -369,7 +369,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_024">
-          <pose>25.870 -47.703 0.000 0.000 0.000 0.000</pose>
+          <pose>42.575 -60.228 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -382,7 +382,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_025">
-          <pose>21.928 -48.417 0.000 0.000 0.000 0.000</pose>
+          <pose>41.968 -64.260 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -395,7 +395,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_026">
-          <pose>18.073 -49.209 0.000 0.000 0.000 0.000</pose>
+          <pose>41.121 -68.283 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -408,7 +408,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_027">
-          <pose>14.416 -50.241 0.000 0.000 0.000 0.000</pose>
+          <pose>39.939 -72.283 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -421,7 +421,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_028">
-          <pose>11.181 -51.786 0.000 0.000 0.000 0.000</pose>
+          <pose>38.219 -76.198 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -434,7 +434,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_029">
-          <pose>8.331 -54.049 0.000 0.000 0.000 0.000</pose>
+          <pose>35.596 -79.795 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -447,7 +447,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_030">
-          <pose>5.748 -56.854 0.000 0.000 0.000 0.000</pose>
+          <pose>31.688 -82.389 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -460,7 +460,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_031">
-          <pose>3.111 -59.956 0.000 0.000 0.000 0.000</pose>
+          <pose>26.962 -82.867 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -473,7 +473,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_032">
-          <pose>-0.276 -62.874 0.000 0.000 0.000 0.000</pose>
+          <pose>22.644 -81.945 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -486,7 +486,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_033">
-          <pose>-4.787 -64.365 0.000 0.000 0.000 0.000</pose>
+          <pose>18.611 -79.985 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -499,7 +499,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_034">
-          <pose>-9.115 -64.327 0.000 0.000 0.000 0.000</pose>
+          <pose>15.362 -76.356 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -512,7 +512,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_035">
-          <pose>-13.230 -63.705 0.000 0.000 0.000 0.000</pose>
+          <pose>14.923 -71.463 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -525,7 +525,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_036">
-          <pose>-17.165 -62.908 0.000 0.000 0.000 0.000</pose>
+          <pose>15.968 -67.164 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -538,7 +538,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_037">
-          <pose>-20.944 -62.311 0.000 0.000 0.000 0.000</pose>
+          <pose>18.516 -63.280 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -551,7 +551,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_038">
-          <pose>-24.433 -62.395 0.000 0.000 0.000 0.000</pose>
+          <pose>22.022 -60.603 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -564,7 +564,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_039">
-          <pose>-27.963 -63.388 0.000 0.000 0.000 0.000</pose>
+          <pose>25.768 -58.654 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -577,7 +577,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_040">
-          <pose>-31.055 -65.082 0.000 0.000 0.000 0.000</pose>
+          <pose>29.315 -56.917 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -590,7 +590,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_041">
-          <pose>-33.514 -67.540 0.000 0.000 0.000 0.000</pose>
+          <pose>32.524 -55.046 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -603,7 +603,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_042">
-          <pose>-35.276 -70.671 0.000 0.000 0.000 0.000</pose>
+          <pose>34.642 -52.705 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -616,7 +616,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_043">
-          <pose>-36.653 -74.300 0.000 0.000 0.000 0.000</pose>
+          <pose>35.715 -49.459 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -629,7 +629,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_044">
-          <pose>-38.279 -78.206 0.000 0.000 0.000 0.000</pose>
+          <pose>35.675 -46.175 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -642,7 +642,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_045">
-          <pose>-40.953 -81.861 0.000 0.000 0.000 0.000</pose>
+          <pose>34.235 -43.657 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -655,7 +655,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_046">
-          <pose>-44.646 -84.457 0.000 0.000 0.000 0.000</pose>
+          <pose>31.493 -42.244 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -668,7 +668,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_047">
-          <pose>-48.720 -86.004 0.000 0.000 0.000 0.000</pose>
+          <pose>29.130 -42.763 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -681,7 +681,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_048">
-          <pose>-53.001 -86.723 0.000 0.000 0.000 0.000</pose>
+          <pose>27.058 -45.266 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -694,7 +694,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_049">
-          <pose>-57.412 -86.499 0.000 0.000 0.000 0.000</pose>
+          <pose>25.432 -48.667 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -707,7 +707,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_050">
-          <pose>-61.706 -85.013 0.000 0.000 0.000 0.000</pose>
+          <pose>23.900 -52.437 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -720,7 +720,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_051">
-          <pose>-65.245 -82.108 0.000 0.000 0.000 0.000</pose>
+          <pose>22.120 -56.180 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -733,7 +733,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_052">
-          <pose>-67.822 -78.701 0.000 0.000 0.000 0.000</pose>
+          <pose>19.377 -59.659 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -746,7 +746,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_053">
-          <pose>-69.826 -74.926 0.000 0.000 0.000 0.000</pose>
+          <pose>16.353 -62.458 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -759,7 +759,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_054">
-          <pose>-71.206 -70.881 0.000 0.000 0.000 0.000</pose>
+          <pose>13.326 -65.009 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -772,7 +772,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_055">
-          <pose>-71.930 -66.673 0.000 0.000 0.000 0.000</pose>
+          <pose>10.204 -67.577 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -785,7 +785,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_056">
-          <pose>-71.989 -62.406 0.000 0.000 0.000 0.000</pose>
+          <pose>7.073 -70.117 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -798,7 +798,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_057">
-          <pose>-71.002 -57.839 0.000 0.000 0.000 0.000</pose>
+          <pose>3.919 -72.638 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -811,7 +811,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_058">
-          <pose>-67.750 -54.320 0.000 0.000 0.000 0.000</pose>
+          <pose>0.744 -75.135 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -824,7 +824,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_059">
-          <pose>-64.374 -52.143 0.000 0.000 0.000 0.000</pose>
+          <pose>-2.441 -77.594 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -837,7 +837,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_060">
-          <pose>-61.411 -49.832 0.000 0.000 0.000 0.000</pose>
+          <pose>-5.661 -80.024 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -850,7 +850,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_061">
-          <pose>-58.929 -47.133 0.000 0.000 0.000 0.000</pose>
+          <pose>-8.933 -82.420 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -863,7 +863,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_062">
-          <pose>-56.823 -44.033 0.000 0.000 0.000 0.000</pose>
+          <pose>-12.261 -84.758 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -876,7 +876,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_063">
-          <pose>-55.012 -40.551 0.000 0.000 0.000 0.000</pose>
+          <pose>-15.681 -87.005 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -889,7 +889,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_064">
-          <pose>-53.829 -37.119 0.000 0.000 0.000 0.000</pose>
+          <pose>-19.301 -89.083 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -902,7 +902,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_065">
-          <pose>-53.377 -33.541 0.000 0.000 0.000 0.000</pose>
+          <pose>-23.407 -90.602 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -915,7 +915,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_066">
-          <pose>-53.711 -29.909 0.000 0.000 0.000 0.000</pose>
+          <pose>-28.295 -90.356 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -928,7 +928,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_067">
-          <pose>-54.655 -26.220 0.000 0.000 0.000 0.000</pose>
+          <pose>-32.146 -87.442 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -941,7 +941,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_068">
-          <pose>-55.826 -22.353 0.000 0.000 0.000 0.000</pose>
+          <pose>-34.649 -84.342 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -954,7 +954,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_069">
-          <pose>-56.610 -18.094 0.000 0.000 0.000 0.000</pose>
+          <pose>-36.914 -80.366 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -967,7 +967,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_070">
-          <pose>-56.173 -13.595 0.000 0.000 0.000 0.000</pose>
+          <pose>-38.002 -76.096 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -980,7 +980,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_071">
-          <pose>-54.329 -9.536 0.000 0.000 0.000 0.000</pose>
+          <pose>-37.921 -71.518 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -993,7 +993,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_072">
-          <pose>-51.590 -6.027 0.000 0.000 0.000 0.000</pose>
+          <pose>-36.378 -67.309 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1006,7 +1006,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_073">
-          <pose>-48.498 -3.112 0.000 0.000 0.000 0.000</pose>
+          <pose>-33.432 -63.729 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1019,7 +1019,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_074">
-          <pose>-44.954 -0.727 0.000 0.000 0.000 0.000</pose>
+          <pose>-29.502 -61.479 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1032,7 +1032,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_075">
-          <pose>-41.035 1.021 0.000 0.000 0.000 0.000</pose>
+          <pose>-25.038 -60.527 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1045,7 +1045,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_076">
-          <pose>-36.902 2.102 0.000 0.000 0.000 0.000</pose>
+          <pose>-20.809 -60.752 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1058,7 +1058,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_077">
-          <pose>-32.749 2.604 0.000 0.000 0.000 0.000</pose>
+          <pose>-16.850 -61.157 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1071,7 +1071,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_078">
-          <pose>-28.630 2.732 0.000 0.000 0.000 0.000</pose>
+          <pose>-13.039 -61.313 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1084,7 +1084,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_079">
-          <pose>-24.725 2.809 0.000 0.000 0.000 0.000</pose>
+          <pose>-9.249 -61.059 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1097,7 +1097,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_080">
-          <pose>-20.642 2.807 0.000 0.000 0.000 0.000</pose>
+          <pose>-5.512 -60.344 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1110,7 +1110,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_081">
-          <pose>-16.613 2.729 0.000 0.000 0.000 0.000</pose>
+          <pose>-1.868 -59.193 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1123,7 +1123,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_082">
-          <pose>-12.584 2.610 0.000 0.000 0.000 0.000</pose>
+          <pose>1.815 -57.752 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1136,7 +1136,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_083">
-          <pose>-8.563 2.462 0.000 0.000 0.000 0.000</pose>
+          <pose>5.404 -56.159 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1149,7 +1149,7 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_084">
-          <pose>-4.525 2.289 0.000 0.000 0.000 0.000</pose>
+          <pose>8.707 -54.369 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1162,7 +1162,436 @@
           </material>
         </visual>
         <visual name="visual_cone_yellow_085">
-          <pose>-0.503 2.090 0.000 0.000 0.000 0.000</pose>
+          <pose>11.473 -52.183 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_086">
+          <pose>12.616 -49.714 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_087">
+          <pose>12.390 -46.165 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_088">
+          <pose>11.167 -43.124 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_089">
+          <pose>8.809 -40.829 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_090">
+          <pose>5.638 -39.322 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_091">
+          <pose>2.107 -38.620 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_092">
+          <pose>-1.759 -38.395 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_093">
+          <pose>-5.719 -38.368 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_094">
+          <pose>-9.680 -38.427 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_095">
+          <pose>-13.697 -38.509 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_096">
+          <pose>-17.742 -38.565 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_097">
+          <pose>-21.788 -38.544 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_098">
+          <pose>-25.859 -38.383 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_099">
+          <pose>-30.007 -37.963 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_100">
+          <pose>-34.192 -37.029 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_101">
+          <pose>-38.274 -34.764 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_102">
+          <pose>-40.952 -31.007 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_103">
+          <pose>-42.357 -26.837 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_104">
+          <pose>-42.960 -22.602 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_105">
+          <pose>-42.989 -18.390 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_106">
+          <pose>-42.524 -14.204 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_107">
+          <pose>-41.541 -10.072 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_108">
+          <pose>-39.899 -6.063 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_109">
+          <pose>-37.194 -2.432 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_110">
+          <pose>-33.211 -0.172 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_111">
+          <pose>-29.096 0.976 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_112">
+          <pose>-24.987 1.649 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_113">
+          <pose>-20.891 2.052 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_114">
+          <pose>-16.812 2.274 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_115">
+          <pose>-12.758 2.363 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_116">
+          <pose>-8.718 2.346 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_117">
+          <pose>-4.642 2.238 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_yellow/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1.0 1.0 0.0 1</ambient>
+            <diffuse>1.0 1.0 0.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_yellow_118">
+          <pose>-0.558 2.046 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_yellow/meshes/cone.stl</uri>
@@ -1175,7 +1604,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_001">
-          <pose>3.615 -1.576 0.000 0.000 0.000 0.000</pose>
+          <pose>2.769 -1.576 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1188,7 +1617,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_002">
-          <pose>7.648 -1.583 0.000 0.000 0.000 0.000</pose>
+          <pose>6.537 -1.834 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1201,7 +1630,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_003">
-          <pose>11.662 -1.547 0.000 0.000 0.000 0.000</pose>
+          <pose>10.499 -2.278 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1214,7 +1643,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_004">
-          <pose>15.655 -1.514 0.000 0.000 0.000 0.000</pose>
+          <pose>14.437 -2.801 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1227,7 +1656,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_005">
-          <pose>19.622 -1.536 0.000 0.000 0.000 0.000</pose>
+          <pose>18.377 -3.389 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1240,7 +1669,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_006">
-          <pose>23.549 -1.679 0.000 0.000 0.000 0.000</pose>
+          <pose>22.303 -4.044 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1253,7 +1682,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_007">
-          <pose>27.412 -2.027 0.000 0.000 0.000 0.000</pose>
+          <pose>26.206 -4.779 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1266,7 +1695,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_008">
-          <pose>31.155 -2.693 0.000 0.000 0.000 0.000</pose>
+          <pose>30.076 -5.632 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1279,7 +1708,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_009">
-          <pose>34.689 -3.819 0.000 0.000 0.000 0.000</pose>
+          <pose>33.778 -6.687 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1292,7 +1721,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_010">
-          <pose>37.838 -5.547 0.000 0.000 0.000 0.000</pose>
+          <pose>37.548 -8.012 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1305,7 +1734,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_011">
-          <pose>40.565 -8.013 0.000 0.000 0.000 0.000</pose>
+          <pose>39.990 -9.145 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1318,7 +1747,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_012">
-          <pose>42.805 -10.896 0.000 0.000 0.000 0.000</pose>
+          <pose>40.718 -12.218 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1331,7 +1760,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_013">
-          <pose>44.305 -14.093 0.000 0.000 0.000 0.000</pose>
+          <pose>41.106 -16.136 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1344,7 +1773,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_014">
-          <pose>44.894 -17.549 0.000 0.000 0.000 0.000</pose>
+          <pose>41.283 -20.023 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1357,7 +1786,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_015">
-          <pose>44.581 -21.135 0.000 0.000 0.000 0.000</pose>
+          <pose>41.315 -24.013 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1370,7 +1799,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_016">
-          <pose>43.586 -24.886 0.000 0.000 0.000 0.000</pose>
+          <pose>41.265 -28.002 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1383,7 +1812,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_017">
-          <pose>42.709 -28.914 0.000 0.000 0.000 0.000</pose>
+          <pose>41.156 -31.956 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1396,7 +1825,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_018">
-          <pose>41.898 -32.686 0.000 0.000 0.000 0.000</pose>
+          <pose>40.999 -35.953 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1409,7 +1838,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_019">
-          <pose>40.634 -36.144 0.000 0.000 0.000 0.000</pose>
+          <pose>40.799 -39.949 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1422,7 +1851,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_020">
-          <pose>38.749 -39.315 0.000 0.000 0.000 0.000</pose>
+          <pose>40.559 -43.930 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1435,7 +1864,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_021">
-          <pose>36.321 -41.249 0.000 0.000 0.000 0.000</pose>
+          <pose>40.275 -47.928 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1448,7 +1877,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_022">
-          <pose>32.866 -42.583 0.000 0.000 0.000 0.000</pose>
+          <pose>39.947 -51.900 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1461,7 +1890,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_023">
-          <pose>29.132 -43.509 0.000 0.000 0.000 0.000</pose>
+          <pose>39.567 -55.817 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1474,7 +1903,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_024">
-          <pose>25.247 -44.259 0.000 0.000 0.000 0.000</pose>
+          <pose>39.104 -59.776 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1487,7 +1916,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_025">
-          <pose>21.286 -44.976 0.000 0.000 0.000 0.000</pose>
+          <pose>38.521 -63.648 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1500,7 +1929,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_026">
-          <pose>17.279 -45.800 0.000 0.000 0.000 0.000</pose>
+          <pose>37.723 -67.445 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1513,7 +1942,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_027">
-          <pose>13.258 -46.938 0.000 0.000 0.000 0.000</pose>
+          <pose>36.639 -71.116 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1526,7 +1955,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_028">
-          <pose>9.292 -48.840 0.000 0.000 0.000 0.000</pose>
+          <pose>35.150 -74.516 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1539,7 +1968,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_029">
-          <pose>5.914 -51.517 0.000 0.000 0.000 0.000</pose>
+          <pose>33.112 -77.329 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1552,7 +1981,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_030">
-          <pose>3.071 -54.599 0.000 0.000 0.000 0.000</pose>
+          <pose>30.410 -79.131 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1565,7 +1994,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_031">
-          <pose>0.526 -57.595 0.000 0.000 0.000 0.000</pose>
+          <pose>27.285 -79.382 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1578,7 +2007,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_032">
-          <pose>-2.103 -59.889 0.000 0.000 0.000 0.000</pose>
+          <pose>23.757 -78.626 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1591,7 +2020,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_033">
-          <pose>-5.119 -60.881 0.000 0.000 0.000 0.000</pose>
+          <pose>20.588 -77.097 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1604,7 +2033,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_034">
-          <pose>-8.779 -60.843 0.000 0.000 0.000 0.000</pose>
+          <pose>18.537 -74.883 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1617,7 +2046,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_035">
-          <pose>-12.572 -60.268 0.000 0.000 0.000 0.000</pose>
+          <pose>18.394 -71.912 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1630,7 +2059,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_036">
-          <pose>-16.486 -59.475 0.000 0.000 0.000 0.000</pose>
+          <pose>19.216 -68.468 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1643,7 +2072,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_037">
-          <pose>-20.611 -58.826 0.000 0.000 0.000 0.000</pose>
+          <pose>21.010 -65.736 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1656,7 +2085,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_038">
-          <pose>-25.080 -58.955 0.000 0.000 0.000 0.000</pose>
+          <pose>23.823 -63.604 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1669,7 +2098,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_039">
-          <pose>-29.249 -60.133 0.000 0.000 0.000 0.000</pose>
+          <pose>27.285 -61.808 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1682,7 +2111,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_040">
-          <pose>-33.140 -62.271 0.000 0.000 0.000 0.000</pose>
+          <pose>30.906 -60.034 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1695,7 +2124,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_041">
-          <pose>-36.319 -65.447 0.000 0.000 0.000 0.000</pose>
+          <pose>34.577 -57.881 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1708,7 +2137,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_042">
-          <pose>-38.486 -69.277 0.000 0.000 0.000 0.000</pose>
+          <pose>37.727 -54.359 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1721,7 +2150,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_043">
-          <pose>-39.947 -73.118 0.000 0.000 0.000 0.000</pose>
+          <pose>39.166 -50.041 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1734,7 +2163,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_044">
-          <pose>-41.384 -76.590 0.000 0.000 0.000 0.000</pose>
+          <pose>39.080 -45.367 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1747,7 +2176,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_045">
-          <pose>-43.396 -79.355 0.000 0.000 0.000 0.000</pose>
+          <pose>36.601 -41.078 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1760,7 +2189,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_046">
-          <pose>-46.229 -81.335 0.000 0.000 0.000 0.000</pose>
+          <pose>32.207 -38.818 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1773,7 +2202,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_047">
-          <pose>-49.631 -82.625 0.000 0.000 0.000 0.000</pose>
+          <pose>27.080 -39.926 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1786,7 +2215,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_048">
-          <pose>-53.230 -83.230 0.000 0.000 0.000 0.000</pose>
+          <pose>24.037 -43.497 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1799,7 +2228,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_049">
-          <pose>-56.795 -83.053 0.000 0.000 0.000 0.000</pose>
+          <pose>22.195 -47.336 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1812,7 +2241,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_050">
-          <pose>-60.021 -81.945 0.000 0.000 0.000 0.000</pose>
+          <pose>20.712 -50.990 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1825,7 +2254,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_051">
-          <pose>-62.630 -79.781 0.000 0.000 0.000 0.000</pose>
+          <pose>19.086 -54.435 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1838,7 +2267,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_052">
-          <pose>-64.871 -76.818 0.000 0.000 0.000 0.000</pose>
+          <pose>16.883 -57.203 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1851,7 +2280,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_053">
-          <pose>-66.614 -73.536 0.000 0.000 0.000 0.000</pose>
+          <pose>14.059 -59.815 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1864,7 +2293,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_054">
-          <pose>-67.814 -70.018 0.000 0.000 0.000 0.000</pose>
+          <pose>11.092 -62.314 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1877,7 +2306,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_055">
-          <pose>-68.445 -66.352 0.000 0.000 0.000 0.000</pose>
+          <pose>7.990 -64.866 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1890,7 +2319,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_056">
-          <pose>-68.496 -62.630 0.000 0.000 0.000 0.000</pose>
+          <pose>4.878 -67.391 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1903,7 +2332,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_057">
-          <pose>-67.862 -59.386 0.000 0.000 0.000 0.000</pose>
+          <pose>1.744 -69.895 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1916,7 +2345,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_058">
-          <pose>-65.752 -57.194 0.000 0.000 0.000 0.000</pose>
+          <pose>-1.408 -72.375 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1929,7 +2358,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_059">
-          <pose>-62.425 -55.050 0.000 0.000 0.000 0.000</pose>
+          <pose>-4.565 -74.813 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1942,7 +2371,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_060">
-          <pose>-59.039 -52.405 0.000 0.000 0.000 0.000</pose>
+          <pose>-7.751 -77.217 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1955,7 +2384,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_061">
-          <pose>-56.175 -49.293 0.000 0.000 0.000 0.000</pose>
+          <pose>-10.976 -79.579 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1968,7 +2397,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_062">
-          <pose>-53.811 -45.815 0.000 0.000 0.000 0.000</pose>
+          <pose>-14.235 -81.868 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1981,7 +2410,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_063">
-          <pose>-51.816 -41.979 0.000 0.000 0.000 0.000</pose>
+          <pose>-17.538 -84.038 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -1994,7 +2423,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_064">
-          <pose>-50.425 -37.934 0.000 0.000 0.000 0.000</pose>
+          <pose>-20.878 -85.959 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2007,7 +2436,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_065">
-          <pose>-49.877 -33.588 0.000 0.000 0.000 0.000</pose>
+          <pose>-24.138 -87.179 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2020,7 +2449,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_066">
-          <pose>-50.272 -29.262 0.000 0.000 0.000 0.000</pose>
+          <pose>-27.066 -87.078 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2033,7 +2462,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_067">
-          <pose>-51.306 -25.204 0.000 0.000 0.000 0.000</pose>
+          <pose>-29.475 -85.181 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2046,7 +2475,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_068">
-          <pose>-52.451 -21.426 0.000 0.000 0.000 0.000</pose>
+          <pose>-31.983 -82.074 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2059,7 +2488,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_069">
-          <pose>-53.118 -17.859 0.000 0.000 0.000 0.000</pose>
+          <pose>-33.646 -79.112 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2072,7 +2501,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_070">
-          <pose>-52.799 -14.527 0.000 0.000 0.000 0.000</pose>
+          <pose>-34.533 -75.631 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2085,7 +2514,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_071">
-          <pose>-51.376 -11.415 0.000 0.000 0.000 0.000</pose>
+          <pose>-34.495 -72.234 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2098,7 +2527,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_072">
-          <pose>-49.005 -8.386 0.000 0.000 0.000 0.000</pose>
+          <pose>-33.303 -68.980 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2111,7 +2540,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_073">
-          <pose>-46.305 -5.840 0.000 0.000 0.000 0.000</pose>
+          <pose>-31.210 -66.433 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2124,7 +2553,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_074">
-          <pose>-43.257 -3.788 0.000 0.000 0.000 0.000</pose>
+          <pose>-28.231 -64.740 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2137,7 +2566,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_075">
-          <pose>-39.886 -2.285 0.000 0.000 0.000 0.000</pose>
+          <pose>-24.916 -64.025 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2150,7 +2579,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_076">
-          <pose>-36.271 -1.341 0.000 0.000 0.000 0.000</pose>
+          <pose>-21.173 -64.233 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2163,7 +2592,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_077">
-          <pose>-32.517 -0.889 0.000 0.000 0.000 0.000</pose>
+          <pose>-17.139 -64.645 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2176,7 +2605,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_078">
-          <pose>-28.598 -0.767 0.000 0.000 0.000 0.000</pose>
+          <pose>-13.009 -64.813 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2189,7 +2618,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_079">
-          <pose>-24.668 -0.691 0.000 0.000 0.000 0.000</pose>
+          <pose>-8.804 -64.531 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2202,7 +2631,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_080">
-          <pose>-20.685 -0.692 0.000 0.000 0.000 0.000</pose>
+          <pose>-4.648 -63.736 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2215,7 +2644,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_081">
-          <pose>-16.701 -0.770 0.000 0.000 0.000 0.000</pose>
+          <pose>-0.645 -62.472 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2228,7 +2657,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_082">
-          <pose>-12.701 -0.888 0.000 0.000 0.000 0.000</pose>
+          <pose>3.151 -60.987 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2241,7 +2670,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_083">
-          <pose>-8.702 -1.035 0.000 0.000 0.000 0.000</pose>
+          <pose>6.924 -59.311 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2254,7 +2683,7 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_084">
-          <pose>-4.685 -1.207 0.000 0.000 0.000 0.000</pose>
+          <pose>10.560 -57.338 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2267,7 +2696,436 @@
           </material>
         </visual>
         <visual name="visual_cone_blue_085">
-          <pose>-0.691 -1.404 0.000 0.000 0.000 0.000</pose>
+          <pose>14.067 -54.533 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_086">
+          <pose>16.111 -49.898 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_087">
+          <pose>15.824 -45.488 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_088">
+          <pose>14.072 -41.172 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_089">
+          <pose>10.745 -37.913 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_090">
+          <pose>6.754 -36.005 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_091">
+          <pose>2.467 -35.138 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_092">
+          <pose>-1.671 -34.896 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_093">
+          <pose>-5.745 -34.869 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_094">
+          <pose>-9.749 -34.928 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_095">
+          <pose>-13.763 -35.010 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_096">
+          <pose>-17.765 -35.065 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_097">
+          <pose>-21.721 -35.045 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_098">
+          <pose>-25.634 -34.890 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_099">
+          <pose>-29.498 -34.500 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_100">
+          <pose>-33.107 -33.701 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_101">
+          <pose>-35.893 -32.199 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_102">
+          <pose>-37.793 -29.500 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_103">
+          <pose>-38.942 -26.070 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_104">
+          <pose>-39.469 -22.360 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_105">
+          <pose>-39.494 -18.575 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_106">
+          <pose>-39.074 -14.794 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_107">
+          <pose>-38.200 -11.114 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_108">
+          <pose>-36.808 -7.706 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_109">
+          <pose>-34.836 -5.019 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_110">
+          <pose>-31.993 -3.453 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_111">
+          <pose>-28.381 -2.450 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_112">
+          <pose>-24.549 -1.823 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_113">
+          <pose>-20.633 -1.438 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_114">
+          <pose>-16.684 -1.223 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_115">
+          <pose>-12.730 -1.137 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_116">
+          <pose>-8.773 -1.154 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_117">
+          <pose>-4.771 -1.259 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cone_blue/meshes/cone.stl</uri>
+              <scale>0.005 0.005 0.005</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+          </material>
+        </visual>
+        <visual name="visual_cone_blue_118">
+          <pose>-0.759 -1.449 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_blue/meshes/cone.stl</uri>
@@ -2280,7 +3138,7 @@
           </material>
         </visual>
         <visual name="visual_cone_orange_001">
-          <pose>0.000 -1.726 0.000 0.000 0.000 0.000</pose>
+          <pose>0.000 -1.726 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_orange/meshes/cone.stl</uri>
@@ -2293,7 +3151,7 @@
           </material>
         </visual>
         <visual name="visual_cone_orange_002">
-          <pose>0.000 1.726 0.000 0.000 0.000 0.000</pose>
+          <pose>0.000 1.726 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_orange/meshes/cone.stl</uri>
@@ -2306,7 +3164,7 @@
           </material>
         </visual>
         <visual name="visual_cone_orange_003">
-          <pose>1.300 1.726 0.000 0.000 0.000 0.000</pose>
+          <pose>1.300 1.726 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_orange/meshes/cone.stl</uri>
@@ -2319,7 +3177,7 @@
           </material>
         </visual>
         <visual name="visual_cone_orange_004">
-          <pose>1.300 -1.726 0.000 0.000 0.000 0.000</pose>
+          <pose>1.300 -1.726 0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://cone_orange/meshes/cone.stl</uri>

@@ -79,7 +79,7 @@ tmux split-window -h
 # -------------------------
 tmux send-keys -t $SESSION:0.0 "source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map1Opt.world" C-m
+tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=Map3Opt.world" C-m
 
 # -------------------------
 # PANE 1: KEYBOARD BRIDGE (Bottom-Left)

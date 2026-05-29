@@ -2,14 +2,14 @@ name: ROS 2 CI
 
 on:
   push:
-    branches: [ main, main-with-minimap]
+    branches: [ main, world-optimisation]
     paths:
       - 'src/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - '.github/workflows/bgsim_ci.yml'
   pull_request:
-    branches: [ main, main-with-minimap]
+    branches: [ main, world-optimisation]
     paths:
       - 'src/**'
       - 'Dockerfile'

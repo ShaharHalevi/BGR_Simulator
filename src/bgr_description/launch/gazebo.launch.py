@@ -42,7 +42,7 @@ def generate_launch_description():
 
     world_arg = DeclareLaunchArgument(
         'world_name',
-        default_value='Acceleration.world',
+        default_value='AccelerationOpt.world',
         description='Name of the .world file to load'
     )
 

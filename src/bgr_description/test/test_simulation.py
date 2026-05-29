@@ -9,6 +9,7 @@ from sensor_msgs.msg import Image, Imu, PointCloud2, JointState
 from nav_msgs.msg import Odometry
 from rosgraph_msgs.msg import Clock
 from std_msgs.msg import Float64MultiArray
+from bgr_description.msg import ConeArray
 
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, TimerAction
@@ -155,6 +156,34 @@ class BaseTestFixture(unittest.TestCase):
         msg = self.wait_for_topic(Odometry, '/model/bgr/odometry', timeout=60.0)
         self.assertIsNotNone(msg, "Failed: No Odometry data on /model/bgr/odometry")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Odom Received. Initial Position: X={msg.pose.pose.position.x:.2f}, Y={msg.pose.pose.position.y:.2f}')
+
+    def test_05_full_state_active(self):
+        """Verification Phase 5: Car State Publisher"""
+        self.node.get_logger().info('--- Verification Phase 5: Car State ---')
+        msg = self.wait_for_topic(Float64MultiArray, '/robot/full_state', timeout=60.0)
+        self.assertIsNotNone(msg, "Failed: No Float64MultiArray data on /robot/full_state")
+        self.node.get_logger().info(f'📦 [DIAGNOSTIC] Car State Received. Array Length: {len(msg.data)}')
+
+    def test_06_wheels_status_active(self):
+        """Verification Phase 6: Wheel Status Publisher"""
+        self.node.get_logger().info('--- Verification Phase 6: Wheels Status ---')
+        msg = self.wait_for_topic(Float64MultiArray, '/robot/wheels_status', timeout=60.0)
+        self.assertIsNotNone(msg, "Failed: No Float64MultiArray data on /robot/wheels_status")
+        self.node.get_logger().info(f'📦 [DIAGNOSTIC] Wheels Status Received. Array Length: {len(msg.data)}')
+
+    def test_07_noisy_sensors_active(self):
+        """Verification Phase 7: Noisy Sensors Publisher"""
+        self.node.get_logger().info('--- Verification Phase 7: Noisy Sensors ---')
+        msg = self.wait_for_topic(Float64MultiArray, '/robot/noisy_state', timeout=60.0)
+        self.assertIsNotNone(msg, "Failed: No Float64MultiArray data on /robot/noisy_state")
+        self.node.get_logger().info(f'📦 [DIAGNOSTIC] Noisy Sensors Received. Array Length: {len(msg.data)}')
+
+    def test_08_visible_cones_active(self):
+        """Verification Phase 8: Visible Cones Service & Publisher"""
+        self.node.get_logger().info('--- Verification Phase 8: Visible Cones ---')
+        msg = self.wait_for_topic(ConeArray, '/visible_cones', timeout=60.0)
+        self.assertIsNotNone(msg, "Failed: No ConeArray data on /visible_cones")
+        self.node.get_logger().info(f'📦 [DIAGNOSTIC] Visible Cones Received. Count: {len(msg.cones)}')
 
 @launch_testing.post_shutdown_test()
 class TestProcessOutput(unittest.TestCase):
