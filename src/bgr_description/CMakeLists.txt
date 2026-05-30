@@ -37,6 +37,7 @@ install(PROGRAMS
   visible_cones.py
   noisy_sensor_publisher.py
   reset_car.py
+  telemetry_logger.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

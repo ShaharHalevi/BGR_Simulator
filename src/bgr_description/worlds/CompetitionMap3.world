@@ -946,13 +946,13 @@
       <pose>-3.586 -2.256 0 0 0 0</pose>
     </include>
     <include>
-      <uri>model://cone_orange</uri>
-      <name>cone_orange_001</name>
+      <uri>model://cone_orange_big</uri>
+      <name>cone_orange_big_001</name>
       <pose>0.000 -1.726 0 0 0 0</pose>
     </include>
     <include>
-      <uri>model://cone_orange</uri>
-      <name>cone_orange_002</name>
+      <uri>model://cone_orange_big</uri>
+      <name>cone_orange_big_002</name>
       <pose>0.000 1.726 0 0 0 0</pose>
     </include>
     <include>

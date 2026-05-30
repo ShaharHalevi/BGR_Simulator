@@ -85,7 +85,7 @@ tmux split-window -h
 # -------------------------
 tmux send-keys -t $SESSION:0.0 "export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST && source /opt/ros/jazzy/setup.bash && source \$(pwd)/install/setup.bash" C-m
 tmux send-keys -t $SESSION:0.0 "clear; echo -e '\e[1;32m[STAGE 1] Launching Gazebo...\e[0m'" C-m
-tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=SkidpadOpt.world" C-m
+tmux send-keys -t $SESSION:0.0 "ros2 launch bgr_description gazebo.launch.py world_name:=MapTestday3Opt.world" C-m
 
 # -------------------------
 # PANE 1: KEYBOARD BRIDGE (Bottom-Left)
@@ -112,8 +112,8 @@ tmux send-keys -t $SESSION:0.2 "echo '  -> Press Ctrl+C HERE to shut down <-    
 tmux send-keys -t $SESSION:0.2 "echo '=========================================='" C-m
 
 # Chain the teleop node with the automated shutdown sequence.
-# When teleop exits (via Ctrl+C), it kills the tmux session to trigger the host-side cleanup.
-tmux send-keys -t $SESSION:0.2 "ros2 run bgr_controller keyboard_teleop.py; tmux kill-session -t $SESSION" C-m
+# When teleop exits (via Ctrl+C), it sends a Ctrl+C to the Gazebo pane to trigger graceful telemetry saving, sleeps for 3 seconds, and then kills the session.
+tmux send-keys -t $SESSION:0.2 "ros2 run bgr_controller keyboard_teleop.py; tmux send-keys -t $SESSION:0.0 C-c; sleep 3; tmux kill-session -t $SESSION" C-m
 
 # Define clean closure handler
 cleanup() {

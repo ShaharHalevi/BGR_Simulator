@@ -2,6 +2,7 @@
 build/
 install/
 log/
+sim-logs/
 
 # Python bytecode
 __pycache__/

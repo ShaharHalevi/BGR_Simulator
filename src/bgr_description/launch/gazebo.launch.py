@@ -241,6 +241,15 @@ def generate_launch_description():
         output="screen",
         parameters=[{"use_sim_time": True}],
     )
+    telemetry_logger_node = Node(
+        package="bgr_description",
+        executable="telemetry_logger.py",
+        output="screen",
+        parameters=[{
+            "use_sim_time": True,
+            "world_name": LaunchConfiguration("world_name")
+        }]
+    )
     static_tf_node = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
@@ -306,6 +315,7 @@ def generate_launch_description():
                 car_wheel_node,                 # starts the car wheel publisher node
                 car_dashboard_node,             # starts the car dashboard GUI node
                 noisy_sensor_node,              # starts the IMU and GPS simulation node
+                telemetry_logger_node,          # starts the telemetry logger node
                 cone_service_node,              # starts the cone service node
                 visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node
