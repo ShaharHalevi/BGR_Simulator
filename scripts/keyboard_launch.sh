@@ -4,8 +4,19 @@
 # Automated Simulation Startup With Keyboard Control
 # ==================================================
 
-# Restrict ROS 2 discovery to the local machine to avoid network crosstalk with other systems
+# Restrict ROS 2 and Gazebo discovery to the local machine to avoid network crosstalk with other systems
 export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+export GZ_IP=127.0.0.1
+
+# World selection parameter (defaults to Map1Opt.world if not provided as $1)
+WORLDS_DIR="src/bgr_description/worlds"
+WORLD_NAME="${1:-Map1Opt.world}"
+
+# Verify if the world file actually exists
+if [ ! -f "$WORLDS_DIR/$WORLD_NAME" ] && [ ! -f "$WORLD_NAME" ]; then
+    echo -e "\e[1;31mError: World file '$WORLD_NAME' not found in $WORLDS_DIR!\e[0m" >&2
+    exit 1
+fi
 
 # Helper function to forcefully terminate all simulator processes and clear shared memory
 nuclear_sweep() {
@@ -52,22 +63,13 @@ cleanup() {
 trap cleanup EXIT
 
 # 1. Killing all previous processes to verify startup is secure
-echo -e "\e[1;36m[1/3] Running Nuclear Cleanup...\e[0m"
+echo -e "\e[1;36m[1/2] Running Nuclear Cleanup...\e[0m"
 ros2 daemon stop 2>/dev/null || true
 nuclear_sweep
 echo -e "\e[1;36mCleanup complete.\e[0m"
 sleep 1
 
-# 2. Build Workspace (Clearing the build, install, log folders to avoid conflicts)
-echo -e "\e[1;33m[2/3] Building Workspace...\e[0m"
-rm -rf build/ install/ log/
-
-# Reset environment variables pointing to deleted install paths to prevent colcon warnings
-unset AMENT_PREFIX_PATH CMAKE_PREFIX_PATH COLCON_PREFIX_PATH
-source /opt/ros/jazzy/setup.bash
-colcon build || { echo -e "\e[1;31mError: Workspace build failed!\e[0m" >&2; exit 1; }
-
-# 3. Sourcing and Starting Background Jobs
+# 2. Sourcing and Starting Background Jobs
 if [ -f install/setup.bash ]; then
     source install/setup.bash
 else
@@ -75,11 +77,11 @@ else
     exit 1
 fi
 
-echo -e "\e[1;32m[3/3] Starting Background Simulation...\e[0m"
+echo -e "\e[1;32m[2/2] Starting Background Simulation...\e[0m"
 
 # Launch Gazebo in the background, redirecting logs to /tmp/gazebo.log
-echo -e "-> Starting Gazebo Sim (Logs redirected to \e[1;36m/tmp/gazebo.log\e[0m)..."
-ros2 launch bgr_description gazebo.launch.py world_name:=MapTestday3Opt.world > /tmp/gazebo.log 2>&1 &
+echo -e "-> Starting Gazebo Sim (World: $WORLD_NAME) (Logs redirected to \e[1;36m/tmp/gazebo.log\e[0m)..."
+ros2 launch bgr_description gazebo.launch.py world_name:="$WORLD_NAME" > /tmp/gazebo.log 2>&1 &
 GAZEBO_PID=$!
 
 # 4. Polling check to verify Gazebo controllers are active before launching keyboard bridge
