@@ -17,3 +17,4 @@ __pycache__/
 # Local environment files
 .env
 output_result.png
+sim-logs/
