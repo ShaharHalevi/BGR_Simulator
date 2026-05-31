@@ -43,7 +43,7 @@ jobs:
             source install/setup.bash &&
             colcon test --event-handlers console_direct+ --test-result-base test_results &&
             colcon test-result --all --test-result-base test_results &&
-            cp output_result.png test_results/ 2>/dev/null || true
+            cp build/bgr_description/output_result.png test_results/ 2>/dev/null || true
           "
 
       - name: Upload Test Results

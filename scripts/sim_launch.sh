@@ -11,6 +11,7 @@ export GZ_IP=127.0.0.1
 # World selection parameter (defaults to Map1Opt.world if not provided as $1)
 WORLDS_DIR="src/bgr_description/worlds"
 WORLD_NAME="${1:-Map1Opt.world}"
+HEADLESS_MODE="${2:-false}"
 
 # Verify if the world file actually exists
 if [ ! -f "$WORLDS_DIR/$WORLD_NAME" ] && [ ! -f "$WORLD_NAME" ]; then
@@ -62,4 +63,4 @@ else
 fi
 clear
 echo -e "\e[1;32m[STAGE 1] Launching Gazebo (World: $WORLD_NAME) (Press Ctrl+C to close)...\e[0m"
-ros2 launch bgr_description gazebo.launch.py world_name:="$WORLD_NAME"
+ros2 launch bgr_description gazebo.launch.py world_name:="$WORLD_NAME" headless:="$HEADLESS_MODE"

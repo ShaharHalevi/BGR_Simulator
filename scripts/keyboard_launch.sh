@@ -11,6 +11,7 @@ export GZ_IP=127.0.0.1
 # World selection parameter (defaults to Map1Opt.world if not provided as $1)
 WORLDS_DIR="src/bgr_description/worlds"
 WORLD_NAME="${1:-Map1Opt.world}"
+HEADLESS_MODE="${2:-false}"
 
 # Verify if the world file actually exists
 if [ ! -f "$WORLDS_DIR/$WORLD_NAME" ] && [ ! -f "$WORLD_NAME" ]; then
@@ -81,7 +82,7 @@ echo -e "\e[1;32m[2/2] Starting Background Simulation...\e[0m"
 
 # Launch Gazebo in the background, redirecting logs to /tmp/gazebo.log
 echo -e "-> Starting Gazebo Sim (World: $WORLD_NAME) (Logs redirected to \e[1;36m/tmp/gazebo.log\e[0m)..."
-ros2 launch bgr_description gazebo.launch.py world_name:="$WORLD_NAME" > /tmp/gazebo.log 2>&1 &
+ros2 launch bgr_description gazebo.launch.py world_name:="$WORLD_NAME" headless:="$HEADLESS_MODE" > /tmp/gazebo.log 2>&1 &
 GAZEBO_PID=$!
 
 # 4. Polling check to verify Gazebo controllers are active before launching keyboard bridge

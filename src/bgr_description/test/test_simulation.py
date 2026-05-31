@@ -1,6 +1,6 @@
 # Command to run this test suite locally:
-#   source install/setup.bash && colcon test --packages-select bgr_description --event-handlers console_cohesion+
-#   colcon test-result --all --verbose
+# source install/setup.bash && colcon test --packages-select bgr_description --event-handlers console_direct+
+# colcon test-result --all --verbose
 
 import os
 import subprocess

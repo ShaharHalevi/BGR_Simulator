@@ -65,7 +65,29 @@ fi
 
 SELECTED_WORLD="${WORLDS[$((world_choice - 1))]}"
 
-# 3. Build Workspace if required
+# 3. Choose headless/headed mode
+echo -e "\e[1;32mSelect Gazebo GUI Mode:\e[0m"
+echo "  1) Headed (Show Gazebo GUI)"
+echo "  2) Headless (Run physics only)"
+echo
+
+read -rp "Choose GUI option (1-2): " gui_choice
+echo
+
+case "$gui_choice" in
+    1)
+        headless="false"
+        ;;
+    2)
+        headless="true"
+        ;;
+    *)
+        echo -e "\e[1;31mInvalid selection. Defaulting to Headed.\e[0m"
+        headless="false"
+        ;;
+esac
+
+# 4. Build Workspace if required
 CLEAN_BUILD=false
 
 check_build_required() {
@@ -127,12 +149,12 @@ else
     echo -e "\e[1;32mWorkspace is up to date. Skipping build.\e[0m"
 fi
 
-# 4. Launch selected mode and map
-echo -e "\e[1;32mLaunching $mode mode on map '$SELECTED_WORLD'...\e[0m"
+# 5. Launch selected mode and map
+echo -e "\e[1;32mLaunching $mode mode on map '$SELECTED_WORLD' (headless: $headless)...\e[0m"
 sleep 1
 
 if [ "$mode" = "keyboard" ]; then
-    exec ./scripts/keyboard_launch.sh "$SELECTED_WORLD"
+    exec ./scripts/keyboard_launch.sh "$SELECTED_WORLD" "$headless"
 else
-    exec ./scripts/sim_launch.sh "$SELECTED_WORLD"
+    exec ./scripts/sim_launch.sh "$SELECTED_WORLD" "$headless"
 fi

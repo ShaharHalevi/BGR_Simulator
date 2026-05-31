@@ -2,10 +2,11 @@
 # BGR_Simulator – Docker Compose
 #
 # Usage:
-#   docker compose up --build                  (Headed – with Gazebo GUI)
-#   HEADLESS=True docker compose up --build    (Headless – physics only)
+#   make docker                                (Recommended - runs interactive session)
+#   docker compose run simulator               (Direct docker command)
 #
-# After the first build, omit --build to start faster.
+# Run this on host if encountering GUI/display problems:
+#   xhost +local:docker
 ###############################################################################
 
 services:
@@ -13,6 +14,7 @@ services:
     build: .
     image: bgr_simulator
     container_name: bgr_simulator
+    working_dir: /ros2_ws/src/bgr_simulator
     stdin_open: true # -i
     tty: true # -t
     network_mode: host
@@ -36,8 +38,4 @@ services:
     #         - driver: nvidia
     #           count: all
     #           capabilities: [gpu]
-    command: >
-      bash -c "source /opt/ros/jazzy/setup.bash &&
-               colcon build &&
-               source /ros2_ws/install/setup.bash &&
-               ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-true}"
+    command: ./main-launch.sh
