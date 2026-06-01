@@ -3,6 +3,7 @@ FROM osrf/ros:jazzy-desktop
 # Add NVIDIA GPU support for hardware acceleration
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
+ENV ROS_DOMAIN_ID=0
 
 # Install basic dependencies and tools
 RUN apt-get update && apt-get install -y \
@@ -18,8 +19,10 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-ros2-control \
     ros-jazzy-ros2-controllers \
     ros-jazzy-xacro \
-    ros-jazzy-ros-gz-* \
-    ros-jazzy-*-ros2-control \
+    ros-jazzy-ros-gz-bridge \
+    ros-jazzy-ros-gz-image \
+    ros-jazzy-ros-gz-sim \
+    ros-jazzy-gz-ros2-control \
     ros-jazzy-joint-state-publisher-gui \
     ros-jazzy-joy \
     ros-jazzy-joy-teleop \

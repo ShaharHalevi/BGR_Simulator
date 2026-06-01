@@ -50,6 +50,7 @@
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>$(find bgr_controller)/config/bgr_controllers.yaml</parameters>
+      <ros_domain_id>0</ros_domain_id>
     </plugin>
   </gazebo>
 
