@@ -44,6 +44,8 @@ RUN apt-get update && rosdep init || true \
 # Build the workspace
 RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build"
 
-# Source the workspace and run the default simulator launch file
-# This command runs Step 1 from the README
-CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"]
+# Set working directory back to the workspace root
+WORKDIR /ros2_ws
+
+# Run the default docker launch manager script
+CMD ["bash", "-c", "cd src/bgr_simulator && ./docker-launch.sh"]

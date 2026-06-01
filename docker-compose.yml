@@ -26,6 +26,9 @@ services:
       - DISPLAY=${DISPLAY:-host.docker.internal:0}
       - QT_X11_NO_MITSHM=1
       - FASTDDS_BUILTIN_TRANSPORTS=UDPv4 # Force UDP, disable SHM transport (fixes host visibility)
+      - HEADLESS=${HEADLESS:-false}
+      - WORLD=${WORLD:-Map1Opt.world}
+      - MODE=${MODE:-sim}
     volumes:
       - ./src:/ros2_ws/src/bgr_simulator/src:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
@@ -38,4 +41,4 @@ services:
     #         - driver: nvidia
     #           count: all
     #           capabilities: [gpu]
-    command: ./main-launch.sh
+    command: ./docker-launch.sh

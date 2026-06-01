@@ -8,7 +8,7 @@ all:
 
 # Run the interactive simulation launch manager inside Docker
 docker:
-	docker compose run simulator
+	docker compose up
 
 clean:
 	rm -rf build/ install/ log/
