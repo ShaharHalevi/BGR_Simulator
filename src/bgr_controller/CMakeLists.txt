@@ -8,8 +8,15 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY config launch
+  DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
+)
+
+install(FILES
+  config/bgr_controllers.yaml
+  config/joy_config.yaml
+  config/joy_teleop.yaml
+  DESTINATION share/${PROJECT_NAME}/config
 )
 
 install(PROGRAMS

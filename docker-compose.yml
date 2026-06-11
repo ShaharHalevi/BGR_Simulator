@@ -40,13 +40,4 @@ services:
       - ./src:/ros2_ws/src/bgr_simulator/src:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-/run/user/1000/gdm/Xauthority}:/tmp/.docker.xauth:ro
-    # Uncomment the following block to enable NVIDIA GPU acceleration
-    # (requires nvidia-container-toolkit to be installed on the host)
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
     command: ./docker-launch.sh

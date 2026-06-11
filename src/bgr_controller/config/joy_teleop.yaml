@@ -21,5 +21,5 @@ joy_teleop:
       axis_mappings:
         data:
           axis: 3              # Right stick X
-          scale: 0.6108        # רדיונים (±35°)
+          scale: 0.51          # virtual center steering angle in radians
           offset: 0.0

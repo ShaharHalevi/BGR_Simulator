@@ -61,6 +61,6 @@ else
     echo -e "\e[1;31mError: install/setup.bash not found!\e[0m" >&2
     exit 1
 fi
-clear
+# clear
 echo -e "\e[1;32m[STAGE 1] Launching Gazebo (World: $WORLD_NAME) (Press Ctrl+C to close)...\e[0m"
 ros2 launch bgr_description gazebo.launch.py world_name:="$WORLD_NAME" headless:="$HEADLESS_MODE"

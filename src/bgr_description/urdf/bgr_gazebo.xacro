@@ -67,25 +67,32 @@
     </plugin>
   </gazebo>
 
-  <!-- Note: Steering mimic handling in Gazebo Harmonic dart is not natively supported 
-       via the gz-sim-mimic-joint-system plugin. It relies on ros2_control to enforce it. -->
+  <!-- Steering is commanded as independent Ackermann left/right joint positions via ros2_control. -->
 
   <!-- Wheel slip plugin for better rolling behavior (all wheels) -->
   <gazebo>
     <plugin filename="gz-sim-wheel-slip-system" name="gz::sim::systems::WheelSlip">
       <wheel link_name="Wheel_rr">
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>${wheel_normal_force}</wheel_normal_force>
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
       </wheel>
       <wheel link_name="Wheel_rl">
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>${wheel_normal_force}</wheel_normal_force>
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
       </wheel>
       <wheel link_name="Wheel_fr">
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>${wheel_normal_force}</wheel_normal_force>
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
       </wheel>
       <wheel link_name="Wheel_fl">
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <wheel_normal_force>${wheel_normal_force}</wheel_normal_force>
         <slip_compliance_lateral>0.05</slip_compliance_lateral>
         <slip_compliance_longitudinal>0.001</slip_compliance_longitudinal>
       </wheel>

@@ -30,6 +30,26 @@ from ament_index_python.packages import get_package_share_directory
 import launch_testing
 
 
+WHEELBASE = 2.0368
+TRACK = 1.3092
+WHEEL_STEER_LIMIT = 0.6
+
+
+def ackermann_angles(center_angle):
+    inner_radius = WHEELBASE / math.tan(WHEEL_STEER_LIMIT)
+    center_limit = math.atan(WHEELBASE / (inner_radius + TRACK / 2.0))
+    center_angle = max(-center_limit, min(center_limit, center_angle))
+    if abs(center_angle) < 1e-6:
+        return [0.0, 0.0]
+
+    turn_radius = WHEELBASE / math.tan(center_angle)
+    left = math.atan(WHEELBASE / (turn_radius - TRACK / 2.0))
+    right = math.atan(WHEELBASE / (turn_radius + TRACK / 2.0))
+    left = max(-WHEEL_STEER_LIMIT, min(WHEEL_STEER_LIMIT, left))
+    right = max(-WHEEL_STEER_LIMIT, min(WHEEL_STEER_LIMIT, right))
+    return [left, right]
+
+
 # 1. LAUNCH EXECUTION
 # This runs once. Gazebo persists until all test classes complete.
 @pytest.mark.launch_test
@@ -348,7 +368,7 @@ class BaseTestFixture(unittest.TestCase):
             wheels_msg.data = [speed, speed, speed, speed]
             pub_wheels.publish(wheels_msg)
             steer_msg = Float64MultiArray()
-            steer_msg.data = [steer]
+            steer_msg.data = ackermann_angles(steer)
             pub_steer.publish(steer_msg)
 
             # Periodic logging every 2.0s of simulation time to keep stdout active on slow runners
@@ -376,7 +396,7 @@ class BaseTestFixture(unittest.TestCase):
         pub_wheels.publish(stop_wheels)
         
         stop_steer = Float64MultiArray()
-        stop_steer.data = [0.0]
+        stop_steer.data = [0.0, 0.0]
         pub_steer.publish(stop_steer)
         
         # Spin once to ensure the stop messages are actually transmitted
@@ -388,19 +408,27 @@ class BaseTestFixture(unittest.TestCase):
         self.node.destroy_subscription(sub_collided)
         
         # Verify, report and plot results
-        dist = self._report_trajectory_and_collisions(trajectory, hit_cones)
+        path_length, lateral_excursion = self._report_trajectory_and_collisions(trajectory, hit_cones)
         self._generate_trajectory_plot(trajectory, hit_cones)
         
-        self.assertGreater(dist, 0.5, f"Vehicle did not move enough! Traveled only {dist:.2f} meters.")
+        self.assertGreater(path_length, 10.0, f"Vehicle did not move enough! Path length was only {path_length:.2f} meters.")
+        self.assertGreater(lateral_excursion, 2.0, f"Vehicle did not steer into the skidpad circle! Lateral excursion was only {lateral_excursion:.2f} meters.")
 
     def _report_trajectory_and_collisions(self, trajectory, hit_cones):
         """Helper to format and log trajectory coordinates and collision results."""
         self.assertTrue(len(trajectory) > 0, "No odometry history was recorded!")
         start_pos = trajectory[0]
         end_pos = trajectory[-1]
-        dist = ((end_pos[0] - start_pos[0])**2 + (end_pos[1] - start_pos[1])**2)**0.5
+        net_displacement = ((end_pos[0] - start_pos[0])**2 + (end_pos[1] - start_pos[1])**2)**0.5
+        path_length = sum(
+            ((b[0] - a[0])**2 + (b[1] - a[1])**2)**0.5
+            for a, b in zip(trajectory, trajectory[1:])
+        )
+        lateral_excursion = max(abs(pos[1] - start_pos[1]) for pos in trajectory)
         
-        self.node.get_logger().info(f"📊 Traveled distance: {dist:.2f} meters")
+        self.node.get_logger().info(f"📊 Path length: {path_length:.2f} meters")
+        self.node.get_logger().info(f"📊 Net displacement: {net_displacement:.2f} meters")
+        self.node.get_logger().info(f"📊 Lateral excursion: {lateral_excursion:.2f} meters")
         self.node.get_logger().info(f"🗺️  Start position: ({start_pos[0]:.2f}, {start_pos[1]:.2f}) -> End position: ({end_pos[0]:.2f}, {end_pos[1]:.2f})")
         
         # Log path sample points
@@ -416,7 +444,7 @@ class BaseTestFixture(unittest.TestCase):
         for cone in hit_cones:
             self.node.get_logger().info(f"   - [HIT] Cone ID: {cone.id}, Color: {cone.color}, Pos: ({cone.x:.2f}, {cone.y:.2f})")
             
-        return dist
+        return path_length, lateral_excursion
 
     def _generate_trajectory_plot(self, trajectory, hit_cones):
         """Helper to fetch layout and generate visual matplotlib path plot."""
