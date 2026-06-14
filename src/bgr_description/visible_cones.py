@@ -16,6 +16,8 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 from std_msgs.msg import Float64MultiArray
+from std_msgs.msg import Float64
+from visualization_msgs.msg import Marker, MarkerArray
 from bgr_description.srv import GetTrack
 from bgr_description.msg import Cone, ConeArray
 
@@ -74,10 +76,17 @@ class VisibleConesNode(Node):
             'collided_cones',
             10)
 
+        # Foxglove-facing collision visualization
+        self.collision_count_pub = self.create_publisher(Float64, '/collision/count', 10)
+        self.collision_marker_pub = self.create_publisher(MarkerArray, '/collision/markers', 10)
+
         # 7. Timer (5Hz calculation)
         self.timer = self.create_timer(0.2, self.timer_callback)
         
         self.get_logger().info(f'Visible Cones Node Started (5Hz). World: {self.world_name}')
+
+        # Seed the count so Foxglove shows 0 before the first hit.
+        self._publish_collision_count()
 
     def refresh_track_data(self):
         """Calls the /get_track service to populate the local cache of cones."""
@@ -161,6 +170,37 @@ class VisibleConesNode(Node):
             collided_msg = ConeArray()
             collided_msg.cones = self.all_hit_events
             self.collided_cones_pub.publish(collided_msg)
+            self._publish_collision_count()
+            self._publish_collision_markers()
+
+    def _publish_collision_count(self):
+        msg = Float64()
+        msg.data = float(len(self.all_hit_events))
+        self.collision_count_pub.publish(msg)
+
+    def _publish_collision_markers(self):
+        marker_array = MarkerArray()
+        for i, cone in enumerate(self.all_hit_events):
+            marker = Marker()
+            marker.header.frame_id = 'odom'
+            marker.header.stamp = self.get_clock().now().to_msg()
+            marker.ns = 'collisions'
+            marker.id = i
+            marker.type = Marker.SPHERE
+            marker.action = Marker.ADD
+            marker.pose.position.x = float(cone.x)
+            marker.pose.position.y = float(cone.y)
+            marker.pose.position.z = 0.3
+            marker.pose.orientation.w = 1.0
+            marker.scale.x = 0.6
+            marker.scale.y = 0.6
+            marker.scale.z = 0.6
+            marker.color.r = 1.0
+            marker.color.g = 0.0
+            marker.color.b = 0.0
+            marker.color.a = 0.9
+            marker_array.markers.append(marker)
+        self.collision_marker_pub.publish(marker_array)
 
     def timer_callback(self):
         """Calculates and publishes visible cones at 5Hz."""
