@@ -125,20 +125,24 @@ def generate_launch_description():
         output="screen",
     )
 
-    # BRIDGE 2: VEHICLE SENSORS
-    # Bridges all vehicle-specific topics once the car is actually spawned.
+    # BRIDGE 2: VEHICLE TF + SENSORS
+    # Bridge the odometry plugin's Pose_V output onto /tf so Foxglove can place
+    # robot_description in the world frame.
     gz_ros2_vehicle_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/world/generated_world/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/model/bgr/pose@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image",
         ],
-        remappings=[('/lidar/points', '/lidar/raw')],
+        remappings=[
+            ('/model/bgr/pose', '/tf'),
+            ('/lidar/points', '/lidar/raw'),
+        ],
         output="screen",
     )
 
@@ -247,6 +251,19 @@ def generate_launch_description():
         arguments=["--x", "0", "--y", "0", "--z", "0", "--roll", "0", "--pitch", "0", "--yaw", "0", "--frame-id", "base_link", "--child-frame-id", "bgr/base_footprint/lidar"],
         output="screen"
     )
+    # Gazebo's OdometryPublisher emits TF as world -> base_footprint, so the only
+    # TF root is "world". Planning/control, however, publish the path, look-ahead
+    # point and all debug markers in the "odom" frame. Without a world -> odom
+    # link that frame is orphaned: Foxglove can't place the robot when the display
+    # frame is "odom", and it silently drops every odom-frame path/marker topic.
+    # Ground-truth odometry is world-relative, so world and odom coincide here:
+    # publish an identity transform to graft "odom" onto the tree.
+    world_to_odom_tf_node = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        arguments=["--x", "0", "--y", "0", "--z", "0", "--roll", "0", "--pitch", "0", "--yaw", "0", "--frame-id", "world", "--child-frame-id", "odom"],
+        output="screen"
+    )
     controllers_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory("bgr_controller"), "launch"),
@@ -309,6 +326,7 @@ def generate_launch_description():
                 cone_service_node,              # starts the cone service node
                 visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node
+                world_to_odom_tf_node,          # grafts the odom frame onto the world TF root
                 car_tracker,                    # makes GUI follow the car
                 controllers_launch,             # starts the vehicle controllers
             ]
