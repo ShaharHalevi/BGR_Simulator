@@ -2,10 +2,14 @@
 # BGR_Simulator – Docker Compose
 #
 # Usage:
-#   docker compose up --build                  (Headed – with Gazebo GUI)
-#   HEADLESS=True docker compose up --build    (Headless – physics only)
+#   make docker                                (Recommended - runs interactive session)
+#   docker compose run simulator               (Direct docker command)
+#   docker compose up --build                  (Headless – physics only)
+#   xhost +local:root                          (Allow GUI apps from Docker)
+#   HEADLESS=False docker compose up --build   (Headed – with Gazebo GUI)
 #
-# After the first build, omit --build to start faster.
+# Run this on host if encountering GUI/display problems:
+#   xhost +local:docker
 ###############################################################################
 
 services:
@@ -13,6 +17,7 @@ services:
     build: .
     image: bgr_simulator
     container_name: bgr_simulator
+    working_dir: /ros2_ws/src/bgr_simulator
     stdin_open: true # -i
     tty: true # -t
     network_mode: host
@@ -20,24 +25,19 @@ services:
     devices:
       - /dev/dri:/dev/dri # Enables the integrated graphics of the cpu to be used (in case a dedicated gpu is not available)
     environment:
+      - ROS_DOMAIN_ID=0
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=SUBNET
       - GZ_PARTITION=bgr_sim
-      - DISPLAY=${DISPLAY:-host.docker.internal:0}
+      - DISPLAY=${DISPLAY:-:0}
       - QT_X11_NO_MITSHM=1
       - FASTDDS_BUILTIN_TRANSPORTS=UDPv4 # Force UDP, disable SHM transport (fixes host visibility)
+      - XAUTHORITY=/tmp/.docker.xauth
+      - COLCON_LOG_PATH=/tmp/colcon_logs
+      - HEADLESS=${HEADLESS:-False}
+      - WORLD=${WORLD:-Map1Opt.world}
+      - MODE=${MODE:-sim}
     volumes:
       - ./src:/ros2_ws/src/bgr_simulator/src:rw
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    # Uncomment the following block to enable NVIDIA GPU acceleration
-    # (requires nvidia-container-toolkit to be installed on the host)
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
-    command: >
-      bash -c "source /opt/ros/jazzy/setup.bash &&
-               colcon build --symlink-install &&
-               source /ros2_ws/install/setup.bash &&
-               ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-true}"
+      - ${XAUTHORITY:-/run/user/1000/gdm/Xauthority}:/tmp/.docker.xauth:ro
+    command: ./docker-launch.sh

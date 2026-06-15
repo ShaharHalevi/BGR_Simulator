@@ -3,6 +3,7 @@ FROM osrf/ros:jazzy-desktop
 # Add NVIDIA GPU support for hardware acceleration
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
+ENV ROS_DOMAIN_ID=0
 
 # Install basic dependencies and tools
 RUN apt-get update && apt-get install -y \
@@ -18,8 +19,10 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-ros2-control \
     ros-jazzy-ros2-controllers \
     ros-jazzy-xacro \
-    ros-jazzy-ros-gz-* \
-    ros-jazzy-*-ros2-control \
+    ros-jazzy-ros-gz-bridge \
+    ros-jazzy-ros-gz-image \
+    ros-jazzy-ros-gz-sim \
+    ros-jazzy-gz-ros2-control \
     ros-jazzy-joint-state-publisher-gui \
     ros-jazzy-joy \
     ros-jazzy-joy-teleop \
@@ -42,8 +45,10 @@ RUN apt-get update && rosdep init || true \
     && rm -rf /var/lib/apt/lists/*
 
 # Build the workspace
-RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
+RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build"
 
-# Source the workspace and run the default simulator launch file
-# This command runs Step 1 from the README
-CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && ros2 launch bgr_description gazebo.launch.py headless:=True"]
+# Set working directory back to the workspace root
+WORKDIR /ros2_ws
+
+# Run the default docker launch manager script
+CMD ["bash", "-c", "cd src/bgr_simulator && ./docker-launch.sh"]

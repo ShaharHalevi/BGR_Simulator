@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script to reset vehicle's position back to the origin (0,0,1.0) in Gazebo.
+Script to reset vehicle's position back to the origin (0,0,0.48) in Gazebo.
 """
 # While running the simulator, to execute this script:
 #   - Open a new terminal 
@@ -19,10 +19,10 @@ def main():
         "--reqtype", "gz.msgs.Pose",
         "--reptype", "gz.msgs.Boolean",
         "--timeout", "1000",
-        "--req", 'name: "bgr", position: {x: 0.0, y: 0.0, z: 1.0}, orientation: {w: 1.0, x: 0.0, y: 0.0, z: 0.0}'
+        "--req", 'name: "bgr", position: {x: 0.0, y: 0.0, z: 0.48}, orientation: {w: 1.0, x: 0.0, y: 0.0, z: 0.0}'
     ]
     
-    print("[RESET] Teleporting vehicle back to (0.0, 0.0, 1.0)...")
+    print("[RESET] Teleporting vehicle back to (0.0, 0.0, 0.48)...")
     
     try:
         result = subprocess.run(cmd, capture_output=True, text=True)

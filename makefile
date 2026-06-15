@@ -1,30 +1,30 @@
 SHELL := /bin/bash
 
-.PHONY: all clean build gz ctrl reset_position
+.PHONY: all clean build gz reset_position docker test
 
-# this will build the workspace, wait until the build is finished, then 
-# open two gnome terminals, one for gazebo and one for the controller, they will run in parallel because of the '&'
-all: 
-	make build
-	gnome-terminal -- bash -c "make gz; exec bash" & 
-	gnome-terminal -- bash -c "make ctrl; exec bash"
+# Run the interactive simulation launch manager
+all:
+	./main-launch.sh
+
+# Run the interactive simulation launch manager inside Docker
+docker:
+	docker compose up
 
 clean:
-	rm -rf build/
+	rm -rf build/ install/ log/
 
 build: 
-	colcon build --symlink-install
+	colcon build
 
 gz:
-	source install/setup.bash && ros2 launch bgr_description gazebo.launch.py world_name:=CompetitionMap1.world headless:=${HEADLESS:-false}
-
-ctrl:
-	source install/setup.bash && ros2 launch bgr_controller controller.launch.py
+	ROS_DOMAIN_ID=0 source install/setup.bash && ros2 launch bgr_description gazebo.launch.py world_name:=${WORLD:-Map1Opt.world} headless:=${HEADLESS:-false}
 
 reset_position:
-	gz service -s /world/empty/set_pose \
-		--reqtype gz.msgs.Pose \
-		--reptype gz.msgs.Boolean \
-		--timeout 2000 \
-		--req "name: 'bgr', position: {x: 45.751, y: 81.3, z: 1.0}, orientation: {x: -0.0001, y: -0.0007, z: 1.232886347679596e-06, w: 0.9999}"
+	source install/setup.bash && ros2 run bgr_description reset_car.py
+
+test:
+	colcon build --packages-select bgr_description
+	-source install/setup.bash && colcon test --packages-select bgr_description --event-handlers console_direct+
+	colcon test-result --all --verbose
+
 

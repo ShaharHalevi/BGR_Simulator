@@ -34,7 +34,10 @@ class WheelsMonitor(Node):
             10)
 
         # --- Joint Names Configuration (From your URDF) ---
-        self.steering_joint = "Steering_fl_joint"
+        self.steering_joints = [
+            "Steering_fl_joint",
+            "Steering_fr_joint",
+        ]
         
         # List of all 4 wheel joints in specific order: FL, FR, RL, RR
         self.wheel_joints = [
@@ -51,15 +54,17 @@ class WheelsMonitor(Node):
         Callback to process joint data and calculate RPMs.
         """
         try:
-            steering_angle = 0.0
+            steering_angles = []
             
             # List to store RPMs: [FL, FR, RL, RR]
             rpms = [0.0, 0.0, 0.0, 0.0]
 
             # --- 1. Get Steering Angle ---
-            if self.steering_joint in msg.name:
-                idx = msg.name.index(self.steering_joint)
-                steering_angle = math.degrees(msg.position[idx])
+            for joint_name in self.steering_joints:
+                if joint_name in msg.name:
+                    idx = msg.name.index(joint_name)
+                    steering_angles.append(math.degrees(msg.position[idx]))
+            steering_angle = sum(steering_angles) / len(steering_angles) if steering_angles else 0.0
 
             # --- 2. Get RPM for each wheel ---
             # Loop through our defined wheel names
@@ -80,15 +85,15 @@ class WheelsMonitor(Node):
 
             # --- 4. Console Display ---
             # Formatting for clean output
-            print(
-                f"\r"
-                f"Steer: {steering_angle:5.1f}° | "
-                f"FL: {rpms[0]:5.1f} | "
-                f"FR: {rpms[1]:5.1f} | "
-                f"RL: {rpms[2]:5.1f} | "
-                f"RR: {rpms[3]:5.1f} (RPM)   ", 
-                end=""
-            )
+            # print(
+            #     f"\r"
+            #     f"Steer: {steering_angle:5.1f}° | "
+            #     f"FL: {rpms[0]:5.1f} | "
+            #     f"FR: {rpms[1]:5.1f} | "
+            #     f"RL: {rpms[2]:5.1f} | "
+            #     f"RR: {rpms[3]:5.1f} (RPM)   ", 
+            #     end=""
+            # )
 
         except Exception as e:
             self.get_logger().warn(f"Data error: {e}")

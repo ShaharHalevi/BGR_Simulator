@@ -2,12 +2,16 @@
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+from nav_msgs.msg import Path
 from std_msgs.msg import Float64MultiArray
 from bgr_description.msg import ConeArray
 import tkinter as tk
 from tkinter import ttk
 import math
+import numpy as np
 from collections import deque
+from types import SimpleNamespace
+from sensor_msgs.msg import PointCloud2
 
 # --- Matplotlib imports ---
 import matplotlib
@@ -30,11 +34,13 @@ COLOR_DIM = "#888888"       # Muted Gray
 # ROS 2 Node Class
 # =============================================================================
 class CarStateListener(Node):
-    def __init__(self, data_callback, wheels_callback, cones_callback):
+    def __init__(self, data_callback, wheels_callback, cones_callback, path_callback):
         super().__init__('car_dashboard_listener')
         self.data_callback = data_callback
         self.wheels_callback = wheels_callback
         self.cones_callback = cones_callback
+        self.path_callback = path_callback
+        self.car_position = None
 
         qos_profile = QoSProfile(
             reliability=ReliabilityPolicy.BEST_EFFORT,
@@ -50,8 +56,12 @@ class CarStateListener(Node):
 
         self.cone_subscription = self.create_subscription(
             ConeArray, 'visible_cones', self.cone_listener_callback, qos_profile)
+        self.lidar_subscription = self.create_subscription(PointCloud2, '/lidar/detections', self.lidar_listener_callback, qos_profile)
+        self.path_subscription = self.create_subscription(Path, '/planned_path', self.path_listener_callback, qos_profile)
 
     def data_listener_callback(self, msg):
+        if len(msg.data) >= 2:
+            self.car_position = np.array(msg.data[:2], dtype=np.float32)
         self.data_callback(msg.data)
 
     def wheels_listener_callback(self, msg):
@@ -60,7 +70,32 @@ class CarStateListener(Node):
     def cone_listener_callback(self, msg):
         self.cones_callback(msg.cones)
 
+    def path_listener_callback(self, msg: Path):
+        self.path_callback(msg.poses)
 
+    def lidar_listener_callback(self, msg: PointCloud2):
+        n = msg.width * msg.height
+        if n == 0:
+            return  # no detections — keep lidar_cones as-is so the car won't start driving
+        step = msg.point_step
+        raw = np.frombuffer(msg.data, dtype=np.uint8).reshape(n, step)
+        # x is at byte offset 0, y at byte offset 4 — grab exactly those 8 bytes
+        # regardless of point_step (avoids wrong reshape when step != 12)
+        if self.car_position is None:
+            self.get_logger().warn('Received lidar detections but car position is unknown, ignoring.')
+            return
+        car_xy = np.array(self.car_position[:2], dtype=np.float32)
+
+        # Extract XY from raw lidar points
+        xy = raw[:, :8].view(np.float32).reshape(n, 2).copy()
+
+        # Add car position safely
+        xy += car_xy
+
+        self.cones_callback([
+            SimpleNamespace(x=float(x), y=float(y), color='green')
+            for x, y in xy
+        ])
 # =============================================================================
 # Tkinter GUI Class
 # =============================================================================
@@ -81,6 +116,7 @@ class DashboardApp:
         self.steering_angle = 0.0
         self.rpms = [0, 0, 0, 0]
         self.cones = []
+        self.path_points = []
 
         self._setup_ui()
         self.process_ros_events()
@@ -185,6 +221,12 @@ class DashboardApp:
     def update_cones(self, cone_list):
         self.cones = cone_list
 
+    def update_path(self, poses):
+        self.path_points = [
+            (pose.pose.position.x, pose.pose.position.y)
+            for pose in poses
+        ]
+
     def stable_format(self, val, decimals=2):
         """ Increased deadzone to completely eliminate sensor noise when idling """
         if abs(val) < 0.2:
@@ -210,7 +252,7 @@ class DashboardApp:
 
             # --- Update Visuals ---
             self.velocity_graph.update(total_speed)
-            self.minimap.update(self.pos, self.yaw_rad, self.cones)
+            self.minimap.update(self.pos, self.yaw_rad, self.cones, self.path_points)
 
             # --- Update Steering Needle ---
             angle_rad = math.radians(-self.steering_angle - 90)
@@ -243,6 +285,7 @@ class MiniMap:
         self.trail_x = deque(maxlen=60)
         self.trail_y = deque(maxlen=60)
         self.trail_line, = self.ax.plot([], [], color=COLOR_ACCENT, linewidth=1.5, alpha=0.4, zorder=2)
+        self.path_line, = self.ax.plot([], [], color="#ffd166", linewidth=2.0, alpha=0.9, zorder=1)
         
         self.car_poly = Polygon([[0,0], [0,0], [0,0]], closed=True, facecolor=COLOR_WARN, edgecolor='white', linewidth=1, zorder=5)
         self.ax.add_patch(self.car_poly)
@@ -256,7 +299,7 @@ class MiniMap:
         
         self.update_counter = 0
 
-    def update(self, pos, yaw, cones):
+    def update(self, pos, yaw, cones, path_points):
         self.update_counter += 1
         if self.update_counter % 2 != 0: return # Throttle to 10Hz
 
@@ -279,17 +322,24 @@ class MiniMap:
         p3 = transform(-L/2, -W/2)
         self.car_poly.set_xy([p1, p2, p3])
 
-        # 3. Update Cones
+        # 3. Update Planned Path
+        if path_points:
+            px, py = zip(*path_points)
+            self.path_line.set_data(px, py)
+        else:
+            self.path_line.set_data([], [])
+
+        # 4. Update Cones
         if cones:
             cx = [c.x for c in cones]
             cy = [c.y for c in cones]
-            colors = [c.color if c.color in ['blue', 'yellow', 'orange'] else 'white' for c in cones]
+            colors = [c.color if c.color in ['blue', 'yellow', 'orange', 'green'] else 'white' for c in cones]
             self.cone_scatter.set_offsets(list(zip(cx, cy)))
             self.cone_scatter.set_facecolors(colors)
         else:
             self.cone_scatter.set_offsets(list(zip([], [])))
 
-        # 3. Follow Car
+        # 5. Follow Car
         RANGE = 20
         self.ax.set_xlim(pos[0] - RANGE, pos[0] + RANGE)
         self.ax.set_ylim(pos[1] - RANGE, pos[1] + RANGE)
@@ -335,11 +385,12 @@ class VelocityGraph:
 def main():
     rclpy.init()
     root = tk.Tk() 
-    ros_node = CarStateListener(lambda x: None, lambda x: None, lambda x: None)
+    ros_node = CarStateListener(lambda x: None, lambda x: None, lambda x: None, lambda x: None)
     app = DashboardApp(root, ros_node)
     ros_node.data_callback = app.update_data
     ros_node.wheels_callback = app.update_wheels
     ros_node.cones_callback = app.update_cones
+    ros_node.path_callback = app.update_path
     try:
         root.mainloop()
     except KeyboardInterrupt:

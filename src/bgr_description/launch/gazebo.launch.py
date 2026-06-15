@@ -15,6 +15,11 @@ Stage 4 → All tooling launches.   Gate: GUI tracker retry-loop.
 import os
 from pathlib import Path
 from ament_index_python.packages import get_package_share_directory
+
+# Force localhost discovery loopback only if not running in GitHub Actions CI
+if not os.environ.get('GITHUB_ACTIONS') == 'true':
+    os.environ['ROS_AUTOMATIC_DISCOVERY_RANGE'] = 'LOCALHOST'
+
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -42,7 +47,7 @@ def generate_launch_description():
 
     world_arg = DeclareLaunchArgument(
         'world_name',
-        default_value='Acceleration.world',
+        default_value='AccelerationOpt.world',
         description='Name of the .world file to load'
     )
 
@@ -54,7 +59,7 @@ def generate_launch_description():
     ])
 
     # The models are now installed dynamically via CMakeLists
-    fsa_models_path = os.path.join(bgr_description, "TracksV0", "models")
+    fsa_models_path = os.path.join(bgr_description, "tracks", "models")
 
     # Set GZ_SIM_RESOURCE_PATH to find robot and track models.
     # We must explicitly prepend the current workspace's install and src directories
@@ -87,15 +92,9 @@ def generate_launch_description():
         '" -s -v 4 -r " + "', world_file_path, '" if "', LaunchConfiguration("headless"), '" in ["True", "true", "1"] else " -v 4 -r " + "', world_file_path, '"'
     ])
 
-    # Pick which Gazebo plugin family to use.
-    ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "humble" else "False"
-
     # Create robot_description parameter from xacro file.
     robot_description = ParameterValue(
-        Command(
-            ["xacro ", LaunchConfiguration("model"), " is_ignition:=", is_ignition]
-        ),
+        Command(["xacro ", LaunchConfiguration("model")]),
         value_type=str,
     )
 
@@ -126,20 +125,24 @@ def generate_launch_description():
         output="screen",
     )
 
-    # BRIDGE 2: VEHICLE SENSORS
-    # Bridges all vehicle-specific topics once the car is actually spawned.
+    # BRIDGE 2: VEHICLE TF + SENSORS
+    # Bridge the odometry plugin's Pose_V output onto /tf so Foxglove can place
+    # robot_description in the world frame.
     gz_ros2_vehicle_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/world/generated_world/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/model/bgr/pose@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/model/bgr/odometry@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image",
         ],
-        remappings=[('/lidar/points', '/lidar/raw')],
+        remappings=[
+            ('/model/bgr/pose', '/tf'),
+            ('/lidar/points', '/lidar/raw'),
+        ],
         output="screen",
     )
 
@@ -153,22 +156,23 @@ def generate_launch_description():
 
     # STAGE 2 GATE: GUI READINESS
     # Deterministically waits for the Gazebo GUI to finish initializing its rendering 
-    # pipeline by checking for the existence of /gui/ services.
+    # pipeline by checking for the existence of the user camera pose topic.
     gui_ready_gate = ExecuteProcess(
         cmd=['sh', '-c', 
              'if [ "$1" = "True" ] || [ "$1" = "true" ] || [ "$1" = "1" ]; then '
              '  echo "[STAGE 2] Headless mode detected. Skipping GUI readiness check."; '
              '  exit 0; '
              'fi; '
-             'echo "[STAGE 2] Waiting for Gazebo GUI services to initialize..."; '
+             'echo "[STAGE 2] Waiting for Gazebo GUI rendering pipeline to initialize..."; '
              'for i in $(seq 1 60); do '
-             '  if gz service -l | grep -q "/gui/"; then '
-             '    echo "[STAGE 2 COMPLETE] Gazebo GUI is ready."; '
+             '  if gz topic -l | grep -q "/gui/camera/pose"; then '
+             '    echo "[STAGE 2 COMPLETE] Gazebo GUI rendering pipeline is ready. Delaying 1s for buffering..."; '
+             '    sleep 1; '
              '    exit 0; '
              '  fi; '
              '  sleep 1; '
              'done; '
-             'echo "[STAGE 2 WARNING] GUI services not found after 60s. Proceeding anyway..."; '
+             'echo "[STAGE 2 WARNING] GUI camera topic not found after 60s. Proceeding anyway..."; '
              'exit 0;',
              'gui_gate_script', headless],
         output='screen'
@@ -182,7 +186,7 @@ def generate_launch_description():
         cmd=['bash', '-c',
              'for i in $(seq 1 30); do '
              'echo "[STAGE 3] Attempting to spawn vehicle..." && '
-             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 1 && '
+             'ros2 run ros_gz_sim create -world generated_world -topic robot_description -name bgr -x 0.0 -y 0.0 -z 0.48 && '
              'echo "[STAGE 3 SUCCESS] Vehicle spawn request accepted!" && break; '
              'echo "[STAGE 3 WARNING] Spawn request timed out or failed. Gazebo is busy loading world. Retrying in 2s..." && '
              'sleep 2; done'],
@@ -247,6 +251,25 @@ def generate_launch_description():
         arguments=["--x", "0", "--y", "0", "--z", "0", "--roll", "0", "--pitch", "0", "--yaw", "0", "--frame-id", "base_link", "--child-frame-id", "bgr/base_footprint/lidar"],
         output="screen"
     )
+    # Gazebo's OdometryPublisher emits TF as world -> base_footprint, so the only
+    # TF root is "world". Planning/control, however, publish the path, look-ahead
+    # point and all debug markers in the "odom" frame. Without a world -> odom
+    # link that frame is orphaned: Foxglove can't place the robot when the display
+    # frame is "odom", and it silently drops every odom-frame path/marker topic.
+    # Ground-truth odometry is world-relative, so world and odom coincide here:
+    # publish an identity transform to graft "odom" onto the tree.
+    world_to_odom_tf_node = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        arguments=["--x", "0", "--y", "0", "--z", "0", "--roll", "0", "--pitch", "0", "--yaw", "0", "--frame-id", "world", "--child-frame-id", "odom"],
+        output="screen"
+    )
+    controllers_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory("bgr_controller"), "launch"),
+            "/controller.launch.py"
+        ])
+    )
 
     # STAGE 3 GATE: GUI tracker with tracking loop.
     # Sends follow command up repeatedly until the GUI successfully follows the car.
@@ -303,7 +326,9 @@ def generate_launch_description():
                 cone_service_node,              # starts the cone service node
                 visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node
+                world_to_odom_tf_node,          # grafts the odom frame onto the world TF root
                 car_tracker,                    # makes GUI follow the car
+                controllers_launch,             # starts the vehicle controllers
             ]
         )
     )
