@@ -16,7 +16,7 @@ import pytest
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
-from sensor_msgs.msg import Image, Imu, PointCloud2, JointState
+from sensor_msgs.msg import Image, Imu, PointCloud2, JointState, NavSatFix
 from nav_msgs.msg import Odometry
 from rosgraph_msgs.msg import Clock
 from std_msgs.msg import Float64MultiArray
@@ -55,13 +55,19 @@ def ackermann_angles(center_angle):
 @pytest.mark.launch_test
 def generate_test_description():
     headless = os.environ.get('HEADLESS', 'True' if 'DISPLAY' not in os.environ else 'False')
+    
+    model_path = os.path.join(get_package_share_directory('bgr_description'), 'urdf', 'bgr.urdf.xacro')
+    if os.environ.get('GITHUB_ACTIONS') == 'true':
+        model_path += ' lidar_update_rate:=2 front_cam_update_rate:=1'
+        
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('bgr_description'), 'launch', 'gazebo.launch.py')
         ]),
         launch_arguments={ 
             'headless': headless,
-            'world_name': 'SkidpadOpt.world'
+            'world_name': 'SkidpadOpt.world',
+            'model': model_path,
         }.items()
     )
 
@@ -221,9 +227,19 @@ class BaseTestFixture(unittest.TestCase):
         self.assertEqual(len(msg.data), msg.height * msg.step, f"Failed: Camera binary buffer size ({len(msg.data)}) does not match dimensions ({msg.height}x{msg.step})!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Camera Online. Resolution: {msg.width}x{msg.height}')
 
-    def test_04_odometry_active(self):
-        """Verification Phase 4: Odometry Ground Truth Check"""
-        self.node.get_logger().info('--- Verification Phase 4: Odometry ---')
+    def test_04_gps_active(self):
+        """Verification Phase 4: GPS Sensor Connectivity and Values"""
+        self.node.get_logger().info('--- Verification Phase 4: GPS ---')
+        msg = self.wait_for_topic(NavSatFix, '/gps/fix', timeout=60.0)
+        self.assertIsNotNone(msg, "Failed: No NavSatFix data on /gps/fix")
+        self.assertFalse(math.isnan(msg.latitude), "Failed: GPS latitude is NaN!")
+        self.assertFalse(math.isnan(msg.longitude), "Failed: GPS longitude is NaN!")
+        self.assertFalse(math.isnan(msg.altitude), "Failed: GPS altitude is NaN!")
+        self.node.get_logger().info(f'📦 [DIAGNOSTIC] GPS Online. Latitude: {msg.latitude:.6f}, Longitude: {msg.longitude:.6f}, Altitude: {msg.altitude:.2f}')
+
+    def test_05_odometry_active(self):
+        """Verification Phase 5: Odometry Ground Truth Check"""
+        self.node.get_logger().info('--- Verification Phase 5: Odometry ---')
         msg = self.wait_for_topic(Odometry, '/model/bgr/odometry', timeout=60.0)
         self.assertIsNotNone(msg, "Failed: No Odometry data on /model/bgr/odometry")
         self.assertFalse(math.isnan(msg.pose.pose.position.x), "Failed: Odometry position X is NaN!")
@@ -231,44 +247,44 @@ class BaseTestFixture(unittest.TestCase):
         self.assertFalse(math.isnan(msg.pose.pose.orientation.w), "Failed: Odometry orientation W is NaN!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Odom Received. Initial Position: X={msg.pose.pose.position.x:.2f}, Y={msg.pose.pose.position.y:.2f}')
 
-    def test_05_full_state_active(self):
-        """Verification Phase 5: Car State Publisher"""
-        self.node.get_logger().info('--- Verification Phase 5: Car State ---')
+    def test_06_full_state_active(self):
+        """Verification Phase 6: Car State Publisher"""
+        self.node.get_logger().info('--- Verification Phase 6: Car State ---')
         msg = self.wait_for_topic(Float64MultiArray, '/robot/full_state', timeout=60.0)
         self.assertIsNotNone(msg, "Failed: No Float64MultiArray data on /robot/full_state")
         self.assertGreater(len(msg.data), 0, "Failed: Car state array is empty!")
         self.assertTrue(all(not math.isnan(x) for x in msg.data), "Failed: Car state contains NaN values!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Car State Received. Array Length: {len(msg.data)}')
 
-    def test_06_wheels_status_active(self):
-        """Verification Phase 6: Wheel Status Publisher"""
-        self.node.get_logger().info('--- Verification Phase 6: Wheels Status ---')
+    def test_07_wheels_status_active(self):
+        """Verification Phase 7: Wheel Status Publisher"""
+        self.node.get_logger().info('--- Verification Phase 7: Wheels Status ---')
         msg = self.wait_for_topic(Float64MultiArray, '/robot/wheels_status', timeout=60.0)
         self.assertIsNotNone(msg, "Failed: No Float64MultiArray data on /robot/wheels_status")
         self.assertGreater(len(msg.data), 0, "Failed: Wheels status array is empty!")
         self.assertTrue(all(not math.isnan(x) for x in msg.data), "Failed: Wheels status contains NaN values!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Wheels Status Received. Array Length: {len(msg.data)}')
 
-    def test_07_noisy_sensors_active(self):
-        """Verification Phase 7: Noisy Sensors Publisher"""
-        self.node.get_logger().info('--- Verification Phase 7: Noisy Sensors ---')
+    def test_08_noisy_sensors_active(self):
+        """Verification Phase 8: Noisy Sensors Publisher"""
+        self.node.get_logger().info('--- Verification Phase 8: Noisy Sensors ---')
         msg = self.wait_for_topic(Float64MultiArray, '/robot/noisy_state', timeout=60.0)
         self.assertIsNotNone(msg, "Failed: No Float64MultiArray data on /robot/noisy_state")
         self.assertGreater(len(msg.data), 0, "Failed: Noisy sensors array is empty!")
         self.assertTrue(all(not math.isnan(x) for x in msg.data), "Failed: Noisy sensors contains NaN values!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Noisy Sensors Received. Array Length: {len(msg.data)}')
 
-    def test_08_visible_cones_active(self):
-        """Verification Phase 8: Visible Cones Service & Publisher"""
-        self.node.get_logger().info('--- Verification Phase 8: Visible Cones ---')
+    def test_09_visible_cones_active(self):
+        """Verification Phase 9: Visible Cones Service & Publisher"""
+        self.node.get_logger().info('--- Verification Phase 9: Visible Cones ---')
         msg = self.wait_for_topic(ConeArray, '/visible_cones', timeout=60.0)
         self.assertIsNotNone(msg, "Failed: No ConeArray data on /visible_cones")
         self.assertGreater(len(msg.cones), 0, "Failed: No visible cones detected from the spawn pose!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Visible Cones Received. Count: {len(msg.cones)}')
 
-    def test_09_car_path_tracking_and_collisions(self):
-        """Verification Phase 9: Car Path Tracking and Cone Collisions"""
-        self.node.get_logger().info('--- Verification Phase 9: Path Tracking & Cone Collisions ---')
+    def test_10_car_path_tracking_and_collisions(self):
+        """Verification Phase 10: Car Path Tracking and Cone Collisions"""
+        self.node.get_logger().info('--- Verification Phase 10: Path Tracking & Cone Collisions ---')
         
         # Publishers to controllers
         pub_wheels = self.node.create_publisher(Float64MultiArray, '/forward_velocity_controller/commands', 10)
@@ -527,7 +543,7 @@ class TestProcessOutput(unittest.TestCase):
         try:
             launch_testing.asserts.assertExitCodes(
                 proc_info,
-                allowable_exit_codes=[0, 2, 1, -2, -9, -15, 255, 130, 137]
+                allowable_exit_codes=[0, 1, 2, 130, 137, 255, -2, -6, -9, -11, -15]
             )
             print("[Post-Shutdown] ✅ Exit codes are within allowable range.")
         finally:

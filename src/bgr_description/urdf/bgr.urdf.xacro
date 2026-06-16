@@ -26,9 +26,12 @@
   <xacro:property name="steer_limit"  value="0.6"/>     
   
   <!-- Sensor update rates (Hz) -->
-  <xacro:property name="lidar_update_rate"     value="50"/>
+  <xacro:arg name="lidar_update_rate"     default="50"/>
+  <xacro:arg name="front_cam_update_rate" default="30"/>
+
+  <xacro:property name="lidar_update_rate"     value="$(arg lidar_update_rate)"/>
   <xacro:property name="imu_update_rate"       value="10"/>
-  <xacro:property name="front_cam_update_rate" value="30"/>
+  <xacro:property name="front_cam_update_rate" value="$(arg front_cam_update_rate)"/>
   <xacro:property name="gps_update_rate"       value="10"/>
 
   
@@ -259,6 +262,14 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
     </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.04" length="0.02"/>
+      </geometry>
+      <material name="orange">
+        <color rgba="1.0 0.5 0.0 1.0"/>
+      </material>
+    </visual>
   </link>
 
 

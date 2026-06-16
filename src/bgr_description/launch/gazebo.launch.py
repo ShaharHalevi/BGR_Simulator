@@ -138,12 +138,11 @@ def generate_launch_description():
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image",
-            "/model/bgr/gps/fix@sensor_msgs/msg/NavSatFix[gz.msgs.NavSat",
+            "/gps/fix@sensor_msgs/msg/NavSatFix[gz.msgs.NavSat",
         ],
         remappings=[
             ('/model/bgr/pose', '/tf'),
             ('/lidar/points', '/lidar/raw'),
-            ('/model/bgr/gps/fix', '/gps/fix'),
         ],
         output="screen",
     )
