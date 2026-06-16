@@ -118,7 +118,7 @@
       <pose>0 0 0 0 0 0</pose>
       <always_on>false</always_on>
       <visualize>true</visualize>
-      <update_rate>50</update_rate>
+      <update_rate>${lidar_update_rate}</update_rate> <!-- Adjust in urdf -->
       <ray>
          <scan>
             <horizontal>
@@ -146,7 +146,7 @@
   <gazebo reference="imu_link">
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <update_rate>10</update_rate>
+      <update_rate>${imu_update_rate}</update_rate> <!-- Adjust in urdf -->
       <visualize>true</visualize>
       <topic>/imu</topic>
       <imu/>
@@ -165,7 +165,7 @@
       <pose>0 0 0 0 0 0</pose>
       <always_on>false</always_on>
       <visualize>true</visualize>
-      <update_rate>30</update_rate>
+      <update_rate>${front_cam_update_rate}</update_rate> <!-- Adjust in urdf -->
       <topic>front_cam</topic>
       <camera>
         <horizontal_fov>1.2</horizontal_fov>
@@ -184,11 +184,26 @@
 
 
 
+  <!-- NavSat system plugin (Jazzy / gz-sim) -->
+  <gazebo>
+    <plugin filename="gz-sim-navsat-system" name="gz::sim::systems::NavSat"/>
+  </gazebo>
+
+  <!-- GPS (NavSat) Sensor -->
+  <gazebo reference="gps_link">
+    <sensor name="gps_sensor" type="navsat">
+      <always_on>true</always_on>
+      <update_rate>${gps_update_rate}</update_rate> <!-- Adjust in urdf -->
+      <topic>gps/fix</topic>
+    </sensor>
+  </gazebo>
+
   <!-- Sensor pipeline plugin (Jazzy / gz-sim) -->
   <gazebo>
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
   </gazebo>
+
 
 </robot>

@@ -11,7 +11,7 @@
   <xacro:property name="track"        value="1.3092"/>   
   <xacro:property name="wheelbase"    value="2.0368"/>   
 
-   <!-- Mass and steering limits -->
+  <!-- Mass and steering limits -->
   <!-- Real measured total car mass is 283.6 kg. body_mass is the remaining
        base_link mass after separately modeled wheels, steering stubs, and sensors. -->
   <xacro:property name="total_vehicle_mass" value="283.6"/>
@@ -20,9 +20,17 @@
   <xacro:property name="lidar_mass"         value="0.5"/>
   <xacro:property name="imu_mass"           value="0.1"/>
   <xacro:property name="front_cam_mass"     value="0.01"/>
-  <xacro:property name="body_mass"          value="${total_vehicle_mass - (4*wheel_mass + 2*steering_stub_mass + lidar_mass + imu_mass + front_cam_mass)}"/>
+  <xacro:property name="gps_mass"           value="0.1"/>
+  <xacro:property name="body_mass"          value="${total_vehicle_mass - (4*wheel_mass + 2*steering_stub_mass + lidar_mass + imu_mass + front_cam_mass + gps_mass)}"/>
   <xacro:property name="wheel_normal_force" value="${total_vehicle_mass * 9.80665 / 4.0}"/>
   <xacro:property name="steer_limit"  value="0.6"/>     
+  
+  <!-- Sensor update rates (Hz) -->
+  <xacro:property name="lidar_update_rate"     value="50"/>
+  <xacro:property name="imu_update_rate"       value="10"/>
+  <xacro:property name="front_cam_update_rate" value="30"/>
+  <xacro:property name="gps_update_rate"       value="10"/>
+
   
   <!-- Mesh-bounds approximation used for base_link collision and inertia.
        Replace body_cg_* with measured CG values when available. -->
@@ -220,11 +228,6 @@
         <color rgba="0 0 0 1"/>
       </material>
     </visual>
-    <collision>
-      <geometry>
-        <cylinder radius="0.05" length="0.05"/>
-      </geometry>
-    </collision>
   </link>
 
   <!-- IMU -->
@@ -241,6 +244,23 @@
       <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
     </inertial>
   </link>
+
+  <!-- GPS -->
+  <joint name="gps_joint" type="fixed">
+    <origin xyz="0.5 0 0.45" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="gps_link"/>
+  </joint>
+
+
+  <link name="gps_link">
+    <inertial>
+      <mass value="${gps_mass}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+    </inertial>
+  </link>
+
 
 
   <!-- Front Camera - To run: ros2 run rqt_image_view rqt_image_view after launching gazebo --> 

@@ -138,13 +138,16 @@ def generate_launch_description():
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
             "/front_cam@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/model/bgr/gps/fix@sensor_msgs/msg/NavSatFix[gz.msgs.NavSat",
         ],
         remappings=[
             ('/model/bgr/pose', '/tf'),
             ('/lidar/points', '/lidar/raw'),
+            ('/model/bgr/gps/fix', '/gps/fix'),
         ],
         output="screen",
     )
+
 
     # STAGE 1 GATE
     # Triggers Stage 2 when simulation time ticks past 0.1s, guaranteeing that the world 
@@ -216,12 +219,15 @@ def generate_launch_description():
         output="screen",
         parameters=[{"use_sim_time": True}],
     )
-    car_dashboard_node = Node(
-        package="bgr_description",
-        executable="car_dashboard.py",
-        output="screen",
-        condition=UnlessCondition('true' if os.environ.get('GITHUB_ACTIONS') == 'true' else 'false') # Won't display in Git Actions
-    )
+
+    # #############Redundant due to foxglove data presentation being superior#############
+    # car_dashboard_node = Node(
+    #     package="bgr_description",
+    #     executable="car_dashboard.py",
+    #     output="screen",
+    #     condition=UnlessCondition('true' if os.environ.get('GITHUB_ACTIONS') == 'true' else 'false') # Won't display in Git Actions
+    # )
+
     cone_service_node = Node(
         package="bgr_description",
         executable="cone_service.py",
@@ -321,7 +327,7 @@ def generate_launch_description():
                 LogInfo(msg='[STAGE 4 START] Vehicle is responsive. Launching tooling...'),
                 car_state_node,                 # starts the car state publisher node
                 car_wheel_node,                 # starts the car wheel publisher node
-                car_dashboard_node,             # starts the car dashboard GUI node
+                # car_dashboard_node,             # starts the car dashboard GUI node (disabled for Foxglove)
                 noisy_sensor_node,              # starts the IMU and GPS simulation node
                 cone_service_node,              # starts the cone service node
                 visible_cones_node,             # starts the visible cones streaming node
