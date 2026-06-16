@@ -5,9 +5,14 @@ import os
 import xml.etree.ElementTree as ET
 from ament_index_python.packages import get_package_share_directory
 
-# --------------------------------
 # NOTE: To use, start gazebo.launch.py first, and enter:
-# ros2 service call /get_track bgr_description/srv/GetTrack "{track_name: 'CompetitionMap1'}"
+# ros2 service call /get_track bgr_description/srv/GetTrack "{track_name: 'Map1Opt'}"
+
+# --------------------------------
+# RELIED ON BY:
+# 1. visible_cones.py (to fetch track geometry/cone coordinates for OBB collision math)
+# 2. test_simulation.py (to verify get_track service functionality in tests)
+# Note: planning_control's planner/node.py has commented-out legacy code for this service.
 # --------------------------------
 
 # Imports the necessary srv and msg files.

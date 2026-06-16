@@ -24,8 +24,6 @@ reset_position:
 	source install/setup.bash && ros2 service call /reset_car std_srvs/srv/Trigger {}
 
 test:
-	colcon build --packages-select bgr_description
-	-source install/setup.bash && colcon test --packages-select bgr_description --event-handlers console_direct+
-	colcon test-result --all --verbose
+	./scripts/test.sh
 
 

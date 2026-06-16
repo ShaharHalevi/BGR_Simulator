@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 """
 Visible Cones & Collision Detector Node
+=======================================
 
 This node serves two distinct, optimized purposes for the BGR Simulator:
-1. Collision Tracking (50Hz+): Actively listens to the high-frequency vehicle odometry state
+1. Collision Tracking (20Hz): Actively listens to the vehicle state
    and performs an Oriented Bounding Box (OBB) intersection to detect if the car physically
    overlaps with any track cones. This enables cones to be "ghosts" in Gazebo while still
    accurately tracking hitting penalties using a debounce mechanism.
 2. Field of View (FOV) Simulation (5Hz): Evaluates which cones fall within a 30m x 6m 
    rectangular viewing frustum in front of the car, publishing a continuous stream of
    visible cones to simulate a camera/perception system without overloading the CPU.
+
+Published Topics:
+---------------------------------------------------------------------------------------------------------------------
+Topic                       | Rate   | Message Type                            | Data Description
+---------------------------------------------------------------------------------------------------------------------
+visible_cones               | 5 Hz   | bgr_description/msg/ConeArray           | Cones currently in the camera's FOV (front frustum)
+collided_cones              | 20 Hz  | bgr_description/msg/ConeArray           | List of all cones that have been hit so far
+cone_collision              | Event  | bgr_description/msg/Cone                | Published once at the exact moment a cone is hit
+/collision/count            | 20 Hz  | std_msgs/msg/Float64                    | Cumulative count of all cone collisions
+/collision/markers          | 20 Hz  | visualization_msgs/msg/MarkerArray      | Red sphere markers at collision sites for Foxglove/RViz
+---------------------------------------------------------------------------------------------------------------------
 """
 import math
 import rclpy
@@ -25,15 +37,17 @@ class VisibleConesNode(Node):
     def __init__(self):
         super().__init__('visible_cones_node')
         
-        # 1. Parameters
-        self.declare_parameter('world_name', 'CompetitionMap1')
-        self.declare_parameter('car_length', 2.55)
-        self.declare_parameter('car_width', 1.45)
-        self.declare_parameter('cone_radius', 0.15)
+        # 1. Parameters (matching URDF body size and offset)
+        self.declare_parameter('world_name', 'Map1Opt')
+        self.declare_parameter('car_length', 3.14)
+        self.declare_parameter('car_width', 1.43)
+        self.declare_parameter('car_x_offset', 0.074)
+        self.declare_parameter('cone_radius', 0.115)
 
         self.world_name = self.get_parameter('world_name').get_parameter_value().string_value
         self.car_length = self.get_parameter('car_length').get_parameter_value().double_value
         self.car_width = self.get_parameter('car_width').get_parameter_value().double_value
+        self.car_x_offset = self.get_parameter('car_x_offset').get_parameter_value().double_value
         self.cone_radius = self.get_parameter('cone_radius').get_parameter_value().double_value
         
         # 2. State Variables
@@ -43,6 +57,7 @@ class VisibleConesNode(Node):
         self.car_yaw = 0.0
         self.currently_overlapping_cones = set()
         self.all_hit_events = []
+        self.last_collision_check_time = 0.0
         
         # 3. QoS Configuration (Matching Gazebo/Publisher)
         qos_profile = QoSProfile(
@@ -119,16 +134,21 @@ class VisibleConesNode(Node):
             self.car_y = msg.data[1]
             self.car_yaw = msg.data[5]
 
-            # Run high-frequency OBB collision check
-            self.check_collisions()
+            # Throttle collision checking to 20 Hz using simulation time
+            now = self.get_clock().now().nanoseconds * 1e-9
+            if now - self.last_collision_check_time >= 0.05:
+                self.last_collision_check_time = now
+                self.check_collisions()
 
     def check_collisions(self):
         """Performs precise OBB intersection to detect if the car hits any ghost cone."""
         if not self.all_cones:
             return
 
-        # Fast broad-phase squared radius (max possible distance for a corner hit)
-        broad_radius_sq = ((self.car_length / 2.0) + self.cone_radius) ** 2 + ((self.car_width / 2.0) + self.cone_radius) ** 2
+        # Fast broad-phase squared radius (max possible distance from axle midpoint to any point on the collision box)
+        max_x = (self.car_length / 2.0) + abs(self.car_x_offset) + self.cone_radius
+        max_y = (self.car_width / 2.0) + self.cone_radius
+        broad_radius_sq = max_x**2 + max_y**2
         
         new_hit = False
         current_frame_overlaps = set()
@@ -144,8 +164,8 @@ class VisibleConesNode(Node):
             if (dx*dx + dy*dy) > broad_radius_sq:
                 continue
 
-            # Narrow phase: precise OBB intersection
-            local_x = dx * cos_yaw + dy * sin_yaw
+            # Narrow phase: precise OBB intersection relative to offset box center
+            local_x = (dx * cos_yaw + dy * sin_yaw) - self.car_x_offset
             local_y = -dx * sin_yaw + dy * cos_yaw
 
             if (abs(local_x) <= (self.car_length / 2.0) + self.cone_radius) and \

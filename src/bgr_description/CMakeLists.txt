@@ -30,8 +30,7 @@ if(BUILD_TESTING)
 endif()
 
 install(PROGRAMS
-  car_wheel_publisher.py
-  car_state_publisher.py
+  sim_pedal_bridge.py
   cone_service.py
   visible_cones.py
   noisy_sensor_publisher.py

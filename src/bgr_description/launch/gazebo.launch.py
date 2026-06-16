@@ -250,6 +250,13 @@ def generate_launch_description():
         output="screen",
         parameters=[{"use_sim_time": True}],
     )
+    sim_pedal_bridge_node = Node(
+        package="bgr_description",
+        executable="sim_pedal_bridge.py",
+        name="sim_pedal_bridge",
+        output="screen",
+        parameters=[{"use_sim_time": True}],
+    )
     static_tf_node = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
@@ -324,10 +331,11 @@ def generate_launch_description():
             target_action=stage3_gate,
             on_exit=[
                 LogInfo(msg='[STAGE 4 START] Vehicle is responsive. Launching tooling...'),
-                car_state_node,                 # starts the car state publisher node
-                car_wheel_node,                 # starts the car wheel publisher node
+                # car_state_node,                 # starts the car state publisher node (consolidated into sim_pedal_bridge)
+                # car_wheel_node,                 # starts the car wheel publisher node (consolidated into sim_pedal_bridge)
                 # car_dashboard_node,             # starts the car dashboard GUI node (disabled for Foxglove)
                 noisy_sensor_node,              # starts the IMU and GPS simulation node
+                sim_pedal_bridge_node,          # publishes vehicle/* topics (pedal_node mimic)
                 cone_service_node,              # starts the cone service node
                 visible_cones_node,             # starts the visible cones streaming node
                 static_tf_node,                 # starts the static TF publisher node

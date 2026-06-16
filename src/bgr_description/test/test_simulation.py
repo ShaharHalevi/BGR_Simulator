@@ -19,8 +19,10 @@ from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import Image, Imu, PointCloud2, JointState, NavSatFix
 from nav_msgs.msg import Odometry
 from rosgraph_msgs.msg import Clock
-from std_msgs.msg import Float64MultiArray
+from std_msgs.msg import Float32, Float64MultiArray
+from geometry_msgs.msg import TwistWithCovarianceStamped
 from bgr_description.msg import ConeArray
+from fs_msgs.msg import VehicleStatus
 from controller_manager_msgs.srv import ListControllers
 
 from launch import LaunchDescription
@@ -57,7 +59,7 @@ def generate_test_description():
     headless = os.environ.get('HEADLESS', 'True' if 'DISPLAY' not in os.environ else 'False')
     
     model_path = os.path.join(get_package_share_directory('bgr_description'), 'urdf', 'bgr.urdf.xacro')
-    if os.environ.get('GITHUB_ACTIONS') == 'true':
+    if os.environ.get('GITHUB_ACTIONS') == 'true': # This is to drastically reduce the cpu load in the Git Actions environment
         model_path += ' lidar_update_rate:=2 front_cam_update_rate:=1'
         
     gazebo_launch = IncludeLaunchDescription(
@@ -282,9 +284,63 @@ class BaseTestFixture(unittest.TestCase):
         self.assertGreater(len(msg.cones), 0, "Failed: No visible cones detected from the spawn pose!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Visible Cones Received. Count: {len(msg.cones)}')
 
-    def test_10_car_path_tracking_and_collisions(self):
-        """Verification Phase 10: Car Path Tracking and Cone Collisions"""
-        self.node.get_logger().info('--- Verification Phase 10: Path Tracking & Cone Collisions ---')
+    def test_10_vehicle_bridge_active(self):
+        """Verification Phase 10: Simulated Pedal Bridge (vehicle/* Topics)"""
+        self.node.get_logger().info('--- Verification Phase 10: Vehicle Bridge ---')
+
+        # vehicle/status — RELIABLE+TRANSIENT_LOCAL, simulated DRIVING state at 20 Hz
+        status_msg = self.wait_for_topic(VehicleStatus, 'vehicle/status', timeout=60.0)
+        self.assertIsNotNone(status_msg, "Failed: No VehicleStatus on vehicle/status")
+        self.assertEqual(status_msg.as_state, VehicleStatus.AS_STATE_DRIVING,
+                         f"Failed: vehicle/status.as_state={status_msg.as_state}, expected DRIVING({VehicleStatus.AS_STATE_DRIVING})")
+        self.assertFalse(status_msg.ebs_armed, "Failed: vehicle/status.ebs_armed is True in simulation!")
+        self.node.get_logger().info(
+            f'📦 [DIAGNOSTIC] vehicle/status OK. as_state={status_msg.as_state}, '
+            f'mission_id={status_msg.mission_id}, ebs_armed={status_msg.ebs_armed}')
+
+        # vehicle/odom — TwistWithCovarianceStamped, twist-only (no pose, speed from rear wheels)
+        odom_msg = self.wait_for_topic(TwistWithCovarianceStamped, 'vehicle/odom', timeout=60.0)
+        self.assertIsNotNone(odom_msg, "Failed: No TwistWithCovarianceStamped on vehicle/odom")
+        self.assertFalse(math.isnan(odom_msg.twist.twist.linear.x), "Failed: vehicle/odom linear.x is NaN!")
+        self.assertEqual(len(odom_msg.twist.covariance), 36, "Failed: vehicle/odom covariance is not 36-element!")
+        self.node.get_logger().info(
+            f'📦 [DIAGNOSTIC] vehicle/odom OK. linear.x={odom_msg.twist.twist.linear.x:.3f} m/s')
+
+        # vehicle/wheel_speeds — JointState, 4 velocities in m/s, names match bridge_node.py
+        wheels_msg = self.wait_for_topic(JointState, 'vehicle/wheel_speeds', timeout=60.0)
+        self.assertIsNotNone(wheels_msg, "Failed: No JointState on vehicle/wheel_speeds")
+        self.assertEqual(list(wheels_msg.name), ['wheel_fl', 'wheel_fr', 'wheel_rl', 'wheel_rr'],
+                         f"Failed: vehicle/wheel_speeds.name mismatch: {list(wheels_msg.name)}")
+        self.assertEqual(len(wheels_msg.velocity), 4,
+                         f"Failed: vehicle/wheel_speeds.velocity has {len(wheels_msg.velocity)} elements, expected 4")
+        self.node.get_logger().info(
+            f'📦 [DIAGNOSTIC] vehicle/wheel_speeds OK. '
+            f'fl={wheels_msg.velocity[0]:.3f} fr={wheels_msg.velocity[1]:.3f} '
+            f'rl={wheels_msg.velocity[2]:.3f} rr={wheels_msg.velocity[3]:.3f} m/s')
+
+        # vehicle/gps/fix — NavSatFix forwarded from Gazebo NavSat, frame_id must be gps_link
+        gps_msg = self.wait_for_topic(NavSatFix, 'vehicle/gps/fix', timeout=60.0)
+        self.assertIsNotNone(gps_msg, "Failed: No NavSatFix on vehicle/gps/fix")
+        self.assertEqual(gps_msg.header.frame_id, 'gps_link',
+                         f"Failed: vehicle/gps/fix frame_id='{gps_msg.header.frame_id}', expected 'gps_link'")
+        self.assertFalse(math.isnan(gps_msg.latitude), "Failed: vehicle/gps/fix latitude is NaN!")
+        self.assertFalse(math.isnan(gps_msg.longitude), "Failed: vehicle/gps/fix longitude is NaN!")
+        self.node.get_logger().info(
+            f'📦 [DIAGNOSTIC] vehicle/gps/fix OK. '
+            f'lat={gps_msg.latitude:.6f}, lon={gps_msg.longitude:.6f}, frame_id={gps_msg.header.frame_id}')
+
+        # vehicle/steering_angle — Float32 in degrees (not radians), matches bridge_node.py
+        steer_msg = self.wait_for_topic(Float32, 'vehicle/steering_angle', timeout=60.0)
+        self.assertIsNotNone(steer_msg, "Failed: No Float32 on vehicle/steering_angle")
+        self.assertFalse(math.isnan(steer_msg.data), "Failed: vehicle/steering_angle is NaN!")
+        self.assertLessEqual(abs(steer_msg.data), 92.0,
+                             f"Failed: vehicle/steering_angle={steer_msg.data:.2f}° exceeds ±92° clamp!")
+        self.node.get_logger().info(
+            f'📦 [DIAGNOSTIC] vehicle/steering_angle OK. angle={steer_msg.data:.2f}°')
+
+    def test_11_car_path_tracking_and_collisions(self):
+        """Verification Phase 11: Car Path Tracking and Cone Collisions"""
+        self.node.get_logger().info('--- Verification Phase 11: Path Tracking & Cone Collisions ---')
         
         # Publishers to controllers
         pub_wheels = self.node.create_publisher(Float64MultiArray, '/forward_velocity_controller/commands', 10)
@@ -553,14 +609,15 @@ class TestProcessOutput(unittest.TestCase):
                 'killall -9 ros2 ros2-daemon gz ruby rviz2 parameter_bridge 2>/dev/null || true',
                 'killall -9 gz-sim-server gz-sim-gui ign-gazebo-server ign-gazebo-gui 2>/dev/null || true',
                 'killall -9 robot_state_publisher static_transform_publisher ros2_control_node 2>/dev/null || true',
-                'pkill -9 -f "car_state_publisher.py" 2>/dev/null || true',
-                'pkill -9 -f "car_wheel_publisher.py" 2>/dev/null || true',
+                # 'pkill -9 -f "car_state_publisher.py" 2>/dev/null || true',
+                # 'pkill -9 -f "car_wheel_publisher.py" 2>/dev/null || true',
                 'pkill -9 -f "cone_service.py" 2>/dev/null || true',
                 'pkill -9 -f "visible_cones.py" 2>/dev/null || true',
                 'pkill -9 -f "noisy_sensor_publisher.py" 2>/dev/null || true',
+                'pkill -9 -f "sim_pedal_bridge.py" 2>/dev/null || true',
                 'pkill -9 -f "bgr_controller" 2>/dev/null || true',
                 'pkill -9 -f "controller_manager/spawner" 2>/dev/null || true',
-                'pkill -9 -f "car_dashboard.py" 2>/dev/null || true',
+                # 'pkill -9 -f "car_dashboard.py" 2>/dev/null || true',
                 'pkill -9 -f "keyboard_teleop" 2>/dev/null || true',
                 'rm -rf /tmp/ignition_* /tmp/gz_* /tmp/gazebo_* /dev/shm/rtps* /dev/shm/fastdds* || true'
             ]

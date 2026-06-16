@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>fs_msgs</name>
+  <version>0.1.0</version>
+  <description>
+    FS UART custom ROS 2 message definitions (VehicleStatus, VehicleControl).
+    This is a simulator-local copy of the pedal_node fs_msgs package so the
+    simulator container can build and use these types without needing access to
+    the pedal_node git submodule. Keep in sync with pedal_node/fs_uart_ws/src/fs_msgs.
+  </description>
+  <maintainer email="bgr@bgu.ac.il">BGU Racing</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>rosidl_default_generators</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
