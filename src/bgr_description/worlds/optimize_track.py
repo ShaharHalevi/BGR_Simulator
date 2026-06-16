@@ -129,17 +129,17 @@ def optimize_world(input_path, output_path):
     if physics is not None:
         max_step = physics.find('max_step_size')
         if max_step is not None:
-            max_step.text = '0.002'
+            max_step.text = '0.005'
         else:
             max_step_elem = ET.SubElement(physics, 'max_step_size')
-            max_step_elem.text = '0.002'
+            max_step_elem.text = '0.005'
 
         update_rate = physics.find('real_time_update_rate')
         if update_rate is not None:
-            update_rate.text = '500'
+            update_rate.text = '200'
         else:
             update_rate_elem = ET.SubElement(physics, 'real_time_update_rate')
-            update_rate_elem.text = '500'
+            update_rate_elem.text = '200'
 
     for light in world_tag.findall('light'):
         if light.get('name') == 'sun':

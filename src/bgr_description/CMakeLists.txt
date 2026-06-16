@@ -32,11 +32,9 @@ endif()
 install(PROGRAMS
   car_wheel_publisher.py
   car_state_publisher.py
-  car_dashboard.py
   cone_service.py
   visible_cones.py
   noisy_sensor_publisher.py
-  reset_car.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

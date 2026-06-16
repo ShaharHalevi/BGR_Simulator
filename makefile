@@ -19,8 +19,9 @@ build:
 gz:
 	ROS_DOMAIN_ID=0 source install/setup.bash && ros2 launch bgr_description gazebo.launch.py world_name:=${WORLD:-Map1Opt.world} headless:=${HEADLESS:-false}
 
+# Reset car position (requires simulation docker containers to be running)
 reset_position:
-	source install/setup.bash && ros2 run bgr_description reset_car.py
+	source install/setup.bash && ros2 service call /reset_car std_srvs/srv/Trigger {}
 
 test:
 	colcon build --packages-select bgr_description

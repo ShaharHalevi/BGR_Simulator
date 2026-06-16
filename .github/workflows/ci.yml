@@ -1,23 +1,23 @@
-name: ROS 2 CI
+name: Simulator CI
 
 on:
   push:
-    branches: [ main, world-optimisation]
+    branches: [ main, sim-optimise]
     paths:
       - 'src/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
-      - '.github/workflows/bgsim_ci.yml'
+      - '.github/workflows/ci.yml'
   pull_request:
-    branches: [ main, world-optimisation]
+    branches: [ main, sim-optimise]
     paths:
       - 'src/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
-      - '.github/workflows/bgsim_ci.yml'
+      - '.github/workflows/ci.yml'
 
 jobs:
-  ros-build-and-test:
+  build-and-test:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
@@ -35,10 +35,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Run Simulation Launch & Tests
+      - name: Simulation Initialisation & Tests
+        env:
+          HEADLESS: "True"
+          GZ_RENDERING_BACKEND: egl
         run: |
           mkdir -p test_results
-          docker run --rm -e GITHUB_ACTIONS=true -v $(pwd)/test_results:/ros2_ws/test_results bgr_simulator:ci bash -c "
+          docker run --rm -e HEADLESS -e GZ_RENDERING_BACKEND -v $(pwd)/test_results:/ros2_ws/test_results bgr_simulator:ci bash -c "
             source /opt/ros/jazzy/setup.bash &&
             source install/setup.bash &&
             colcon test --event-handlers console_direct+ --test-result-base test_results &&

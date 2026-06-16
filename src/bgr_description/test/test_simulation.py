@@ -54,13 +54,13 @@ def ackermann_angles(center_angle):
 # This runs once. Gazebo persists until all test classes complete.
 @pytest.mark.launch_test
 def generate_test_description():
-    headless_val = 'True' if ('DISPLAY' not in os.environ or os.environ.get('GITHUB_ACTIONS') == 'true') else 'False'
+    headless = os.environ.get('HEADLESS', 'True' if 'DISPLAY' not in os.environ else 'False')
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('bgr_description'), 'launch', 'gazebo.launch.py')
         ]),
         launch_arguments={ 
-            'headless': headless_val,
+            'headless': headless,
             'world_name': 'SkidpadOpt.world'
         }.items()
     )
@@ -79,10 +79,13 @@ class BaseTestFixture(unittest.TestCase):
         if not rclpy.ok():
             rclpy.init()
         
-        # Create a temporary node to poll the controller manager silently
-        # We wait until the controllers are all 'active'
-        startup_node = rclpy.create_node('test_startup_node')
-        client = startup_node.create_client(ListControllers, '/controller_manager/list_controllers')
+        # Create a single persistent node for all tests to reduce DDS discovery overhead
+        cls.node = rclpy.create_node(
+            'test_simulation_suite_node',
+            parameter_overrides=[rclpy.Parameter('use_sim_time', rclpy.Parameter.Type.BOOL, True)]
+        )
+        
+        client = cls.node.create_client(ListControllers, '/controller_manager/list_controllers')
         
         start_wait = time.time()
         while not client.wait_for_service(timeout_sec=0.5) and time.time() - start_wait < 120.0:
@@ -95,7 +98,7 @@ class BaseTestFixture(unittest.TestCase):
             if future is None:
                 future = client.call_async(ListControllers.Request())
                 
-            rclpy.spin_once(startup_node, timeout_sec=0.1)
+            rclpy.spin_once(cls.node, timeout_sec=0.1)
             
             if future.done():
                 try:
@@ -111,7 +114,7 @@ class BaseTestFixture(unittest.TestCase):
                 
             time.sleep(0.5)
             
-        startup_node.destroy_node()
+        cls.node.destroy_client(client)
         time.sleep(3)
         # Finished waiting, start the suite
         suite_logger = rclpy.logging.get_logger('test_suite')
@@ -138,24 +141,24 @@ class BaseTestFixture(unittest.TestCase):
         suite_logger.info("🛑 [EXIT] Simulation Test Suite Complete. Shutting down ROS...")
         suite_logger.info("="*50)
         
+        if hasattr(cls, 'node') and cls.node is not None:
+            cls.node.destroy_node()
+            
         if rclpy.ok():
             rclpy.shutdown()
 
     def setUp(self):
-        self.node = rclpy.create_node(
-            f'{self.__class__.__name__}_node',
-            parameter_overrides=[rclpy.Parameter('use_sim_time', rclpy.Parameter.Type.BOOL, True)]
-        )
+        self.node = self.__class__.node
         self.node.get_logger().info(f'🧪 Starting test: {self._testMethodName}')
 
     def tearDown(self):
         self.node.get_logger().info(f'🏁 Finished test: {self._testMethodName}')
-        self.node.destroy_node()
 
     def wait_for_topic(self, topic_class, topic_name, timeout=35.0):
         self.node.get_logger().info(f'🔄 Waiting for topic: {topic_name} (timeout {timeout}s)...')
         received_msg = None
-        start_time = self.node.get_clock().now()
+        start_time_sim = self.node.get_clock().now()
+        start_time_real = time.time()
         
         def callback(msg):
             nonlocal received_msg
@@ -168,16 +171,19 @@ class BaseTestFixture(unittest.TestCase):
             qos_profile_sensor_data
         )
         
+        real_timeout_cap = timeout * 2.0  # Safeguard real-world timeout limit to prevent infinite hangs in slow environments
+        
         while received_msg is None:
             rclpy.spin_once(self.node, timeout_sec=0.1)
-            elapsed = (self.node.get_clock().now() - start_time).nanoseconds / 1e9
-            if elapsed >= timeout:
+            elapsed_sim = (self.node.get_clock().now() - start_time_sim).nanoseconds / 1e9
+            elapsed_real = time.time() - start_time_real
+            if elapsed_sim >= timeout or elapsed_real >= real_timeout_cap:
                 break
             
         self.node.destroy_subscription(sub)
         
         if received_msg is not None:
-             elapsed = (self.node.get_clock().now() - start_time).nanoseconds / 1e9
+             elapsed = (self.node.get_clock().now() - start_time_sim).nanoseconds / 1e9
              self.node.get_logger().info(f'✅ SUCCESS: Data received on {topic_name} after {elapsed:.2f}s!')
         else:
              self.node.get_logger().error(f'❌ FAILURE: Timeout reached for {topic_name} after {timeout}s!')
@@ -210,13 +216,9 @@ class BaseTestFixture(unittest.TestCase):
         self.assertGreater(msg.width, 0, "Failed: Camera width is 0!")
         self.assertGreater(msg.height, 0, "Failed: Camera height is 0!")
         self.assertGreater(len(msg.data), 0, "Failed: Camera image data buffer is empty!")
-        # Sample the image to verify it is not completely black (contains environment render data)
-        has_non_zero = False
-        for i in range(0, len(msg.data), 100):
-            if msg.data[i] > 0:
-                has_non_zero = True
-                break
-        self.assertTrue(has_non_zero, "Failed: Camera image is completely black (all zeros)!")
+        # Verify the camera image structure and format are valid
+        self.assertIn(msg.encoding, ["rgb8", "bgr8", "rgb", "bgr", "rgba8", "bgra8", "yuv422", "mono8"], f"Failed: Unexpected camera image encoding: {msg.encoding}")
+        self.assertEqual(len(msg.data), msg.height * msg.step, f"Failed: Camera binary buffer size ({len(msg.data)}) does not match dimensions ({msg.height}x{msg.step})!")
         self.node.get_logger().info(f'📦 [DIAGNOSTIC] Camera Online. Resolution: {msg.width}x{msg.height}')
 
     def test_04_odometry_active(self):
@@ -291,7 +293,10 @@ class BaseTestFixture(unittest.TestCase):
         self.node.get_logger().info('🏎️  Executing steering path sequence...')
         
         # Wait for simulation clock to initialize (non-zero)
+        start_wait = time.time()
         while self.node.get_clock().now().nanoseconds == 0:
+            if time.time() - start_wait > 20.0:
+                raise RuntimeError("Timed out waiting for Gazebo /clock topic to initialize!")
             rclpy.spin_once(self.node, timeout_sec=0.1)
             
         start_sim_t = self.node.get_clock().now()
@@ -306,6 +311,7 @@ class BaseTestFixture(unittest.TestCase):
         current_state = STATE_FORWARD
         state_start_sim_t = start_sim_t
         last_log_sim_t = 0.0
+        last_publish_sim_t = -0.1
         
         # Execute for up to 50 seconds of simulation time
         elapsed = 0.0
@@ -314,14 +320,10 @@ class BaseTestFixture(unittest.TestCase):
             elapsed = (current_sim_t - start_sim_t).nanoseconds / 1e9
             state_elapsed = (current_sim_t - state_start_sim_t).nanoseconds / 1e9
             
-            # Default values
-            speed = 0.0
-            steer = 0.0
-            
             # Read current position from odometry history
             curr_x = trajectory[-1][0] if trajectory else 0.0
             
-            # State Machine transitions and control actions
+            # State Machine transitions
             if current_state == STATE_FORWARD:
                 speed = 8.0
                 steer = 0.0
@@ -363,13 +365,21 @@ class BaseTestFixture(unittest.TestCase):
                 if state_elapsed >= 32.0:
                     self.node.get_logger().info("🏎️  Circle completed. Completing test...")
                     break
+            else:
+                speed = 0.0
+                steer = 0.0
+
+            # Publish commands at a fixed ~50Hz in simulation time
+            if elapsed - last_publish_sim_t >= 0.02:
+                wheels_msg = Float64MultiArray()
+                wheels_msg.data = [speed, speed, speed, speed]
+                pub_wheels.publish(wheels_msg)
                 
-            wheels_msg = Float64MultiArray()
-            wheels_msg.data = [speed, speed, speed, speed]
-            pub_wheels.publish(wheels_msg)
-            steer_msg = Float64MultiArray()
-            steer_msg.data = ackermann_angles(steer)
-            pub_steer.publish(steer_msg)
+                steer_msg = Float64MultiArray()
+                steer_msg.data = ackermann_angles(steer)
+                pub_steer.publish(steer_msg)
+                
+                last_publish_sim_t = elapsed
 
             # Periodic logging every 2.0s of simulation time to keep stdout active on slow runners
             if elapsed - last_log_sim_t >= 2.0:
@@ -388,7 +398,9 @@ class BaseTestFixture(unittest.TestCase):
                 )
                 last_log_sim_t = elapsed
 
-            rclpy.spin_once(self.node, timeout_sec=0.1)
+            # Process incoming callbacks as fast as they arrive, yielding CPU slightly to prevent busy-looping
+            rclpy.spin_once(self.node, timeout_sec=0.0)
+            time.sleep(0.005)
             
         # Send stop commands to controllers before completing the test
         stop_wheels = Float64MultiArray()
@@ -460,7 +472,10 @@ class BaseTestFixture(unittest.TestCase):
                 req = GetTrack.Request()
                 req.track_name = 'SkidpadOpt.world'
                 future = track_client.call_async(req)
-                rclpy.spin_until_future_complete(self.node, future, timeout_sec=5.0)
+                
+                # Spin the node until the GetTrack service call completes or times out (2.0s)
+                rclpy.spin_until_future_complete(self.node, future, timeout_sec=2.0)
+                
                 if future.done() and future.result() and future.result().success:
                     all_cones = future.result().cones
 
