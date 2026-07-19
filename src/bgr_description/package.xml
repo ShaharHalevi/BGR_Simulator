@@ -25,6 +25,9 @@
   <exec_depend condition="$ROS_DISTRO >= iron">gz_ros2_control</exec_depend>
   <exec_depend condition="$ROS_DISTRO == humble">ign_ros2_control</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
 
   <test_depend>launch_testing_ament_cmake</test_depend>
 

@@ -20,7 +20,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ament_export_dependencies(rosidl_default_runtime)
 
 # Install description files (meshes, urdf, launch, rviz) and the TracksV0 folder
-install(DIRECTORY meshes urdf launch rviz worlds ../TracksV0
+install(DIRECTORY meshes urdf launch rviz worlds config ../TracksV0
   DESTINATION share/${PROJECT_NAME}
 )
 
@@ -37,6 +37,7 @@ install(PROGRAMS
   visible_cones.py
   noisy_sensor_publisher.py
   reset_car.py
+  ekf_publisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
